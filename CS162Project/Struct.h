@@ -23,7 +23,7 @@ struct Score{
 
 struct StudentEnrolled{
     StudentEnrolled* next;
-    string type; //20CLC1…, class 20CLC11, class 20VP…
+    string type; //20CLC1ï¿½, class 20CLC11, class 20VPï¿½
     int No;
     string studentId;
     string socialId;
@@ -72,7 +72,7 @@ struct Student{
     string userName;
     Student *next = nullptr;
     CourseOfStudent courses;
-    string type; //20CLC1…, class 20CLC11, class 20VP…
+    string type; //20CLC1ï¿½, class 20CLC11, class 20VPï¿½
     int No;
     string studentId;
     string socialId;
@@ -96,6 +96,7 @@ struct StaffMember{
 
 struct Class{
     Class* next;
+    string classname;
     Student *student;
 };
 
