@@ -1,0 +1,12 @@
+#include <string>
+#include <fstream>
+
+using namespace std;
+
+void StaffMember::createSchoolYear(){
+
+}
+
+void StaffMember::createSeveralClasses(){
+
+}
