@@ -20,6 +20,19 @@ void StaffMember::createSchoolYear(){
 void StaffMember::createSeveralClasses(){
 
 }
+void Class::addStudents()
+{
+    Student stu = new Student;
+    cin >> stu.No;
+    cin >> stu.studentId;
+    cin >> stu.fristName;
+    cin >> stu.lastName;
+    cin >> stu.gender;
+    cin >> stu.dateOfBirth;
+    cin >> stu.socialId;
+    stu.next = this->student;
+    this->student = &stu;
+}
 
 void User::login(){
     cout << "1: Student" << endl;

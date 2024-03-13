@@ -98,6 +98,7 @@ struct Class{
     Class* next;
     string classname;
     Student *student;
+    void addStudents();
 };
 
 struct User{
