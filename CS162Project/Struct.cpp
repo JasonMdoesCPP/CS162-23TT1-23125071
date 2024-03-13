@@ -3,6 +3,8 @@
 
 using namespace std;
 
+#include "Struct.h"
+
 void StaffMember::createSchoolYear(){
 
 }
