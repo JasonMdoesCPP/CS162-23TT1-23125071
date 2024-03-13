@@ -32,6 +32,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Struct.cpp" />
 		<Unit filename="Struct.h" />
 		<Unit filename="main.cpp" />
 		<Extensions />

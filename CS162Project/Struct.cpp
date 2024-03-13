@@ -6,7 +6,15 @@ using namespace std;
 #include "Struct.h"
 
 void StaffMember::createSchoolYear(){
-
+    SchoolYear* cur = schoolYear;
+    while (cur && cur -> next) cur = cur -> next;
+    cout << "Please input school year: ";
+    int data;
+    cin >> data;
+    SchoolYear* newYear = new SchoolYear;
+    newYear -> next = nullptr;
+    newYear -> yearStart = data;
+    if (cur) cur -> next = newYear; else schoolYear = newYear;
 }
 
 void StaffMember::createSeveralClasses(){
