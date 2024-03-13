@@ -3,7 +3,7 @@
 
 #include <string>
 #include <fstream>
-
+#include <iostream>
 using namespace std;
 
 struct DateOfBirth{
@@ -68,7 +68,9 @@ struct SchoolYear{
 };
 
 struct Student{
-    Student *next;
+    string passWord;
+    string userName;
+    Student *next = nullptr;
     CourseOfStudent courses;
     string type; //20CLC1…, class 20CLC11, class 20VP…
     int No;
@@ -82,7 +84,9 @@ struct Student{
 };
 
 struct StaffMember{
-    StaffMember*next;
+    string passWord;
+    string userName;
+    StaffMember*next = nullptr;
     string firstName;
     string lastName;
     SchoolYear schoolYear;
@@ -98,9 +102,10 @@ struct Class{
 struct User{
     StaffMember *staffMembers;
     Student *students;
-    string passWord;
-    string userName;
-
+    int ca; // case 1: student case 2: staffMember
+    StaffMember *user2 = nullptr;
+    Student *user1 = nullptr; 
+    void login();
 };
 
 #endif // STRUCT_H_INCLUDED

@@ -1,9 +1,8 @@
 #include <iostream>
-
+#include "Struct.h"
 using namespace std;
 
 int main()
 {
-    cout << "Hello world!" << endl;
-    return 0;
+
 }
