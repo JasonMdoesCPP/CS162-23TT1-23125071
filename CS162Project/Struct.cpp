@@ -17,20 +17,29 @@ void StaffMember::createSchoolYear(){
     if (cur) cur -> next = newYear; else schoolYear = newYear;
 }
 
-void StaffMember::createSeveralClasses(){
-
+void Class::createSeveralClasses(){
+    Class *HeadClass=new Class;
+    Class *cur=HeadClass;
+    string temp;
+    cout<<"Enter name of classes separated by space. Finish by entering Enter"<<endl;
+    while(cin>>temp)
+    {       
+    cur->classname=temp;
+    cur->next=new Class;
+    cur=cur->next;
+    }
 }
 void Class::addStudents()
 {
-    Student stu = new Student;
-    cin >> stu.No;
-    cin >> stu.studentId;
-    cin >> stu.fristName;
-    cin >> stu.lastName;
-    cin >> stu.gender;
-    cin >> stu.dateOfBirth;
-    cin >> stu.socialId;
-    stu.next = this->student;
+    Student *stu = new Student;
+    cin >> stu->No;
+    cin >> stu->studentId;
+    cin >> stu->fristName;
+    cin >> stu->lastName;
+    cin >> stu->gender;
+    cin >> stu->dateOfBirth;
+    cin >> stu->socialId;
+    stu->next = this->student;
     this->student = &stu;
 }
 
