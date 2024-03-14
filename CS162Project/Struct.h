@@ -27,7 +27,7 @@ struct StudentEnrolled{
     int No;
     string studentId;
     string socialId;
-    string fristName;
+    string firstName;
     string lastName;
     string gender;
     DateOfBirth dateOfBirth;
@@ -76,7 +76,7 @@ struct Student{
     int No;
     string studentId;
     string socialId;
-    string fristName;
+    string firstName;
     string lastName;
     string gender;
     int schoolYear;
