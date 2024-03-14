@@ -17,16 +17,24 @@ void StaffMember::createSchoolYear(){
     if (cur) cur -> next = newYear; else schoolYear = newYear;
 }
 
-void Class::createSeveralClasses(){
-    Class *HeadClass=new Class;
-    Class *cur=HeadClass;
+void Class::createSeveralClasses(Class *&HeadClass){
     string temp;
-    cout<<"Enter name of classes separated by space. Finish by entering Enter"<<endl;
-    while(cin>>temp)
+    cout<<"Enter name of classes separated by space. Finish by entering Q"<<endl;
+    while(true)
     {       
-    cur->classname=temp;
-    cur->next=new Class;
-    cur=cur->next;
+        cin>>temp;
+        if(temp=="Q") break;  //exit loop when user enters 'Q'.
+    Class *newOne = new Class;
+    newOne->classname = temp;
+    newOne->next=nullptr;
+    if(HeadClass==nullptr){
+    HeadClass=newOne;
+    }
+    else 
+    {
+    newOne->next=HeadClass;
+    HeadClass=newOne;
+    }
     }
 }
 void Class::addStudents()

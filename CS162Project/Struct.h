@@ -91,7 +91,6 @@ struct StaffMember{
     string lastName;
     SchoolYear* schoolYear;
     void createSchoolYear();
-    void createSeveralClasses();
 };
 
 struct Class{
@@ -99,6 +98,7 @@ struct Class{
     string classname;
     Student *student;
     void addStudents();
+    void createSeveralClasses(Class *&HeadClass);
 };
 
 struct User{
