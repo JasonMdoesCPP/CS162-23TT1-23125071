@@ -93,12 +93,13 @@ struct StaffMember{
     void createSchoolYear();
 };
 
+
 struct Class{
     Class* next;
-    string classname;
+    string classname; // 23tt1, 223tt2
     Student *student;
     void addStudents();
-    void createSeveralClasses(Class *&HeadClass);
+    void inputFromFile();
 };
 
 struct User{
@@ -110,4 +111,14 @@ struct User{
     void login();
 };
 
+
+
+
+// External functions 
+
+void inputFromFile(Class *clas, string name); 
+
+
 #endif // STRUCT_H_INCLUDED
+
+

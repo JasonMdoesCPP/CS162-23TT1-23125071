@@ -17,7 +17,7 @@ void StaffMember::createSchoolYear(){
     if (cur) cur -> next = newYear; else schoolYear = newYear;
 }
 
-void Class::createSeveralClasses(Class *&HeadClass){
+void createSeveralClasses(Class *&HeadClass){
     string temp;
     cout<<"Enter name of classes separated by space. Finish by entering Q"<<endl;
     while(true)
@@ -37,21 +37,7 @@ void Class::createSeveralClasses(Class *&HeadClass){
     }
     }
 }
-void Class::addStudents()
-{
-    Student *stu = new Student;
-    cin >> stu->No;
-    cin >> stu->studentId;
-    cin >> stu->firstName;
-    cin >> stu->lastName;
-    cin >> stu->gender;
-    cin >> stu->dateOfBirth.day;
-    cin >> stu -> dateOfBirth.month;
-    cin >> stu->dateOfBirth.year;
-    cin >> stu->socialId;
-    stu->next = this->student;
-    this->student = stu;
-}
+
 
 void User::login(){
     cout << "1: Student" << endl;
@@ -94,4 +80,83 @@ void User::login(){
         }
     }
     return;
+}
+void inputFromFile(Class *clas, string name){
+    Class*cur = clas;
+    while(cur){
+        if(clas->classname == name){
+            clas->inputFromFile();
+            return; 
+        }
+        cur = cur->next; 
+    }
+    cout << "Don't have any class having this name";
+}
+void Class::inputFromFile(){
+    string name;
+    name = classname+".csv";
+    ifstream fin;
+    fin.open(name); 
+    if(!fin.is_open()){
+        cout << "Error! ";
+        return;
+    }
+    string line;
+    getline(fin, line);
+    string temp;
+    while(getline(fin, temp, ',')){
+        if(temp == "endlish"){
+            break;
+        }
+        Student *stu = new Student;
+        stu->No = stoi(temp);
+        getline(fin, temp, ',');
+        stu->studentId = temp;
+        getline(fin, temp, ',');
+        stu->firstName = temp;
+        getline(fin, temp, ',');
+        stu->lastName = temp;
+        getline(fin, temp, ',');
+        stu->gender = temp;
+        getline(fin, temp, ',');
+        stu->dateOfBirth.day = stoi(temp);
+        getline(fin, temp, ',');
+        stu->dateOfBirth.month = stoi(temp);
+        getline(fin, temp, ',');
+        stu->dateOfBirth.year = stoi(temp);
+        getline(fin, temp);
+        stu->socialId = temp;
+        stu->next = student;
+        student = stu;
+    }
+    fin.close();
+}
+
+
+void Class::addStudents()
+{
+    cout << "Enter number of students: ";
+    int n;
+    cin >> n;
+    if(n--){
+        Student *stu = new Student;
+        cout << "No: ";
+        cin >> stu->No;
+        cout << "Student Id: ";
+        cin >> stu->studentId;
+        cout << "First name: ";
+        cin >> stu->firstName;
+        cout << "Last name: ";
+        cin >> stu->lastName;
+        cout << "Gender: (male/female)";
+        cin >> stu->gender;
+        cout << "Day of birth: ";
+        cin >> stu->dateOfBirth.day;
+        cin >> stu -> dateOfBirth.month;
+        cin >> stu->dateOfBirth.year;
+        cout << "Social id: ";
+        cin >> stu->socialId;
+        stu->next = student;
+        student = stu;
+    }
 }
