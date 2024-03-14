@@ -34,13 +34,15 @@ void Class::addStudents()
     Student *stu = new Student;
     cin >> stu->No;
     cin >> stu->studentId;
-    cin >> stu->fristName;
+    cin >> stu->firstName;
     cin >> stu->lastName;
     cin >> stu->gender;
-    cin >> stu->dateOfBirth;
+    cin >> stu->dateOfBirth.day;
+    cin >> stu -> dateOfBirth.month;
+    cin >> stu->dateOfBirth.year;
     cin >> stu->socialId;
     stu->next = this->student;
-    this->student = &stu;
+    this->student = stu;
 }
 
 void User::login(){
