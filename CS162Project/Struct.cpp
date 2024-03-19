@@ -206,6 +206,11 @@ void Class::addStudents()
 
 void SchoolYear::createSemester(){
     semester = new Semester[3];
+    cout << "Please choose the current semester (1, 2, 3): ";
+    int cur;
+    cin >> cur;
+    cout << "Please enter start date: "; cin >> semester[cur-1] -> startDay;
+    cout << "Please enter the end date: "; cin >> semester[cur-1] -> endDay;
     cout << "Semester created!" << endl;
     return;
 }
@@ -215,13 +220,22 @@ void Semester::addCourse(){
     cout << "Please enter course ID:";
     cin >> temp -> id;
     cout << "Please enter course name: ";
-    cin >> course->name;
+    cin >> temp->name;
     cout << "Please enter class name: ";
+    cin >> temp -> classname;
     cout << "Please enter teacher's name:";
+    cin >> temp -> teacherName;
     cout << "Please enter the number of credits: ";
+    cin >> temp -> numberOfCredits;
     cout << "Please enter the maximal number of students in the course: ";
+    cin >> temp -> maxSize;
     cout << "Please enter the day the course will be performed in: ";
+    cin.get();
+    cin.get(temp -> dow, 1, '\0');
+    cin.get();
     cout << "Please enter the session the course will be performed in: ";
+    cin >> temp -> session;
+    cout << "Course created!" << endl;
 }
 void Semester::viewTheListOfCourses()
 {
