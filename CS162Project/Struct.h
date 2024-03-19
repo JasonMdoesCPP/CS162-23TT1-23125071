@@ -58,13 +58,15 @@ struct Semester{
     int startDay;
     int endDay;
     Course *course;
+    void addCourse();
 };
 
 struct SchoolYear{
     SchoolYear* next;
-    Semester *semester = new Semester[3];
+    Semester *semester = nullptr;
     int yearStart;
     int yearEnd = yearStart+1;
+    void createSemester();
 };
 
 struct Student{
@@ -110,15 +112,15 @@ struct User{
     Student *user1 = nullptr;
     void login();
     void addInformationStudent();
-    void addInformationStaffMembers(); 
+    void addInformationStaffMembers();
 };
 
 
 
 
-// External functions 
+// External functions
 
-void inputFromFile(Class *clas, string name); 
+void inputFromFile(Class *clas, string name);
 
 
 #endif // STRUCT_H_INCLUDED

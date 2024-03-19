@@ -21,7 +21,7 @@ void createSeveralClasses(Class *&HeadClass){
     string temp;
     cout<<"Enter name of classes separated by space. Finish by entering Q"<<endl;
     while(true)
-    {       
+    {
         cin>>temp;
         if(temp=="Q") break;  //exit loop when user enters 'Q'.
     Class *newOne = new Class;
@@ -30,7 +30,7 @@ void createSeveralClasses(Class *&HeadClass){
     if(HeadClass==nullptr){
     HeadClass=newOne;
     }
-    else 
+    else
     {
     newOne->next=HeadClass;
     HeadClass=newOne;
@@ -89,9 +89,9 @@ void inputFromFile(Class *clas, string name){
     while(cur){
         if(clas->classname == name){
             clas->inputFromFile();
-            return; 
+            return;
         }
-        cur = cur->next; 
+        cur = cur->next;
     }
     cout << "Don't have any class having this name";
 }
@@ -99,7 +99,7 @@ void Class::inputFromFile(){
     string name;
     name = classname+".csv";
     ifstream fin;
-    fin.open(name); 
+    fin.open(name);
     if(!fin.is_open()){
         cout << "Error! ";
         return;
@@ -165,6 +165,28 @@ void Class::addStudents()
 }
 void User::addInformationStudent(){
     students = new Student;
-    
-    
+
+
 }
+
+void SchoolYear::createSemester(){
+    semester = new Semester[3];
+    cout << "Semester created!" << endl;
+    return;
+}
+
+void Semester::addCourse(){
+    Course* temp = new Course;
+    cout << "Please enter course ID:";
+    cin >> temp -> id;
+    cout << "Please enter course name: ";
+    cin >> course->name;
+    cout << "Please enter class name: ";
+    cout << "Please enter teacher's name:";
+    cout << "Please enter the number of credits: ";
+    cout << "Please enter the maximal number of students in the course: ";
+    cout << "Please enter the day the course will be performed in: ";
+    cout << "Please enter the session the course will be performed in: ";
+}
+
+
