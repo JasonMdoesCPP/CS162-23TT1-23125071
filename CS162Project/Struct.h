@@ -47,12 +47,13 @@ struct Course{
     StudentEnrolled *studentEnrolled;
     string id;
     string name;
+    string classname;
     string teacherName;
     int numberOfCredits;
     int maxSize = 50;
     char dow ;// day of week
     int session;
-    void inputStudent2CourseFromFile(Semester sem);
+    void inputStudent2CourseFromFile(Class headClass);
 };
 
 struct Semester{//3 only 
