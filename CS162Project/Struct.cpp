@@ -79,7 +79,10 @@ void User::login(){
             cur = cur->next;
         }
     }
-    return;
+    if(!user1&&!user2){
+        cout << " Wrong Username or Password" << endl;
+        login();
+    }
 }
 void inputFromFile(Class *clas, string name){
     Class*cur = clas;
@@ -105,7 +108,7 @@ void Class::inputFromFile(){
     getline(fin, line);
     string temp;
     while(getline(fin, temp, ',')){
-        if(temp == "endlish"){
+        if(temp == "endlist"){
             break;
         }
         Student *stu = new Student;
@@ -159,4 +162,9 @@ void Class::addStudents()
         stu->next = student;
         student = stu;
     }
+}
+void User::addInformationStudent(){
+    students = new Student;
+    
+    
 }

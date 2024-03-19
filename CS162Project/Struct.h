@@ -62,7 +62,7 @@ struct Semester{
 
 struct SchoolYear{
     SchoolYear* next;
-    Semester semester[3];
+    Semester *semester = new Semester[3];
     int yearStart;
     int yearEnd = yearStart+1;
 };
@@ -109,6 +109,8 @@ struct User{
     StaffMember *user2 = nullptr;
     Student *user1 = nullptr;
     void login();
+    void addInformationStudent();
+    void addInformationStaffMembers(); 
 };
 
 
