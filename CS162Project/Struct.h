@@ -53,7 +53,7 @@ struct Course{
     int maxSize = 50;
     char dow ;// day of week
     int session;
-    void inputStudent2CourseFromFile(Class headClass);
+    void inputStudent2CourseFromFile();
 };
 
 struct Semester{//3 only 
@@ -62,20 +62,22 @@ struct Semester{//3 only
     Course *course;
     void addCourse();
     void viewTheListOfCourses();
+    
 };
 
 struct SchoolYear{
     SchoolYear* next;
-    Semester semester[3];
+    Semester *semester = nullptr;
     int yearStart;
     int yearEnd = yearStart+1;
+    void createSemester();
 };
 
 struct Student{
     string passWord;
     string userName;
     Student *next = nullptr;
-    CourseOfStudent courses;
+    CourseOfStudent *courses;
     string type; //20CLC1�, class 20CLC11, class 20VP�
     int No;
     string studentId;
@@ -113,6 +115,9 @@ struct User{
     StaffMember *user2 = nullptr;
     Student *user1 = nullptr;
     void login();
+    void addInformationStudent();
+    void addInformationStaffMembers();
+
 };
 
 
@@ -121,7 +126,7 @@ struct User{
 // External functions 
 
 void inputFromFile(Class *clas, string name); 
-void inputCourseFromFile()
+void inputCourseFromFile();
 
 #endif // STRUCT_H_INCLUDED
 

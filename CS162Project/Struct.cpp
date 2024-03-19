@@ -164,49 +164,45 @@ void Class::addStudents()
     }
 }
 
- void Course::inputStudent2CourseFromFile(Class headclass){
-    string name1;
-    name1 = name+".csv";
-    ifstream fin;
-    fin.open(name1);
-    if(!fin.is_open()){
-        cout << "Error! ";
-        return;
-    }
-    string line;
-    getline(fin, line);
-    string temp;
-    while(getline(fin, temp, ',')){
-        if(temp == "endlist"){
-            break;
-        }
-        StudentEnrolled *stu = new StudentEnrolled;
-        stu->studentId = stoi(temp);
-        getline(fin, temp, ',');
-        stu->socialId = stoi(temp);
-        getline(fin, temp, ',');
-        stu->firstName = temp;
-        getline(fin, temp, ',');
-        stu->lastName = temp;
-        getline(fin, temp, ',');
-        stu->gender = temp;
-        getline(fin, temp, ',');
-        stu->dateOfBirth.day = stoi(temp);
-        getline(fin, temp, ',');
-        stu->dateOfBirth.month = stoi(temp);
-        getline(fin, temp, ',');
-        stu->dateOfBirth.year = stoi(temp);
-        getline(fin, temp);
-        stu=stu->next;
+//void Course::inputStudent2CourseFromFile(){
+//    string name1;
+//    name1 = name+".csv";
+//    ifstream fin;
+//    fin.open(name1);
+//    if(!fin.is_open()){
+//        cout << "Error! ";
+//        return;
+//    }
+//    string line;
+//    getline(fin, line);
+//    string temp;
+//    while(getline(fin, temp, ',')){
+//        if(temp == "endlist"){
+//            break;
+//        }
+//        StudentEnrolled *stu = new StudentEnrolled;
+//        stu->studentId = stoi(temp);
+//        getline(fin, temp, ',');
+//        stu->socialId = stoi(temp);
+//        getline(fin, temp, ',');
+//        stu->firstName = temp;
+//        getline(fin, temp, ',');
+//        stu->lastName = temp;
+//        getline(fin, temp, ',');
+//        stu->gender = temp;
+//        getline(fin, temp, ',');
+//        stu->dateOfBirth.day = stoi(temp);
+//        getline(fin, temp, ',');
+//        stu->dateOfBirth.month = stoi(temp);
+//        getline(fin, temp, ',');
+//        stu->dateOfBirth.year = stoi(temp);
+//        getline(fin, temp);
+//        stu=stu->next;
+//
+//    }
+//    fin.close();
+//}
 
-    }
-    fin.close();
-}
-void User::addInformationStudent(){
-    students = new Student;
-
-
-}
 
 void SchoolYear::createSemester(){
     semester = new Semester[3];
@@ -229,12 +225,59 @@ void Semester::addCourse(){
 }
 void Semester::viewTheListOfCourses()
 {
-    while (Semester->course != NULL)
+    while (course != NULL)
     {
-        cout << "Course ID: " << Semester->course.id << endl;
-        cout << "Course Name: " << Semester->course.name << endl;
-        cout << "Teacher Name: " << Semester->course.teacherName << endl;
-        cout << "Number of Credits " << Semester->course.numberOfCredits << endl;
-        Semester->course = Semester->course->next;
+        cout << "Course ID: " << course->id << endl;
+        cout << "Course Name: " << course->name << endl;
+        cout << "Teacher Name: " << course->teacherName << endl;
+        cout << "Number of Credits " << course->numberOfCredits << endl;
+        course = course->next;
     }
+}
+void User::addInformationStudent(){
+    ifstream fin;
+    fin.open("student.txt");
+    students = new Student;
+    Student* cur = students;
+    Student* before = students;
+    string temp;
+    while(fin>>temp){
+        if(temp ==  "end"){
+            break;
+        }
+        cur->passWord = temp;
+        fin >> cur->userName;
+        fin >> cur->studentId;
+        fin >> cur->socialId;
+        fin >> cur->firstName;
+        fin >> cur->lastName;
+        fin >> cur->gender;
+        cur->next = new Student;
+        before = cur;
+        cur = cur->next;
+    }
+    before->next = nullptr;
+    delete cur;
+}
+void User::addInformationStaffMembers(){
+    ifstream fin;
+    fin.open("staffMember.txt");
+    staffMembers = new StaffMember;
+    StaffMember* cur = staffMembers;
+    StaffMember* before = staffMembers;
+    string temp;
+    while(fin>>temp){
+        if(temp ==  "end"){
+            break;
+        }
+        cur->passWord = temp;
+        fin >> cur->userName;
+        fin >> cur->firstName;
+        fin >> cur->lastName;
+        cur->next = new StaffMember;
+        before = cur;
+        cur = cur->next;
+    }
+    before->next = nullptr;
+    delete cur;
 }
