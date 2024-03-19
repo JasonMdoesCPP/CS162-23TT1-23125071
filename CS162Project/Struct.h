@@ -60,6 +60,8 @@ struct Semester{//3 only
     int startDay;
     int endDay;
     Course *course;
+    void addCourse();
+    void viewTheListOfCourses();
 };
 
 struct SchoolYear{
