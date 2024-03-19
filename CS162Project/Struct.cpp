@@ -188,5 +188,15 @@ void Semester::addCourse(){
     cout << "Please enter the day the course will be performed in: ";
     cout << "Please enter the session the course will be performed in: ";
 }
-
+void Semester::viewTheListOfCourses()
+{
+    while (Semester->course != NULL)
+    {
+        cout << "Course ID: " << Semester->course.id << endl;
+        cout << "Course Name: " << Semester->course.name << endl;
+        cout << "Teacher Name: " << Semester->course.teacherName << endl;
+        cout << "Number of Credits " << Semester->course.numberOfCredits << endl;
+        Semester->course = Semester->course->next;
+    }
+}
 
