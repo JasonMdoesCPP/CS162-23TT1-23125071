@@ -209,8 +209,8 @@ void SchoolYear::createSemester(){
     cout << "Please choose the current semester (1, 2, 3): ";
     int cur;
     cin >> cur;
-    cout << "Please enter start date: "; cin >> semester[cur-1] -> startDay;
-    cout << "Please enter the end date: "; cin >> semester[cur-1] -> endDay;
+    cout << "Please enter start date: "; cin >> semester[cur-1].startDay;
+    cout << "Please enter the end date: "; cin >> semester[cur-1].endDay;
     cout << "Semester created!" << endl;
     return;
 }
