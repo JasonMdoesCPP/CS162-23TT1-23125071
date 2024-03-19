@@ -160,3 +160,42 @@ void Class::addStudents()
         student = stu;
     }
 }
+
+ void Course::inputStudent2CourseFromFile(Class headclass){
+    string name1;
+    name1 = name+".csv";
+    ifstream fin;
+    fin.open(name1); 
+    if(!fin.is_open()){
+        cout << "Error! ";
+        return;
+    }
+    string line;
+    getline(fin, line);
+    string temp;
+    while(getline(fin, temp, ',')){
+        if(temp == "endlist"){
+            break;
+        }
+        StudentEnrolled *stu = new StudentEnrolled;
+        stu->studentId = stoi(temp);
+        getline(fin, temp, ',');
+        stu->socialId = stoi(temp);
+        getline(fin, temp, ',');
+        stu->firstName = temp;
+        getline(fin, temp, ',');
+        stu->lastName = temp;
+        getline(fin, temp, ',');
+        stu->gender = temp;
+        getline(fin, temp, ',');
+        stu->dateOfBirth.day = stoi(temp);
+        getline(fin, temp, ',');
+        stu->dateOfBirth.month = stoi(temp);
+        getline(fin, temp, ',');
+        stu->dateOfBirth.year = stoi(temp);
+        getline(fin, temp);
+        stu=stu->next;
+
+    }
+    fin.close();
+}

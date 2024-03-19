@@ -52,9 +52,10 @@ struct Course{
     int maxSize = 50;
     char dow ;// day of week
     int session;
+    void inputStudent2CourseFromFile(Semester sem);
 };
 
-struct Semester{
+struct Semester{//3 only 
     int startDay;
     int endDay;
     Course *course;
@@ -117,7 +118,7 @@ struct User{
 // External functions 
 
 void inputFromFile(Class *clas, string name); 
-
+void inputCourseFromFile()
 
 #endif // STRUCT_H_INCLUDED
 
