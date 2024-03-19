@@ -163,13 +163,12 @@ void Class::addStudents()
         student = stu;
     }
 }
-<<<<<<< HEAD
 
  void Course::inputStudent2CourseFromFile(Class headclass){
     string name1;
     name1 = name+".csv";
     ifstream fin;
-    fin.open(name1); 
+    fin.open(name1);
     if(!fin.is_open()){
         cout << "Error! ";
         return;
@@ -203,7 +202,6 @@ void Class::addStudents()
     }
     fin.close();
 }
-=======
 void User::addInformationStudent(){
     students = new Student;
 
@@ -240,5 +238,3 @@ void Semester::viewTheListOfCourses()
         Semester->course = Semester->course->next;
     }
 }
-
->>>>>>> 0b77c7c1beadc9554db25872be5525e3ec00f27c
