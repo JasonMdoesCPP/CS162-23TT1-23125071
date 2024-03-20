@@ -119,15 +119,7 @@ struct User{
     void addInformationStaffMembers();
 
 };
-<<<<<<< HEAD
 // External functions 
-=======
-
-
-
-
-// External functions
->>>>>>> ed2f2c4c60bc9fc4a8137e3e358e8da6f69e45f3
 
 void inputFromFile(Class *clas, string name);
 void inputCourseFromFile();
