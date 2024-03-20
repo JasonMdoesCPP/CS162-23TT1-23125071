@@ -235,6 +235,14 @@ void Semester::addCourse(){
     cin.get();
     cout << "Please enter the session the course will be performed in: ";
     cin >> temp -> session;
+    if (course = nullptr) {
+        course = temp;
+        temp -> next = nullptr;
+    }
+    else {
+        temp -> next = course;
+        course = temp;
+    }
     cout << "Course created!" << endl;
 }
 void Semester::viewTheListOfCourses()

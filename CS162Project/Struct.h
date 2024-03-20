@@ -56,13 +56,13 @@ struct Course{
     void inputStudent2CourseFromFile();
 };
 
-struct Semester{//3 only 
+struct Semester{//3 only
     int startDay;
     int endDay;
-    Course *course;
+    Course *course = nullptr;
     void addCourse();
     void viewTheListOfCourses();
-    
+
 };
 
 struct SchoolYear{
@@ -119,9 +119,17 @@ struct User{
     void addInformationStaffMembers();
 
 };
+<<<<<<< HEAD
 // External functions 
+=======
 
-void inputFromFile(Class *clas, string name); 
+
+
+
+// External functions
+>>>>>>> ed2f2c4c60bc9fc4a8137e3e358e8da6f69e45f3
+
+void inputFromFile(Class *clas, string name);
 void inputCourseFromFile();
 
 #endif // STRUCT_H_INCLUDED
