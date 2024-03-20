@@ -51,7 +51,7 @@ struct Course{
     string teacherName;
     int numberOfCredits;
     int maxSize = 50;
-    char dow ;// day of week
+    char dow[1] ;// day of week
     int session;
     void inputStudent2CourseFromFile();
 };
@@ -119,10 +119,6 @@ struct User{
     void addInformationStaffMembers();
 
 };
-
-
-
-
 // External functions 
 
 void inputFromFile(Class *clas, string name); 
