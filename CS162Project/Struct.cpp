@@ -303,3 +303,21 @@ void User::addInformationStaffMembers(){
     before->next = nullptr;
     delete cur;
 }
+
+//This function use for updating the course of each student 
+//While input student into course
+Student* FindStudentinClass(Class *headClass,string Id)
+{
+    Class *currentClass=headClass;
+    Student *currentStudent;
+    while(currentClass!=nullptr)
+    {
+        currentStudent=currentClass->student;
+        while(currentStudent!=nullptr)
+        {
+            if(currentStudent->studentId==Id)
+            return currentStudent;
+        }
+    }
+    return nullptr;
+}
