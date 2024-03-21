@@ -247,13 +247,14 @@ void Semester::addCourse(){
 }
 void Semester::viewTheListOfCourses()
 {
-    while (course != NULL)
+    Course* cur = course;
+    while (cur != NULL)
     {
-        cout << "Course ID: " << course->id << endl;
-        cout << "Course Name: " << course->name << endl;
-        cout << "Teacher Name: " << course->teacherName << endl;
-        cout << "Number of Credits " << course->numberOfCredits << endl;
-        course = course->next;
+        cout << "Course ID: " << cur->id << endl;
+        cout << "Course Name: " << cur->name << endl;
+        cout << "Teacher Name: " << cur->teacherName << endl;
+        cout << "Number of Credits " << cur->numberOfCredits << endl;
+        cur = cur->next;
     }
 }
 void User::addInformationStudent(){
