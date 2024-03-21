@@ -218,7 +218,7 @@ void SchoolYear::createSemester(){
 void Semester::addCourse(){
     Course* temp = new Course;
     cout << "Please enter course ID:";
-    cin >> temp -> id;
+    cin >> temp -> ID;
     cout << "Please enter course name: ";
     cin >> temp->name;
     cout << "Please enter class name: ";
@@ -250,7 +250,7 @@ void Semester::viewTheListOfCourses()
     Course* cur = course;
     while (cur != NULL)
     {
-        cout << "Course ID: " << cur->id << endl;
+        cout << "Course ID: " << cur->ID << endl;
         cout << "Course Name: " << cur->name << endl;
         cout << "Teacher Name: " << cur->teacherName << endl;
         cout << "Number of Credits " << cur->numberOfCredits << endl;
@@ -305,7 +305,7 @@ void User::addInformationStaffMembers(){
     delete cur;
 }
 
-//This function use for updating the course of each student 
+//This function use for updating the course of each student
 //While input student into course
 Student* FindStudentinClass(Class *headClass,string Id)
 {
