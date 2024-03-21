@@ -45,7 +45,7 @@ struct CourseOfStudent{
 struct Course{
     Course* next;
     StudentEnrolled *studentEnrolled;
-    string id;
+    string ID;
     string name;
     string classname;
     string teacherName;
