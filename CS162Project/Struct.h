@@ -40,7 +40,7 @@ struct CourseOfStudent{
     int semester;
     Score score;
 };
-
+struct User;
 //Then he/she will upload a CSV file, containing a list of students enrolled in the course.
 struct Course{
     Course* next;
@@ -53,7 +53,7 @@ struct Course{
     int maxSize = 50;
     char dow[1] ;// day of week
     int session;
-    void inputStudent2CourseFromFile();
+    void inputStudent2CourseFromFile(User* Head);
 };
 
 struct Semester{//3 only
@@ -123,7 +123,8 @@ struct User{
 
 void inputFromFile(Class *clas, string name);
 void inputCourseFromFile();
-
+void UpdateCourse4StuInUser(string ID,User Head);
+Student* FindStudentinClass(Class *headClass,string Id)
 #endif // STRUCT_H_INCLUDED
 
 

@@ -164,7 +164,7 @@ void Class::addStudents()
     }
 }
 
-void Course::inputStudent2CourseFromFile(){
+void Course::inputStudent2CourseFromFile(User* Head){
    string name1;
    name1 = name+".csv";
    ifstream fin;
@@ -181,9 +181,10 @@ void Course::inputStudent2CourseFromFile(){
            break;
        }
        StudentEnrolled *stu = new StudentEnrolled;
-       stu->studentId = stoi(temp);
+       stu->studentId = temp;
+       UpdateCourse4StuInUser(temp,Head,name);
        getline(fin, temp, ',');
-       stu->socialId = stoi(temp);
+       stu->socialId = temp;
        getline(fin, temp, ',');
        stu->firstName = temp;
        getline(fin, temp, ',');
@@ -197,12 +198,26 @@ void Course::inputStudent2CourseFromFile(){
        getline(fin, temp, ',');
        stu->dateOfBirth.year = stoi(temp);
        getline(fin, temp);
-       stu=stu->next;
+       //Insert before Head
+       stu->next = studentEnrolled;
+       studentEnrolled=stu;
 
    }
    fin.close();
 }
-
+void UpdateCourse4StuInUser(string ID,User* Head_User)
+{
+    Student *cur=Head_User->students;
+    while(cur!=nullptr)
+    {
+        string temp=cur->studentId;
+        if(temp.compare(ID)==0)
+        {
+            CourseOfStudent *newCourse=new CourseOfStudent;
+            newCourse->name=
+        }
+    }
+}
 
 void SchoolYear::createSemester(){
     semester = new Semester[3];
@@ -307,7 +322,7 @@ void User::addInformationStaffMembers(){
 
 //This function use for updating the course of each student
 //While input student into course
-Student* FindStudentinClass(Class *headClass,string Id)
+Student* FindStudentinClass(Class *headClass,string ID)
 {
     Class *currentClass=headClass;
     Student *currentStudent;
@@ -316,7 +331,7 @@ Student* FindStudentinClass(Class *headClass,string Id)
         currentStudent=currentClass->student;
         while(currentStudent!=nullptr)
         {
-            if(currentStudent->studentId==Id)
+            if(currentStudent->studentId==ID)
             return currentStudent;
         }
     }
