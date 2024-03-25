@@ -95,7 +95,7 @@ struct StaffMember{
     StaffMember*next = nullptr;
     string firstName;
     string lastName;
-    SchoolYear* schoolYear;
+    SchoolYear* schoolYear=nullptr;
     void createSchoolYear();
 };
 
@@ -125,6 +125,7 @@ void inputFromFile(Class *clas, string name);
 void inputCourseFromFile();
 void UpdateCourse4StuInUser(string ID,User* &Head,string Course_name);
 Student* FindStudentinClass(Class *headClass,string ID);
+void createSeveralClasses(Class *&HeadClass);
 #endif // STRUCT_H_INCLUDED
 
 
