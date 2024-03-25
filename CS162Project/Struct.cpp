@@ -14,6 +14,7 @@ void StaffMember::createSchoolYear(){
     SchoolYear* newYear = new SchoolYear;
     newYear -> next = nullptr;
     newYear -> yearStart = data;
+    newYear -> yearEnd = data + 1;
     if (cur) cur -> next = newYear; else schoolYear = newYear;
 }
 
@@ -164,9 +165,9 @@ void Class::addStudents()
     }
 }
 
-void Course::inputStudent2CourseFromFile(User* Head){
+void Course::inputStudent2CourseFromFile(User* &Head){
    string name1;
-   name1 = name+".csv";
+   name1 = Course_name+".csv";
    ifstream fin;
    fin.open(name1);
    if(!fin.is_open()){
@@ -182,7 +183,7 @@ void Course::inputStudent2CourseFromFile(User* Head){
        }
        StudentEnrolled *stu = new StudentEnrolled;
        stu->studentId = temp;
-       UpdateCourse4StuInUser(temp,Head,name);
+       UpdateCourse4StuInUser(temp,Head,Course_name);
        getline(fin, temp, ',');
        stu->socialId = temp;
        getline(fin, temp, ',');
@@ -205,7 +206,7 @@ void Course::inputStudent2CourseFromFile(User* Head){
    }
    fin.close();
 }
-void UpdateCourse4StuInUser(string ID,User* Head_User)
+void UpdateCourse4StuInUser(string ID,User* &Head_User,string Course_name)
 {
     Student *cur=Head_User->students;
     while(cur!=nullptr)
@@ -214,7 +215,8 @@ void UpdateCourse4StuInUser(string ID,User* Head_User)
         if(temp.compare(ID)==0)
         {
             CourseOfStudent *newCourse=new CourseOfStudent;
-            newCourse->name=
+            newCourse->CourseOfStu_name=Course_name;
+            return;
         }
     }
 }
@@ -233,9 +235,9 @@ void SchoolYear::createSemester(){
 void Semester::addCourse(){
     Course* temp = new Course;
     cout << "Please enter course ID:";
-    cin >> temp -> ID;
+    cin >> temp -> Course_ID;
     cout << "Please enter course name: ";
-    cin >> temp->name;
+    cin >> temp->Course_name;
     cout << "Please enter class name: ";
     cin >> temp -> classname;
     cout << "Please enter teacher's name:";
@@ -265,8 +267,8 @@ void Semester::viewTheListOfCourses()
     Course* cur = course;
     while (cur != NULL)
     {
-        cout << "Course ID: " << cur->ID << endl;
-        cout << "Course Name: " << cur->name << endl;
+        cout << "Course ID: " << cur->Course_name << endl;
+        cout << "Course Name: " << cur->Course_name << endl;
         cout << "Teacher Name: " << cur->teacherName << endl;
         cout << "Number of Credits " << cur->numberOfCredits << endl;
         cur = cur->next;

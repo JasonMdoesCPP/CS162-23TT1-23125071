@@ -36,7 +36,7 @@ struct StudentEnrolled{
 
 struct CourseOfStudent{
     CourseOfStudent*next;
-    string name; // View a list of his/her courses. He/she will study these courses in this semester.
+    string CourseOfStu_name; // View a list of his/her courses. He/she will study these courses in this semester.
     int semester;
     Score score;
 };
@@ -45,15 +45,15 @@ struct User;
 struct Course{
     Course* next;
     StudentEnrolled *studentEnrolled;
-    string ID;
-    string name;
+    string Course_ID;
+    string Course_name;
     string classname;
     string teacherName;
     int numberOfCredits;
     int maxSize = 50;
     char dow[1] ;// day of week
     int session;
-    void inputStudent2CourseFromFile(User* Head);
+    void inputStudent2CourseFromFile(User* &Head);
 };
 
 struct Semester{//3 only
@@ -69,7 +69,7 @@ struct SchoolYear{
     SchoolYear* next;
     Semester *semester = nullptr;
     int yearStart;
-    int yearEnd = yearStart+1;
+    int yearEnd;
     void createSemester();
 };
 
@@ -123,8 +123,8 @@ struct User{
 
 void inputFromFile(Class *clas, string name);
 void inputCourseFromFile();
-void UpdateCourse4StuInUser(string ID,User Head);
-Student* FindStudentinClass(Class *headClass,string Id)
+void UpdateCourse4StuInUser(string ID,User* &Head,string Course_name);
+Student* FindStudentinClass(Class *headClass,string ID);
 #endif // STRUCT_H_INCLUDED
 
 
