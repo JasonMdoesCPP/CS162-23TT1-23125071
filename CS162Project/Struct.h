@@ -127,7 +127,7 @@ void inputCourseFromFile();
 void UpdateCourse4StuInUser(string ID,User* &Head,string Course_name);
 Student* FindStudentinClass(Class *headClass,string ID);
 void createSeveralClasses(Class *&HeadClass);
-Course findCourseinSemester(string name,Semester *s);
+Course* findCourseinSemester(string Course_ID,Semester *s);
 #endif // STRUCT_H_INCLUDED
 
 
