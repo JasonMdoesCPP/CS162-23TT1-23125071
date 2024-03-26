@@ -21,21 +21,18 @@ void StaffMember::createSchoolYear(){
 void createSeveralClasses(Class *&HeadClass){
     string temp;
     cout<<"Enter name of classes separated by space. Finish by entering Q"<<endl;
-    while(true)
-    {
+    while(true){
         cin>>temp;
         if(temp=="Q") break;  //exit loop when user enters 'Q'.
-    Class *newOne = new Class;
-    newOne->classname = temp;
-    newOne->next=nullptr;
-    if(HeadClass==nullptr){
-    HeadClass=newOne;
-    }
-    else
-    {
-    newOne->next=HeadClass;
-    HeadClass=newOne;
-    }
+        Class *newOne = new Class;
+        newOne->classname = temp;
+        newOne->next=nullptr;
+        if(HeadClass==nullptr){
+            HeadClass=newOne;
+        }else{
+            newOne->next=HeadClass;
+            HeadClass=newOne;
+        }
     }
 }
 
@@ -252,7 +249,7 @@ void Semester::addCourse(){
     cin.get();
     cout << "Please enter the session the course will be performed in: ";
     cin >> temp -> session;
-    if (course = nullptr) {
+    if (course == nullptr) {
         course = temp;
         temp -> next = nullptr;
     }
@@ -338,4 +335,53 @@ Student* FindStudentinClass(Class *headClass,string ID)
         }
     }
     return nullptr;
+}
+
+void Course::updateStudentResult(User user){
+    StudentEnrolled* cur1 = studentEnrolled;
+    Student* cur2;
+    while(cur1){
+        cur2 = user.students;
+        while(cur2){
+            if(cur1->studentId == cur2->studentId){
+                CourseOfStudent* cur3 = cur2->courses;
+                while(cur3){
+                    if(cur3->CourseOfStu_name == Course_name){
+                        cur3->score.finalMark = cur1->score.finalMark;
+                        cur3->score.midtermMark =cur1->score.midtermMark;
+                        cur3->score.otherMark =cur1->score.otherMark;
+                        cur3->score.totalMark = cur1->score.totalMark;
+                        break;
+                    }
+                    cur3 = cur3->next;
+                }
+                break;
+            }
+            cur2 = cur2->next;
+        }
+        cur1 = cur1->next;
+    }
+}
+
+void User::deleteUser(){
+    while(students){
+        Student *temp=students;
+        students =  students->next;
+        delete temp;
+    }
+    while(staffMembers){
+        StaffMember *temp = staffMembers;
+        staffMembers = staffMembers->next;
+        delete temp;
+    }
+    students = nullptr;
+    staffMembers = nullptr;
+}
+
+void deleteClass(Class *&clas){
+    while(clas){
+        Class* temp = clas;
+        clas = clas->next; 
+    }
+    clas = nullptr;
 }
