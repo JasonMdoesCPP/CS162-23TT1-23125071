@@ -54,6 +54,7 @@ struct Course{
     char dow[1] ;// day of week
     int session;
     void inputStudent2CourseFromFile(User* &Head);
+    void updateCourse();
 };
 
 struct Semester{//3 only
@@ -126,6 +127,7 @@ void inputCourseFromFile();
 void UpdateCourse4StuInUser(string ID,User* &Head,string Course_name);
 Student* FindStudentinClass(Class *headClass,string ID);
 void createSeveralClasses(Class *&HeadClass);
+Course findCourseinSemester(string name,Semester *s);
 #endif // STRUCT_H_INCLUDED
 
 

@@ -339,3 +339,35 @@ Student* FindStudentinClass(Class *headClass,string ID)
     }
     return nullptr;
 }
+Course* findCourseinSemester(string Course_ID,Semester *s)
+{
+    Course *cur=s->course;
+    while(cur)
+    {
+        if(cur->Course_ID==Course_ID) return cur;
+        else cur=cur->next;
+    }
+    return nullptr;
+
+}
+void Course::updateCourse()
+{
+    cout << "Please enter course ID:";
+    cin >> Course_ID;
+    cout << "Please enter course name: ";
+    cin >> Course_name;
+    cout << "Please enter class name: ";
+    cin >> classname;
+    cout << "Please enter teacher's name:";
+    cin >> teacherName;
+    cout << "Please enter the number of credits: ";
+    cin >> numberOfCredits;
+    cout << "Please enter the maximal number of students in the course: ";
+    cin >> maxSize;
+    cout << "Please enter the day the course will be performed in: ";
+    cin.get();
+    cin.get(dow, 1, '\0');
+    cin.get();
+    cout << "Please enter the session the course will be performed in: ";
+    cin >> session;
+}
