@@ -39,6 +39,55 @@ void createSeveralClasses(Class *&HeadClass){
     }
 }
 
+enum IN { 
+	// 13 is ASCII for carriage 
+	// return 
+	IN_BACK = 8, 
+	IN_RET = 13 
+}; 
+
+// Function that accepts the password 
+std::string takePasswdFromUser( 
+	char sp = '*') 
+{ 
+	// Stores the password 
+	string passwd = ""; 
+	char ch_ipt; 
+
+	// Until condition is true 
+	while (true) { 
+
+		ch_ipt = getch(); 
+
+		// if the ch_ipt 
+		if (ch_ipt == 13) { 
+			cout << endl; 
+			return passwd; 
+		} 
+		else if (ch_ipt == 8 
+				&& passwd.length() != 0) { 
+			passwd.pop_back(); 
+
+			// Cout statement is very 
+			// important as it will erase 
+			// previously printed character 
+			cout << "\b \b"; 
+
+			continue; 
+		} 
+
+		// Without using this, program 
+		// will crash as \b can't be 
+		// print in beginning of line 
+		else if (ch_ipt == 8 
+				&& passwd.length() == 0) { 
+			continue; 
+		} 
+
+		passwd.push_back(ch_ipt); 
+		cout << sp; 
+	} 
+} 
 
 void User::login(){
     cout << "1: Student" << endl;
@@ -57,8 +106,7 @@ void User::login(){
     cout << "Username: ";
     cin.ignore();
     getline(cin, x);
-    cout << "Password: ";
-    getline(cin, y);
+    y=takePasswdFromUser();
     if(ca == 1){
         Student* cur = students;
         while(cur){
@@ -370,4 +418,35 @@ void Course::updateCourse()
     cin.get();
     cout << "Please enter the session the course will be performed in: ";
     cin >> session;
+}
+void Course::addStudent()
+{
+    StudentEnrolled *stu = new StudentEnrolled;
+        cout<<"Enter student No:";
+        cin>>stu->No;
+        cout << "Student Id: ";
+        cin >> stu->studentId;
+        cout << "Social id: ";
+        cin >> stu->socialId;
+        cout << "First name: ";
+        cin >> stu->firstName;
+        cout << "Last name: ";
+        cin >> stu->lastName;
+        cout << "Gender: (male/female)";
+        cin >> stu->gender;
+        cout << "Day of birth(dd mm yyyy):";
+        cin >> stu->dateOfBirth.day;
+        cin >> stu -> dateOfBirth.month;
+        cin >> stu->dateOfBirth.year;
+       //Insert before Head
+       stu->next = studentEnrolled;
+       studentEnrolled=stu;
+}
+void Course::removeStudent()
+{
+    StudentEnrolled *stu=studentEnrolled;
+    while(stu)
+    {
+        
+    }
 }
