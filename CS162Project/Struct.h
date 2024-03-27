@@ -57,6 +57,7 @@ struct Course{
     void updateCourse();
     void addStudent();
     void removeStudent();
+    void exportStudent(User* Head, ofstream fout);
     void updateStudentResult(User user);
 };
 
@@ -123,7 +124,7 @@ struct User{
     void addInformationStaffMembers();
     void deleteUser();
 };
-// External functions 
+// External functions
 
 void inputFromFile(Class *clas, string name);
 void inputCourseFromFile();

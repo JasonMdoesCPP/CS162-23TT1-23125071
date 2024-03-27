@@ -54,7 +54,7 @@ void User::login(){
     cin.ignore();
     getline(cin, x);
     cout << "Password: ";
-    getline(cin, y); 
+    getline(cin, y);
     if(ca == 1){
         Student* cur = students;
         while(cur){
@@ -395,7 +395,7 @@ void Course::removeStudent()
     StudentEnrolled *stu=studentEnrolled;
     while(stu)
     {
-        
+
     }
 }
 
@@ -421,6 +421,30 @@ void deleteClass(Class *&clas){
         clas = clas->next;
     }
     clas = nullptr;
+}
+
+void Course::exportStudent(User* Head, ofstream fout){
+    fout.open("Students.csv");
+    if (!fout) {
+        cout << "Error!";
+        return;
+    }
+    StudentEnrolled* cur = studentEnrolled;
+    while (cur!=nullptr){
+        fout << cur->type << ",";
+        fout << cur->no << ",";
+        fout << cur->studentId << ",";
+        fout << cur->socialId << ",";
+        fout << cur->firstName << ",";
+        fout << cur->lastName << ",";
+        fout << cur-> gender << ",";
+        fout << cur->dateOfBirth.day << ",";
+        fout << cur->dateOfBirth.month << ",";
+        fout << cur->dateOfBirth.year << ",";
+        fout << cur->score << ",";
+        fout << endl;
+        cur = cur -> next;
+    }
 }
 
 void Course::updateStudentResult(User user){
