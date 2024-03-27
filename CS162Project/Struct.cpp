@@ -36,56 +36,6 @@ void createSeveralClasses(Class *&HeadClass){
     }
 }
 
-enum IN { 
-	// 13 is ASCII for carriage 
-	// return 
-	IN_BACK = 8, 
-	IN_RET = 13 
-}; 
-
-// Function that accepts the password 
-std::string takePasswdFromUser( 
-	char sp = '*') 
-{ 
-	// Stores the password 
-	string passwd = ""; 
-	char ch_ipt; 
-
-	// Until condition is true 
-	while (true) { 
-
-		ch_ipt = getch(); 
-
-		// if the ch_ipt 
-		if (ch_ipt == 13) { 
-			cout << endl; 
-			return passwd; 
-		} 
-		else if (ch_ipt == 8 
-				&& passwd.length() != 0) { 
-			passwd.pop_back(); 
-
-			// Cout statement is very 
-			// important as it will erase 
-			// previously printed character 
-			cout << "\b \b"; 
-
-			continue; 
-		} 
-
-		// Without using this, program 
-		// will crash as \b can't be 
-		// print in beginning of line 
-		else if (ch_ipt == 8 
-				&& passwd.length() == 0) { 
-			continue; 
-		} 
-
-		passwd.push_back(ch_ipt); 
-		cout << sp; 
-	} 
-} 
-
 void User::login(){
     cout << "1: Student" << endl;
     cout << "2: Staff member" << endl;
@@ -103,7 +53,8 @@ void User::login(){
     cout << "Username: ";
     cin.ignore();
     getline(cin, x);
-    y=takePasswdFromUser();
+    cout << "Password: ";
+    getline(cin, y); 
     if(ca == 1){
         Student* cur = students;
         while(cur){
@@ -445,5 +396,55 @@ void Course::removeStudent()
     while(stu)
     {
         
+    }
+}
+
+
+void User::deleteUser(){
+    while(students){
+        Student *temp=students;
+        students =  students->next;
+        delete temp;
+    }
+    while(staffMembers){
+        StaffMember *temp = staffMembers;
+        staffMembers = staffMembers->next;
+        delete temp;
+    }
+    students = nullptr;
+    staffMembers = nullptr;
+}
+
+void deleteClass(Class *&clas){
+    while(clas){
+        Class* temp = clas;
+        clas = clas->next;
+    }
+    clas = nullptr;
+}
+
+void Course::updateStudentResult(User user){
+    StudentEnrolled* cur1 = studentEnrolled;
+    Student* cur2;
+    while(cur1){
+        cur2 = user.students;
+        while(cur2){
+            if(cur1->studentId == cur2->studentId){
+                CourseOfStudent* cur3 = cur2->courses;
+                while(cur3){
+                    if(cur3->CourseOfStu_name == Course_name){
+                        cur3->score.finalMark = cur1->score.finalMark;
+                        cur3->score.midtermMark =cur1->score.midtermMark;
+                        cur3->score.otherMark =cur1->score.otherMark;
+                        cur3->score.totalMark = cur1->score.totalMark;
+                        break;
+                    }
+                    cur3 = cur3->next;
+                }
+                break;
+            }
+            cur2 = cur2->next;
+        }
+        cur1 = cur1->next;
     }
 }

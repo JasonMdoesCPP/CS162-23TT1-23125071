@@ -1,6 +1,6 @@
 #ifndef STRUCT_H_INCLUDED
 #define STRUCT_H_INCLUDED
-#include <conio.h> 
+
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -57,6 +57,7 @@ struct Course{
     void updateCourse();
     void addStudent();
     void removeStudent();
+    void updateStudentResult(User user);
 };
 
 struct Semester{//3 only
@@ -120,7 +121,7 @@ struct User{
     void login();
     void addInformationStudent();
     void addInformationStaffMembers();
-
+    void deleteUser();
 };
 // External functions 
 
@@ -130,6 +131,7 @@ void UpdateCourse4StuInUser(string ID,User* &Head,string Course_name);
 Student* FindStudentinClass(Class *headClass,string ID);
 void createSeveralClasses(Class *&HeadClass);
 Course* findCourseinSemester(string Course_ID,Semester *s);
+void deleteClass(Class *&clas);
 #endif // STRUCT_H_INCLUDED
 
 
