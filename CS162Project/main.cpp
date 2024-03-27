@@ -1,40 +1,37 @@
-#include <iostream>
-#include "Struct.h"
-#include <string>
-using namespace std;
-
+#include"Struct.h"
 int main()
 {
-    User user;
-    Class *HeadClass = nullptr;
-    user.addInformationStudent();
-    user.addInformationStaffMembers();
-    user.login();
-    if(user.user1){
-        Student* stu = user.user1; 
-    }
-    if(user.user2){
-        StaffMember * staf = user.user2;
-        cout << "1. Create a school year " << endl;
-        cout << "2. Create several classes for 1st-year students" << endl;
-        cout << "0. Ending program!" << endl;
-        int ca;
-        cin >> ca;
-        while(ca){
-            if(ca == 1){
-                staf->createSchoolYear(); 
-            }else if(ca == 2){
-                createSeveralClasses(HeadClass);
-            }
-            cout << "1. Create a school year (2020-2021, for example)" << endl;
-            cout << "2. Create several classes for 1st-year students" << endl;
-            cout << "0. Ending program!" << endl;
-            cin >> ca;
-        }
-    }
-    
-    user.deleteUser();
-    cout << HeadClass->next->next->classname; 
-    deleteClass(HeadClass);
-    
+	User *Head_User = new User;
+	Class* Head_Class = nullptr;
+	if (Head_User->user1) cout << "Sth wrong in user 1";
+	Head_User->addInformationStaffMembers();
+	Head_User->addInformationStudent();
+	Head_User->login();
+	if (Head_User->user1)
+	{
+
+	}
+	if (Head_User->user2)
+	{
+
+		int choice = 0;
+		while (choice != 6)
+		{
+			cout << "Enter choices:";
+			cout << " 1.Create school year." << endl;
+			cout << "2.Create several Classes." << endl;
+			cin >> choice;
+			switch (choice)
+			{
+			case 1:
+				Head_User->user2->createSchoolYear();
+				break;
+
+			case 2:
+				createSeveralClasses(Head_Class);
+				break;
+			}
+		}
+		cout << "fin";
+	}
 }
