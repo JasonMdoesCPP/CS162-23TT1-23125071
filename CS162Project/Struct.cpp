@@ -432,7 +432,7 @@ void Course::exportStudent(User* Head, ofstream fout){
     StudentEnrolled* cur = studentEnrolled;
     while (cur!=nullptr){
         fout << cur->type << ",";
-        fout << cur->no << ",";
+        fout << cur->No << ",";
         fout << cur->studentId << ",";
         fout << cur->socialId << ",";
         fout << cur->firstName << ",";
@@ -441,7 +441,10 @@ void Course::exportStudent(User* Head, ofstream fout){
         fout << cur->dateOfBirth.day << ",";
         fout << cur->dateOfBirth.month << ",";
         fout << cur->dateOfBirth.year << ",";
-        fout << cur->score << ",";
+        fout << cur->score.midtermMark<< ",";
+        fout << cur->score.finalMark<< ",";
+        fout << cur->score.otherMark<< ",";
+        fout << cur->score.totalMark<< ",";
         fout << endl;
         cur = cur -> next;
     }
