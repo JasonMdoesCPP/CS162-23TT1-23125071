@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1711526806 source:c:\users\administrator\source\repos\cs162-23tt1-23125071\cs162project\main.cpp
+	"Struct.h"
+
+1711551211 c:\users\administrator\source\repos\cs162-23tt1-23125071\cs162project\struct.h
+	<string>
+	<fstream>
+	<iostream>
+
