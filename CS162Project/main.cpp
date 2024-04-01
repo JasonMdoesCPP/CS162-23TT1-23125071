@@ -1,5 +1,5 @@
 #include"Struct.h"
-using namespace std; 
+using namespace std;
 int main()
 {
     User user;
@@ -14,6 +14,7 @@ int main()
         StaffMember * staf = user.user2;
         cout << "1. Create a school year " << endl;
         cout << "2. Create several classes for 1st-year students" << endl;
+        cout << "3. Add new 1st year students to 1st-year classes." << endl;
         cout << "0. Ending program!" << endl;
         int ca;
         cin >> ca;
@@ -22,14 +23,18 @@ int main()
                 staf->createSchoolYear();
             }else if(ca == 2){
                 createSeveralClasses(HeadClass);
-            }
+            }else if(ca == 3){
+                addStudentToClass(HeadClass, user.students);
+            }else
+                cout << "Enter wrong number!"  << endl;
+            
             cout << "1. Create a school year (2020-2021, for example)" << endl;
             cout << "2. Create several classes for 1st-year students" << endl;
+            cout << "3. Add new 1st year students to 1st-year classes." << endl;
             cout << "0. Ending program!" << endl;
             cin >> ca;
         }
     }
-    
     user.deleteUser();
     deleteClass(HeadClass);
     
