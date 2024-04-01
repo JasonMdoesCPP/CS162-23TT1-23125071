@@ -1,6 +1,2 @@
-.DS_Store
 bin
 obj
-*.cbp
-*.depend
-*.layout
