@@ -37,5 +37,5 @@ int main()
     }
     user.deleteUser();
     deleteClass(HeadClass);
-    
+    cout << "aaa";
 }
