@@ -15,6 +15,7 @@ int main()
         cout << "1. Create a school year " << endl;
         cout << "2. Create several classes for 1st-year students" << endl;
         cout << "3. Add new 1st year students to 1st-year classes." << endl;
+        cout << "4. Adding student to class from csv file" << endl;
         cout << "0. Ending program!" << endl;
         int ca;
         cin >> ca;
@@ -25,12 +26,15 @@ int main()
                 createSeveralClasses(HeadClass);
             }else if(ca == 3){
                 addStudentToClass(HeadClass, user.students);
+            }else if(ca == 4){
+                addStudentToClassFromCsvFile(HeadClass, user.students); 
             }else
                 cout << "Enter wrong number!"  << endl;
             
             cout << "1. Create a school year (2020-2021, for example)" << endl;
             cout << "2. Create several classes for 1st-year students" << endl;
             cout << "3. Add new 1st year students to 1st-year classes." << endl;
+            cout << "4. Adding student to class from csv file" << endl;
             cout << "0. Ending program!" << endl;
             cin >> ca;
         }

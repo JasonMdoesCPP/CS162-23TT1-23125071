@@ -53,7 +53,7 @@ struct Class{
     Class* next;
     string className; // 23tt1, 223tt2
     StudentEnrolled* studentEnroll = nullptr;  // include file has list of studentID(check if there are exist or not)
-    Score classScore; // create function caculates the classScore
+    Score *classScore = nullptr;  // create function caculates the classScore
     void addStudents(Student* stu);
 };
 struct Student{
@@ -92,7 +92,7 @@ struct User{
     void deleteUser();
 };
 
-
+void addStudentToClassFromCsvFile(Class*clas, Student*stu); 
 void createSeveralClasses(Class *&HeadClass);
 void deleteClass(Class *&clas);
 void addStudentToClass(Class* clas, Student* stu);

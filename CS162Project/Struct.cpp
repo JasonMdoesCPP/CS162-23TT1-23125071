@@ -127,8 +127,15 @@ void User::deleteUser(){
 void deleteClass(Class *&clas){
     while(clas){
         Class* temp = clas;
-        delete temp;
         clas = clas->next;
+        StudentEnrolled* cur = temp->studentEnroll;
+        while(cur){
+            StudentEnrolled* temp1 = cur;
+            cur = cur->next;
+            delete temp1;
+        }
+        temp->studentEnroll = nullptr;
+        delete temp;
     }
     clas = nullptr;
 }
@@ -165,7 +172,51 @@ void addStudentToClass(Class* clas, Student* stu){
     else
         cout << "The class doesn't exist " << endl;
 }
-
+void addStudentToClassFromCsvFile(Class*clas, Student*stu){
+    string className;
+    cout << "Enter class name: ";
+    cin >> className;
+   
+    bool check = false;
+    ifstream fin;
+    Class*cur = clas;
+    while(cur){
+        if(cur->className == className){
+            check = true;
+            break;
+        }
+        cur = cur->next;
+    }
+    className += ".csv";
+    fin.open(className);
+    if(!fin.is_open()){
+        cout << "Doesn't have this class' csv file";
+        return;
+    }
+    if(check){
+        while(!fin.eof()){
+            string temp;
+            getline(fin, temp,',');
+            if(temp == "eof"){
+                break; 
+            }
+            Student* cur1 = stu;
+            while(cur1){
+                if(cur1->studentId == temp){
+                    StudentEnrolled* temp2 = new StudentEnrolled;
+                    temp2->studentId = temp;
+                    temp2->next = clas->studentEnroll;
+                    clas->studentEnroll = temp2;
+                    cur1->className = cur->className;
+                    break;
+                }
+                cur1 = cur1->next;
+            }
+        }
+    }
+    else
+        cout << "The class doesn't exist " << endl;
+}
 void Class::addStudents(Student* stu)
 {
     cout << "Only need the Id of students for adding"  << endl;
