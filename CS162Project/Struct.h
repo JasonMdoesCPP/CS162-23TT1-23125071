@@ -26,9 +26,10 @@ struct StudentEnrolled{
     StudentEnrolled* next;
     string studentId;
 };
+struct User;
 struct Course{
     Course* next;
-    StudentEnrolled *studentEnrolled;
+    StudentEnrolled *studentEnrolled=nullptr;
     string Course_ID;
     string Course_name;
     string classname;
@@ -37,11 +38,13 @@ struct Course{
     int maxSize = 50;
     char dow[1] ;// day of week
     int session;
+    void inputStudent2CourseFromFile(User &Head_User){};
 };
 struct Semester{
     Course *course = nullptr;
     int startDay;
     int endDay;
+    void addCourse();
 };
 struct SchoolYear{
     SchoolYear* next;
@@ -92,8 +95,9 @@ struct User{
     void deleteUser();
 };
 
-void addStudentToClassFromCsvFile(Class*clas, Student*stu); 
+void addStudentToClassFromCsvFile(Class*clas, Student*stu);
 void createSeveralClasses(Class *&HeadClass);
 void deleteClass(Class *&clas);
 void addStudentToClass(Class* clas, Student* stu);
+void UpdateCoursetoUser(string StudentID,string CourseName,string newCourseName, User &Head_User);
 #endif // STRUCT_H_INCLUDED

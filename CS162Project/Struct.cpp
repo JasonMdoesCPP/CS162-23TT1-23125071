@@ -176,7 +176,7 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
     string className;
     cout << "Enter class name: ";
     cin >> className;
-   
+
     bool check = false;
     ifstream fin;
     Class*cur = clas;
@@ -198,7 +198,7 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
             string temp;
             getline(fin, temp,',');
             if(temp == "eof"){
-                break; 
+                break;
             }
             Student* cur1 = stu;
             while(cur1){
@@ -255,3 +255,98 @@ void Class::addStudents(Student* stu)
         }
     }
 }
+void Semester::addCourse() {
+    Course* temp = new Course;
+    cout << "Please enter course ID:";
+    cin >> temp->Course_ID;
+    cout << "Please enter course name: ";
+    cin >> temp->Course_name;
+    cout << "Please enter class name: ";
+    cin >> temp->classname;
+    cout << "Please enter teacher's name:";
+    cin >> temp->teacherName;
+    cout << "Please enter the number of credits: ";
+    cin >> temp->numberOfCredits;
+    cout << "Please enter the maximal number of students in the course: ";
+    cin >> temp->maxSize;
+    cout << "Please enter the day the course will be performed in: (M: Monday, T: Tuesday,...., S: Saturday)";
+    cin.get();
+    cin.get(temp->dow, 1, '\0');
+    cin.get();
+    cout << "Please enter the session the course will be performed in: ";
+    cin >> temp->session;
+    if (course == nullptr) {
+        course = temp;
+        temp->next = nullptr;
+    }
+    else {
+        temp->next = course;
+        course = temp;
+    }
+    cout << "Course created!" << endl;
+}
+void UpdateCoursetoUser(string StudentID,string CourseName, string newCourseName, User &Head_User)
+{
+    Student *cur_Student=Head_User.students;
+    while(cur_Student)
+    {
+        if(cur_Student->studentId==StudentID)
+        {
+
+            Score *cur_Score=cur_Student->score;
+            bool flag=false;
+                while(cur_Score)
+                {
+                    if(cur_Score->courseName==CourseName)
+                    {
+                        cur_Score->courseName=newCourseName;
+                        flag=true;
+                    }
+                    cur_Score=cur_Score->next;
+                }
+                if(flag==false)
+                {
+                    cur_Score=cur_Student->score;
+                    while(cur_Score->next!=nullptr) cur_Score=cur_Score->next;
+                    cur_Score->next=new Score;
+                    cur_Score=cur_Score->next;
+                    cur_Score->courseName=newCourseName;
+                    cur_Score->next=nullptr;
+                    return;
+                }
+        }
+        cur_Student=cur_Student->next;
+    }
+}
+void Course::inputStudent2CourseFromFile(User &Head_User)
+{
+    string name1
+    name1=Course_name+".csv";
+    ifstream fin;
+    fin.open(name1);
+    if (!fin.is_open()) {
+        cout << "Error! ";
+        return;
+    }
+    string line;
+    getline(fin, line);
+    string temp;
+    while (getline(fin, temp, ',')) {
+        if (temp == "endlist") {
+            break;
+        }
+        StudentEnrolled* stu = new StudentEnrolled;
+        stu->studentId = temp;
+//Get class of the student
+        getline(fin, temp, ',');
+        string classname;
+	classname = temp;
+       	UpdateCoursetoUser(stu->studentId,Course_name,Course_name,Head_User);
+        getline(fin, temp);
+        //Insert before Head
+        stu->next = studentEnrolled;
+        studentEnrolled = stu;
+    }
+    fin.close();
+}
+
