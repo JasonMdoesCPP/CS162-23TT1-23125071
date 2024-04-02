@@ -320,7 +320,7 @@ void UpdateCoursetoUser(string StudentID,string CourseName, string newCourseName
 }
 void Course::inputStudent2CourseFromFile(User &Head_User)
 {
-    string name1
+    string name1;
     name1=Course_name+".csv";
     ifstream fin;
     fin.open(name1);

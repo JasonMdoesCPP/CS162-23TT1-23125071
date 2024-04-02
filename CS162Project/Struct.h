@@ -38,7 +38,7 @@ struct Course{
     int maxSize = 50;
     char dow[1] ;// day of week
     int session;
-    void inputStudent2CourseFromFile(User &Head_User){};
+    void inputStudent2CourseFromFile(User &Head_User);
 };
 struct Semester{
     Course *course = nullptr;
