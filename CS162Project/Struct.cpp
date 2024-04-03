@@ -209,9 +209,13 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
         return;
     }
     if(check){
+        string line;
+        getline(fin, line); // Read and discard header line
         while(!fin.eof()){
+            bool flag = false;
             string temp;
             getline(fin, temp,',');
+            fin.ignore();
             if(temp == "eof"){
                 break;
             }
@@ -223,10 +227,12 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
                     temp2->next = clas->studentEnroll;
                     clas->studentEnroll = temp2;
                     cur1->className = cur->className;
+                    flag = true;
                     break;
                 }
                 cur1 = cur1->next;
             }
+            if (flag == false) cout << "Student with ID " << temp << " have not been added on the student list!"<<endl;
         }
     }
     else
@@ -286,7 +292,7 @@ void Semester::addCourse() {
     cin >> temp->numberOfCredits;
     cout << "Please enter the maximal number of students in the course: ";
     cin >> temp->maxSize;
-    cout << "Please enter the day the course will be performed in: (M: Monday, T: Tuesday, ..., S: Saturday)";
+    cout << "Please enter the day the course will be performed in (M/T/W/Th/F/Sa/Su):";
     cin.ignore();
     cin.get(temp->dow, 2, '\n'); // Increase size to accommodate the null terminator
     cout << "Please enter the session the course will be performed in: ";
@@ -301,44 +307,88 @@ void Semester::addCourse() {
     }
     cout << "Course created!" << endl;
 }
-void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, User &Head_User)
+//1 for adding, 2 for deleting
+void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, User &Head_User,int choice)
 {
     Student *cur_Student=Head_User.students;
-    while(cur_Student)
-    {
-        if(cur_Student->studentId==StudentID)
+    switch (choice)
         {
+    case 1:
+        while (cur_Student)
+        {
+            if (cur_Student->studentId == StudentID)
+            {
 
-            Score *cur_Score=cur_Student->score;
-             if (cur_Score == nullptr)
+                Score* cur_Score = cur_Student->score;
+                if (cur_Score == nullptr)
                 {
                     cur_Student->score = new Score;
                     cur_Student->score->Course_ID = newCourseID; // Update to newCourseID instead of CourseID
                     cur_Student->score->next = nullptr;
                     return;
                 }
-            while (cur_Score)
+                while (cur_Score)
+                {
+                    if (cur_Score->Course_ID == CourseID)
+                    {
+                        cur_Score->Course_ID = newCourseID;
+                        return;
+                    }
+                    if (cur_Score->next == nullptr)
+                    {
+                        cur_Score->next = new Score;
+                        cur_Score = cur_Score->next;
+                        cur_Score->Course_ID = newCourseID; // Update to newCourseID instead of newCourseName
+                        cur_Score->next = nullptr;
+                        return;
+                    }
+                    cur_Score = cur_Score->next;
+                }
+
+
+            }
+            cur_Student = cur_Student->next;
+        }
+        break;
+    case 2:
+        while (cur_Student)
+        {
+            if (cur_Student->studentId == StudentID)
             {
+
+                Score* cur_Score = cur_Student->score;
+                if (cur_Score == nullptr)
+                {
+                    return;
+                }
                 if (cur_Score->Course_ID == CourseID)
                 {
-                    cur_Score->Course_ID = newCourseID;
+                    delete cur_Score;
+                    cur_Score = nullptr;
                     return;
                 }
-                if (cur_Score->next == nullptr)
+                while (cur_Score)
                 {
-                    cur_Score->next = new Score;
+                    if (cur_Score->next->Course_ID == CourseID)
+                    {
+                        Score *tempScore = cur_Score->next;
+                        cur_Score->next = tempScore->next;
+                        delete tempScore;
+                        return;
+                    }
+                    if (cur_Score->next == nullptr)
+                    {
+                        return;
+                    }
                     cur_Score = cur_Score->next;
-                    cur_Score->Course_ID = newCourseID; // Update to newCourseID instead of newCourseName
-                    cur_Score->next = nullptr;
-                    return;
                 }
-                cur_Score = cur_Score->next;
+
+
             }
-
-
+            cur_Student = cur_Student->next;
         }
-        cur_Student=cur_Student->next;
-    }
+        }
+
 }
 void Course::inputStudent2CourseFromFile(User &Head_User)
 {
@@ -378,7 +428,7 @@ string filename = Course_ID + ".csv";
             studentEnrolled = newEnrollment;
 
             // Update to User
-            UpdateCoursetoUser(studentId, Course_ID, Course_ID, Head_User);
+            UpdateCoursetoUser(studentId, Course_ID, Course_ID, Head_User,1);
         }
         fin.ignore();
     }
@@ -397,4 +447,125 @@ Course* Semester::findCourseinSemester(string CourseID)
     }
     return nullptr;
 }
+// Member function to update course information
+void Course::UpdateCourseInfo(User &Head_User)
+{
+    cout << "Please enter updated information for the course:" << endl;
+    cout << "Course ID: ";
+    string newCourseID;
+    cin >> newCourseID;
+    cout << "Course Name: ";
+    cin.ignore();
+    getline(cin, Course_name);
+    cout << "Class Name: ";
+    cin >> classname;
+    cout << "Teacher's Name: ";
+    cin.ignore();
+    getline(cin, teacherName);
+    cout << "Number of Credits: ";
+    cin >> numberOfCredits;
+    cout << "Maximal Number of Students: ";
+    cin >> maxSize;
+    cout << "Day of Week (M/T/W/Th/F/Sa/Su): ";
+    cin.ignore();
+    cin.get(dow, 2, '\n');
+    cout << "Session: ";
+    cin >> session;
+
+    // Update course ID in student scores if necessary
+    if (newCourseID != Course_ID) {
+        Course* tempCourse = this;
+        while (tempCourse) {
+            StudentEnrolled* tempStudent = tempCourse->studentEnrolled;
+            while (tempStudent) {
+                Student* curStudent = Head_User.students;
+                while (curStudent) {
+                    Score* curScore = curStudent->score;
+                    while (curScore) {
+                        if (curScore->Course_ID == Course_ID) {
+                            curScore->Course_ID = newCourseID;
+                        }
+                        curScore = curScore->next;
+                    }
+                    curStudent = curStudent->next;
+                }
+                tempStudent = tempStudent->next;
+            }
+            tempCourse = tempCourse->next;
+        }
+    }
+
+    // Update course ID
+    Course_ID = newCourseID;
+
+}
+
+// Member function to add a student to the course
+void Course::AddStudentToCourse(Student* student) {
+
+    while (studentEnrolled)
+    {
+        if (studentEnrolled->studentId == student->studentId)
+            cout << "Student's already in the course!";
+        return;
+    }
+    StudentEnrolled* newEnrollment = new StudentEnrolled;
+    newEnrollment->studentId = student->studentId;
+    newEnrollment->next = studentEnrolled;
+    studentEnrolled = newEnrollment;
+
+    // Update student's score with this course
+    Score* newScore = new Score;
+    newScore->Course_ID = Course_ID;
+    newScore->next = student->score;
+    student->score = newScore;
+}
+
+// Member function to remove a student from the course
+void Course::RemoveStudentFromCourse(const string& studentId) {
+    StudentEnrolled* prev = nullptr;
+    StudentEnrolled* current = studentEnrolled;
+
+    // Find the student in the enrollment list
+    while (current != nullptr) {
+        if (current->studentId == studentId) {
+            // If found, remove the enrollment
+            if (prev == nullptr) {
+                studentEnrolled = current->next;
+            }
+            else {
+                prev->next = current->next;
+            }
+            delete current;
+            return;
+        }
+        prev = current;
+        current = current->next;
+    }
+}
+
+// Member function to delete a course from a semester
+void Semester::DeleteACourse(const string& courseId) {
+    Course* prev = nullptr;
+    Course* current = course;
+
+    // Traverse the list to find the course
+    while (current != nullptr) {
+        if (current->Course_ID == courseId) {
+            // If found, remove it from the list
+            if (prev == nullptr) {
+                course = current->next;
+            }
+            else {
+                prev->next = current->next;
+            }
+            // Delete all associated memory
+            delete current;
+            return;
+        }
+        prev = current;
+        current = current->next;
+    }
+}
+
 

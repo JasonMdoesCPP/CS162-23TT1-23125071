@@ -36,9 +36,12 @@ struct Course{
     string teacherName;
     int numberOfCredits;
     int maxSize = 50;
-    char dow[1] ;// day of week
+    char dow[2] ;// day of week
     int session;
     void inputStudent2CourseFromFile(User &Head_User);
+    void UpdateCourseInfo(User &Head_User);
+    void AddStudentToCourse(Student* student);
+    void RemoveStudentFromCourse(const string& studentId);
 };
 struct Semester{
     Course *course = nullptr;
@@ -46,6 +49,7 @@ struct Semester{
     int endDay;
     void addCourse();
     Course* findCourseinSemester(string CourseID);
+    void DeleteACourse(const string& courseId);
 };
 struct SchoolYear{
     SchoolYear* next=nullptr;
@@ -103,6 +107,6 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu);
 void createSeveralClasses(Class *&HeadClass);
 void deleteClass(Class *&clas);
 void addStudentToClass(Class* clas, Student* stu);
-void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, User &Head_User);
+void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, User &Head_User, int choice);
 void CopyCourseInfo(Course cur_Course, Course newCourse);
 #endif // STRUCT_H_INCLUDED
