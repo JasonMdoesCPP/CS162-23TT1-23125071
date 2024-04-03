@@ -320,6 +320,12 @@ void UpdateCoursetoUser(string StudentID,string CourseName, string newCourseName
                     }
                     cur_Score=cur_Score->next;
                 }
+                if (cur_Score == nullptr)
+                {
+                    cur_Score = new Score;
+                    cur_Score->courseName = newCourseName;
+                    flag = true;
+                }
                 if(flag==false)
                 {
                     cur_Score=cur_Student->score;
@@ -357,7 +363,7 @@ void Course::inputStudent2CourseFromFile(User &Head_User)
         getline(fin, temp, ',');
         string classname;
 	classname = temp;
-       	UpdateCoursetoUser(stu->studentId,Course_name,Course_name,Head_User);
+       	UpdateCoursetoUser(stu->studentId,Course_ID,nullptr,Head_User);
         getline(fin, temp);
         //Insert before Head
         stu->next = studentEnrolled;
