@@ -70,7 +70,7 @@ void User::addInformationStudent(){
     Student* before = students;
     string temp;
     while(fin>>temp){
-        if(temp ==  "end"){
+        if(temp ==  "eof"){
             break;
         }
         cur->passWord = temp;
@@ -96,7 +96,7 @@ void User::addInformationStaffMembers(){
     StaffMember* before = staffMembers;
     string temp;
     while(fin>>temp){
-        if(temp ==  "end"){
+        if(temp ==  "eof"){
             break;
         }
         cur->passWord = temp;
