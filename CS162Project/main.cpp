@@ -154,6 +154,37 @@ int main() {
 
     if (user.user1) {
         Student* stu = user.user1;
+        int ca;
+        do {
+            cout << "1. View a list of courses you will study" << endl;
+            cout << "0. Exit the program" << endl;
+            cout << "Enter your choice: ";
+            cin >> ca;
+            switch (ca) {
+            case 1: {
+                Course* cur = cur_semester->course;
+                if (cur) {
+                    cout << "The courses you will study are: " << endl;
+                    while (cur) {
+                        StudentEnrolled* curStudent = cur->studentEnrolled;
+                        while (curStudent) {
+                            if (curStudent->studentId == stu->studentId) cout << cur->Course_ID << endl;
+                            curStudent = curStudent->next;
+                        }
+                        cur = cur -> next;
+                    }
+                }
+                else {
+                    cout << "You have not enrolled any courses yet!" << endl;
+                    getch();
+                    system("cls");
+                }
+                break;
+            }
+            case 0:
+                break;
+            }
+        } while (ca!=0)
     }
     if (user.user2) {
         StaffMember* staf = user.user2;
@@ -171,6 +202,10 @@ int main() {
             cout << "10. Add a student to the course" << endl;
             cout << "11. Remove a student from the course" << endl;
             cout << "12. Delete a course" << endl;
+            cout << "13. View a list of classes" << endl;
+            cout << "14. View a list of students in a class" << endl;
+            cout << "15. View a list of courses" << endl;
+            cout << "16. View a list of students in a course" << endl;
             cout << "0. Ending program!" << endl;
 
             cout << "Enter your choice: ";
@@ -277,6 +312,28 @@ int main() {
                 cin >> courseId;
                 cur_semester->DeleteACourse(courseId);
                 cout << "Course deleted successfully!" << endl;
+                break;
+            }
+            case 13:
+                viewClasses(HeadClass);
+                break;
+            case 14:
+                viewStudentInClass(HeadClass);
+                break;
+            case 15:
+                cur_semester->viewCourse();
+                break;
+            case 16: {
+                string courseID;
+                cout << "Enter the course ID: ";
+                cin >> courseID;
+                Course* curCourse = cur_semester->findCourseinSemester(courseID);
+                if (curCourse) curCourse->viewStudent();
+                else {
+                    cout << "Course not found!" << endl;
+                    getch();
+                    system("cls");
+                }
                 break;
             }
             case 0:

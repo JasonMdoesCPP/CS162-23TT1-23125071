@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string.h>
 #include<string>
+#include <conio.h>
 
 using namespace std;
 struct Student;
@@ -42,12 +43,14 @@ struct Course{
     void UpdateCourseInfo(User &Head_User);
     void AddStudentToCourse(Student* student);
     void RemoveStudentFromCourse(const string& studentId);
+    void viewStudent();
 };
 struct Semester{
     Course *course = nullptr;
     int startDay;
     int endDay;
     void addCourse();
+    void viewCourse();
     Course* findCourseinSemester(string CourseID);
     void DeleteACourse(const string& courseId);
 };
@@ -63,7 +66,7 @@ struct Class{
     Class* next=nullptr;
     string className; // 23tt1, 223tt2
     StudentEnrolled* studentEnroll = nullptr;  // include file has list of studentID(check if there are exist or not)
-    Score *classScore = nullptr;  // create function caculates the classScore
+    Score *classScore = nullptr;  // create function that calculates the classScore
     void addStudents(Student* stu);
 };
 struct Student{
@@ -109,4 +112,6 @@ void deleteClass(Class *&clas);
 void addStudentToClass(Class* clas, Student* stu);
 void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, User &Head_User, int choice);
 void CopyCourseInfo(Course cur_Course, Course newCourse);
+void viewClasses(Class* HeadClass);
+void viewStudentInClass(Class* HeadClass);
 #endif // STRUCT_H_INCLUDED

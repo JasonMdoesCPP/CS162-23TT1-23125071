@@ -1,4 +1,5 @@
 #include "struct.h"
+#include <conio.h>
 
 void createSeveralClasses(Class *&HeadClass){
     string temp;
@@ -17,6 +18,7 @@ void createSeveralClasses(Class *&HeadClass){
         }
     }
 }
+
 void User::login(){
     cout << "1: Student" << endl;
     cout << "2: Staff member" << endl;
@@ -591,4 +593,76 @@ void Semester::DeleteACourse(const string& courseId) {
     }
 }
 
+void viewClasses(Class* HeadClass){
+    cout << "The currently registered classes are: " << endl;
+    Class* cur = HeadClass;
+    while (cur) {
+        cout << cur -> className << endl;
+        cur = cur -> next;
+    }
+}
+
+void viewStudentInClass(Class* HeadClass){
+    Class* cur = HeadClass;
+    if (!cur) {
+        cout << "There are no registered class." << endl;
+        getch();
+        system("cls");
+        return;
+    }
+    cout << "Please enter the class you want to view: ";
+    string temp;
+    cin >> temp;
+    while (cur) {
+        if (cur->className == temp) break;
+        cur = cur -> next;
+    }
+    if (!cur) {
+        cout << "There are no classes with this name" << endl;
+        getch();
+        system("cls");
+        return;
+    }
+    cout << "The students in class " << temp << " have their IDs to be: " << endl;
+    StudentEnrolled* curStudent = HeadClass->studentEnroll;
+    while (curStudent) {
+        cout << curStudent->studentId << endl;
+        curStudent = curStudent -> next;
+    }
+    getch();
+    system("cls");
+}
+
+void Semester::viewCourse(){
+    Course* cur = course;
+    if (!cur) {
+        cout << "There are no courses added yet." << endl;
+        getch();
+        system("cls");
+    }
+    cout << "The added courses in this semester have their IDs to be: " << endl;
+    while (cur) {
+        cout << cur->Course_ID << endl;
+        cur = cur -> next;
+    }
+    getch();
+    system("cls");
+}
+
+void Course::viewStudent(){
+    StudentEnrolled* cur = studentEnrolled;
+    if (!cur){
+        cout << "No students have been added to the course yet!" << endl;
+        getch();
+        system("cls");
+        return;
+    }
+    cout << "The students in this course have their IDs to be:" << endl;
+    while (cur){
+        cout << cur->studentId << endl;
+        cur = cur->next;
+    }
+    getch();
+    system("cls");
+}
 
