@@ -301,7 +301,7 @@ void Semester::addCourse() {
     }
     cout << "Course created!" << endl;
 }
-void UpdateCoursetoUser(string StudentID,string CourseName, string newCourseName, User &Head_User)
+void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, User &Head_User)
 {
     Student *cur_Student=Head_User.students;
     while(cur_Student)
@@ -310,65 +310,78 @@ void UpdateCoursetoUser(string StudentID,string CourseName, string newCourseName
         {
 
             Score *cur_Score=cur_Student->score;
-            bool flag=false;
-                while(cur_Score)
-                {
-                    if(cur_Score->courseName==CourseName)
-                    {
-                        cur_Score->courseName=newCourseName;
-                        flag=true;
-                    }
-                    cur_Score=cur_Score->next;
-                }
-                if (cur_Score == nullptr)
+             if (cur_Score == nullptr)
                 {
                     cur_Score = new Score;
-                    cur_Score->courseName = newCourseName;
-                    flag = true;
-                }
-                if(flag==false)
-                {
-                    cur_Score=cur_Student->score;
-                    while(cur_Score->next!=nullptr) cur_Score=cur_Score->next;
-                    cur_Score->next=new Score;
-                    cur_Score=cur_Score->next;
-                    cur_Score->courseName=newCourseName;
-                    cur_Score->next=nullptr;
+                    cur_Score->Course_ID = newCourseID; // Update to newCourseID instead of CourseID
+                    cur_Score->next = nullptr;
                     return;
                 }
+            while (cur_Score)
+            {
+                if (cur_Score->Course_ID == CourseID)
+                {
+                    cur_Score->Course_ID = newCourseID;
+                    return;
+                }
+                if (cur_Score->next == nullptr)
+                {
+                    cur_Score->next = new Score;
+                    cur_Score = cur_Score->next;
+                    cur_Score->Course_ID = newCourseID; // Update to newCourseID instead of newCourseName
+                    cur_Score->next = nullptr;
+                    return;
+                }
+                cur_Score = cur_Score->next;
+            }
+
+
         }
         cur_Student=cur_Student->next;
     }
 }
 void Course::inputStudent2CourseFromFile(User &Head_User)
 {
-    string name1;
-    name1=Course_name+".csv";
-    ifstream fin;
-    fin.open(name1);
+string filename = Course_ID + ".csv";
+    ifstream fin(filename);
+
     if (!fin.is_open()) {
-        cout << "Error! ";
+        cout << "Error opening file: " << filename << endl;
         return;
     }
+
     string line;
-    getline(fin, line);
-    string temp;
-    while (getline(fin, temp, ',')) {
-        if (temp == "endlist") {
+    getline(fin, line); // Read and discard header line
+
+    string studentId;
+    while (getline(fin, studentId, ',')) {
+        if (studentId == "endlist") {
             break;
         }
-        StudentEnrolled* stu = new StudentEnrolled;
-        stu->studentId = temp;
-//Get class of the student
-        getline(fin, temp, ',');
-        string classname;
-	classname = temp;
-       	UpdateCoursetoUser(stu->studentId,Course_ID,nullptr,Head_User);
-        getline(fin, temp);
-        //Insert before Head
-        stu->next = studentEnrolled;
-        studentEnrolled = stu;
+
+        // Check if the student is already enrolled
+        StudentEnrolled *curEnrollment = studentEnrolled;
+        bool alreadyEnrolled = false;
+        while (curEnrollment != nullptr) {
+            if (curEnrollment->studentId == studentId) {
+                alreadyEnrolled = true;
+                break;
+            }
+            curEnrollment = curEnrollment->next;
+        }
+
+        if (!alreadyEnrolled) {
+            // Create a new StudentEnrolled node
+            StudentEnrolled *newEnrollment = new StudentEnrolled;
+            newEnrollment->studentId = studentId;
+            newEnrollment->next = studentEnrolled;
+            studentEnrolled = newEnrollment;
+
+            // Update to User
+            UpdateCoursetoUser(studentId, Course_ID, Course_ID, Head_User);
+        }
     }
+
     fin.close();
 }
 

@@ -102,5 +102,6 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu);
 void createSeveralClasses(Class *&HeadClass);
 void deleteClass(Class *&clas);
 void addStudentToClass(Class* clas, Student* stu);
-void UpdateCoursetoUser(string StudentID,string CourseID,Course newCourse, User &Head_User);
+void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, User &Head_User);
+void CopyCourseInfo(Course cur_Course, Course newCourse)
 #endif // STRUCT_H_INCLUDED
