@@ -15,15 +15,15 @@ struct DateOfBirth{
     int month;
 };
 struct Score{
-    Score* next;
+    Score* next=nullptr;
     string Course_ID;
-    double totalMark;
-    double finalMark;
-    double midtermMark;
-    double otherMark;
+    double totalMark=0;
+    double finalMark=0;
+    double midtermMark=0;
+    double otherMark=0;
 };
 struct StudentEnrolled{
-    StudentEnrolled* next;
+    StudentEnrolled* next=nullptr;
     string studentId;
 };
 struct User;
@@ -45,9 +45,10 @@ struct Semester{
     int startDay;
     int endDay;
     void addCourse();
+    Course* findCourseinSemester(string CourseID);
 };
 struct SchoolYear{
-    SchoolYear* next;
+    SchoolYear* next=nullptr;
     Semester *semester = nullptr; //3 semester only
     int yearStart;
     int yearEnd;
@@ -55,7 +56,7 @@ struct SchoolYear{
 
 };
 struct Class{
-    Class* next;
+    Class* next=nullptr;
     string className; // 23tt1, 223tt2
     StudentEnrolled* studentEnroll = nullptr;  // include file has list of studentID(check if there are exist or not)
     Score *classScore = nullptr;  // create function caculates the classScore
@@ -63,7 +64,7 @@ struct Class{
 };
 struct Student{
     Student *next = nullptr;
-    Score *score; /*include courses name so if wanting to allocate the course enrolled allocate this*/
+    Score *score=nullptr; /*include courses name so if wanting to allocate the course enrolled allocate this*/
     DateOfBirth dateOfBirth;
     string className;
     string passWord;

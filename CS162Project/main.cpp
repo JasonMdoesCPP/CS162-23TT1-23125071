@@ -19,6 +19,7 @@ int main()
         cout << "4. Adding student to class from csv file" << endl;
         cout << "5. Add Semester to School Year" << endl;
         cout << "6 Add new Course"<<endl;
+        cout << "7. Add Student to Course" << endl;
         cout << "0. Ending program!" << endl;
         int ca;
         cin >> ca;
@@ -42,6 +43,18 @@ int main()
             else if (ca == 6)
             {
                 cur_semester->addCourse();
+            }
+            else if (ca == 7)
+            {
+                string CourseID;
+                cout << "Enter Course ID:";
+                cin.ignore();
+                getline(cin, CourseID);
+                Course* cur_Course=cur_semester->findCourseinSemester(CourseID);
+                if (cur_Course)
+                {
+                    cur_Course->inputStudent2CourseFromFile(user);
+                }
             }
             else
                 cout << "Enter wrong number!"  << endl;

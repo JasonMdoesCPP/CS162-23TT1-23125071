@@ -312,9 +312,9 @@ void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, Us
             Score *cur_Score=cur_Student->score;
              if (cur_Score == nullptr)
                 {
-                    cur_Score = new Score;
-                    cur_Score->Course_ID = newCourseID; // Update to newCourseID instead of CourseID
-                    cur_Score->next = nullptr;
+                    cur_Student->score = new Score;
+                    cur_Student->score->Course_ID = newCourseID; // Update to newCourseID instead of CourseID
+                    cur_Student->score->next = nullptr;
                     return;
                 }
             while (cur_Score)
@@ -380,8 +380,21 @@ string filename = Course_ID + ".csv";
             // Update to User
             UpdateCoursetoUser(studentId, Course_ID, Course_ID, Head_User);
         }
+        fin.ignore();
     }
 
     fin.close();
+}
+//03/04
+Course* Semester::findCourseinSemester(string CourseID)
+{
+    Course *cur_Course = course;
+    while (cur_Course != nullptr)
+    {
+        if (cur_Course->Course_ID == CourseID)
+            return cur_Course;
+        cur_Course = cur_Course->next;
+    }
+    return nullptr;
 }
 
