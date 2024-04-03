@@ -165,7 +165,7 @@ void StaffMember::addSemester(int yearStart,Semester *&cur_semester)
                     }
                     cur_year = cur_year->next;
                 }
-                cout << "No SchoolYear found!";
+    cout << "No SchoolYear found!" << endl;
 }
 
 
@@ -219,20 +219,30 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
             if(temp == "eof"){
                 break;
             }
-            Student* cur1 = stu;
-            while(cur1){
-                if(cur1->studentId == temp){
-                    StudentEnrolled* temp2 = new StudentEnrolled;
-                    temp2->studentId = temp;
-                    temp2->next = clas->studentEnroll;
-                    clas->studentEnroll = temp2;
-                    cur1->className = cur->className;
+            StudentEnrolled* curStudentEnrolled = cur->studentEnroll;
+            while(curStudentEnrolled){
+                if(temp == curStudentEnrolled->studentId){
+                    cout << "The student with ID " << temp << " has been added in this class!" << endl;
                     flag = true;
-                    break;
                 }
-                cur1 = cur1->next;
+                curStudentEnrolled=curStudentEnrolled->next;
             }
-            if (flag == false) cout << "Student with ID " << temp << " have not been added on the student list!"<<endl;
+            if(!flag){
+                Student* cur1 = stu;
+                while(cur1){
+                    if(cur1->studentId == temp){
+                        StudentEnrolled* temp2 = new StudentEnrolled;
+                        temp2->studentId = temp;
+                        temp2->next = clas->studentEnroll;
+                        clas->studentEnroll = temp2;
+                        cur1->className = cur->className;
+                        flag = true;
+                        break;
+                    }
+                    cur1 = cur1->next;
+                }
+                if (flag == false) cout << "Student with ID " << temp << " doesn't exist!"<<endl;
+            }
         }
     }
     else
@@ -253,26 +263,39 @@ void Class::addStudents(Student* stu)
         string temp;
         cout << "Student Id: ";
         cin >> temp;
+        StudentEnrolled* curStudentEnroll = studentEnroll;
+        // check if in class ?
         bool check = false;
-        while(cur){
-            if(cur->studentId == temp){
-                if(cur->schoolYear == 1){
-                    cur->className = className;
-                    check = true;
-                    break;
-                }else
-                    break;
+        while(curStudentEnroll){
+            if(temp == curStudentEnroll->studentId){
+                check = true;
+                break;
             }
-            cur = cur->next;
+            curStudentEnroll=curStudentEnroll->next;
         }
         if(check){
-            StudentEnrolled *temp1 = new StudentEnrolled;
-            temp1->studentId = temp;
-            temp1->next = studentEnroll;
-            studentEnroll = temp1;
-        }else{
-            n++;
-            cout << "Doesn't find any student having this Id" << endl;
+            cout << "This student has been added in this class!" << endl;
+        }
+        if(!check){
+            while(cur){
+                if(cur->studentId == temp){
+                    if(cur->schoolYear == 1){
+                        cur->className = className;
+                        check = true;
+                        break;
+                    }else
+                        break;
+                }
+                cur = cur->next;
+            }
+            if(check){
+                StudentEnrolled *temp1 = new StudentEnrolled;
+                temp1->studentId = temp;
+                temp1->next = studentEnroll;
+                studentEnroll = temp1;
+            }else{
+                cout << "Doesn't find any student having this id" << endl;
+            }
         }
     }
 }
