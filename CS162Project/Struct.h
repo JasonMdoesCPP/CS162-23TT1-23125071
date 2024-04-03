@@ -48,9 +48,11 @@ struct Semester{
 };
 struct SchoolYear{
     SchoolYear* next;
-    Semester *semester = nullptr;
+    Semester *semester = nullptr; //3 semester only
     int yearStart;
     int yearEnd;
+
+
 };
 struct Class{
     Class* next;
@@ -82,6 +84,7 @@ struct StaffMember{
     string firstName;
     string lastName;
     void createSchoolYear();
+    void addSemester(int yearStart,Semester *&cur_semester);
 };
 struct User{
     StaffMember *staffMembers;

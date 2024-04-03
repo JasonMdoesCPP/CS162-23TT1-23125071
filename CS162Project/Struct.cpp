@@ -152,6 +152,21 @@ void StaffMember::createSchoolYear(){
     if (cur) cur -> next = newYear; else schoolYear = newYear;
 }
 
+void StaffMember::addSemester(int yearStart,Semester *&cur_semester)
+{
+    SchoolYear *cur_year = schoolYear;
+                while (cur_year)
+                {
+                    if (cur_year->yearStart == yearStart)
+                    {
+                        cur_year->semester = new Semester;
+                        cur_semester = cur_year->semester;
+                        return;
+                    }
+                    cur_year = cur_year->next;
+                }
+                cout << "No SchoolYear found!";
+}
 
 
 void addStudentToClass(Class* clas, Student* stu){
@@ -257,22 +272,23 @@ void Class::addStudents(Student* stu)
 }
 void Semester::addCourse() {
     Course* temp = new Course;
-    cout << "Please enter course ID:";
+    cout << "Please enter course ID: ";
     cin >> temp->Course_ID;
     cout << "Please enter course name: ";
-    cin >> temp->Course_name;
+    cin.ignore();
+    getline(cin, temp->Course_name);
     cout << "Please enter class name: ";
     cin >> temp->classname;
-    cout << "Please enter teacher's name:";
-    cin >> temp->teacherName;
+    cout << "Please enter teacher's name: ";
+    cin.ignore();
+    getline(cin, temp->teacherName);
     cout << "Please enter the number of credits: ";
     cin >> temp->numberOfCredits;
     cout << "Please enter the maximal number of students in the course: ";
     cin >> temp->maxSize;
-    cout << "Please enter the day the course will be performed in: (M: Monday, T: Tuesday,...., S: Saturday)";
-    cin.get();
-    cin.get(temp->dow, 1, '\0');
-    cin.get();
+    cout << "Please enter the day the course will be performed in: (M: Monday, T: Tuesday, ..., S: Saturday)";
+    cin.ignore();
+    cin.get(temp->dow, 2, '\n'); // Increase size to accommodate the null terminator
     cout << "Please enter the session the course will be performed in: ";
     cin >> temp->session;
     if (course == nullptr) {

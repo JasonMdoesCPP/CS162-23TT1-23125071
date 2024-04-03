@@ -3,6 +3,7 @@ using namespace std;
 int main()
 {
     User user;
+    Semester* cur_semester=nullptr;
     Class *HeadClass = nullptr;
     user.addInformationStudent();
     user.addInformationStaffMembers();
@@ -16,6 +17,8 @@ int main()
         cout << "2. Create several classes for 1st-year students" << endl;
         cout << "3. Add new 1st year students to 1st-year classes." << endl;
         cout << "4. Adding student to class from csv file" << endl;
+        cout << "5. Add Semester to School Year" << endl;
+        cout << "6 Add new Course"<<endl;
         cout << "0. Ending program!" << endl;
         int ca;
         cin >> ca;
@@ -27,10 +30,22 @@ int main()
             }else if(ca == 3){
                 addStudentToClass(HeadClass, user.students);
             }else if(ca == 4){
-                addStudentToClassFromCsvFile(HeadClass, user.students); 
-            }else
+                addStudentToClassFromCsvFile(HeadClass, user.students);
+            }
+            else if (ca == 5)
+            {
+                int yearStart=0;
+                cout << "Enter SchoolYear (Start Year):";
+                cin >> yearStart;
+                staf->addSemester(yearStart, cur_semester);
+            }
+            else if (ca == 6)
+            {
+                cur_semester->addCourse();
+            }
+            else
                 cout << "Enter wrong number!"  << endl;
-            
+
             cout << "1. Create a school year (2020-2021, for example)" << endl;
             cout << "2. Create several classes for 1st-year students" << endl;
             cout << "3. Add new 1st year students to 1st-year classes." << endl;
@@ -39,7 +54,8 @@ int main()
             cin >> ca;
         }
     }
+    cout << "finish";
     user.deleteUser();
     deleteClass(HeadClass);
-    
+
 }
