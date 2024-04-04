@@ -624,7 +624,7 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
         
         return;
     }
-    cout << "The students in class " << temp << " have their fullname to be: " << endl;
+    cout << "The students in class " << temp << " have their full name/id to be: " << endl;
     StudentEnrolled* curStudent = cur->studentEnroll;
     while (curStudent) {
         Student* curUserStudent = headStudent;
@@ -703,4 +703,35 @@ void Student::ViewScore(Course* HeadCourse){
     }else{
         cout << "Scores haven't published " << endl;
     }
+}
+
+void Class::viewScore(Student* stu, Course* headCourse){
+    StudentEnrolled* curClasStu = studentEnroll;
+    while(curClasStu){
+        Student*curStu = stu;
+        while(curStu){
+            if(curStu->studentId == curClasStu->studentId){
+                curStu->ViewScore(headCourse);
+                cout << "GPA: " << curStu->calGPA(); 
+                break;
+            }
+            curStu = curStu->next;
+        }
+        curClasStu = curClasStu->next;
+    }
+                      
+}
+
+
+double Student::calGPA(){
+    Score* curScore = score;
+    double total = 0;
+    int cnt = 0;
+    while(curScore){
+        total+=curScore->totalMark;
+        curScore = curScore->next;
+        cnt++;
+    }
+    total/=cnt;
+    return total/10*4;
 }

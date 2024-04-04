@@ -67,6 +67,7 @@ struct Class{
     StudentEnrolled* studentEnroll = nullptr;  // include file has list of studentID(check if there are exist or not)
     Score *classScore = nullptr;  // create function that calculates the classScore
     void addStudents(Student* stu);
+    void viewScore(Student* stu, Course* headCourse); 
 };
 struct Student{
     Student *next = nullptr;
@@ -83,6 +84,7 @@ struct Student{
     int No;
     int schoolYear;
     void ViewScore(Course* HeadCourse );
+    double calGPA(); 
 };
 struct StaffMember{
     string passWord;
