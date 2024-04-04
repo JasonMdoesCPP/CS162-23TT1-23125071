@@ -236,8 +236,9 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
                         StudentEnrolled* temp2 = new StudentEnrolled;
                         temp2->studentId = temp;
                         temp2->next = clas->studentEnroll;
-                        clas->studentEnroll = temp2;
+                        cur->studentEnroll = temp2;
                         cur1->className = cur->className;
+                        clas->studentEnroll = temp2;
                         flag = true;
                         break;
                     }
