@@ -665,4 +665,27 @@ void Course::viewStudent(){
     getch();
     system("cls");
 }
+void publishScore(){
+    publishedScore = true;
+}
 
+void Student::ViewScore(Course* HeadCourse){
+    if(publishedScore){
+        Score* cur = score;
+        while(cur){
+            Course * curCourse = HeadCourse;
+            while(curCourse){
+                if(curCourse->Course_ID == cur->Course_ID)
+                    break;
+                curCourse = curCourse->next;
+            }
+            cout << "Course: " << curCourse->Course_name << endl;
+            cout << "Mid term: "<< cur->midtermMark << endl;
+            cout << "Final: "<<cur->finalMark << endl;
+            cout <<"Other: " <<cur->otherMark << endl;
+            cout <<"Total: " << cur->totalMark << endl;
+        }
+    }else{
+        cout << "Scores haven't published " << endl; 
+    }
+}

@@ -157,6 +157,7 @@ int main() {
         int ca;
         do {
             cout << "1. View a list of courses you will study" << endl;
+            cout << "2. View score" << endl;
             cout << "0. Exit the program" << endl;
             cout << "Enter your choice: ";
             cin >> ca;
@@ -181,10 +182,16 @@ int main() {
                 }
                 break;
             }
+                case 2: {
+                    Course* temp = user.staffMembers->schoolYear->semester->course;
+                    stu->ViewScore(temp);
+                    break;
+                }
+                        
             case 0:
                 break;
             }
-        } while (ca!=0)
+        } while (ca!=0);
     }
     if (user.user2) {
         StaffMember* staf = user.user2;
@@ -206,6 +213,7 @@ int main() {
             cout << "14. View a list of students in a class" << endl;
             cout << "15. View a list of courses" << endl;
             cout << "16. View a list of students in a course" << endl;
+            cout << "24. publish student score!!" << endl; 
             cout << "0. Ending program!" << endl;
 
             cout << "Enter your choice: ";
@@ -336,6 +344,10 @@ int main() {
                 }
                 break;
             }
+                case 24: {
+                    publishScore();
+                    break;
+                }
             case 0:
                 break;
             default:

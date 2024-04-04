@@ -10,6 +10,7 @@
 
 using namespace std;
 struct Student;
+bool publishedScore = false;
 struct DateOfBirth{
     int day;
     int year;
@@ -83,6 +84,7 @@ struct Student{
     string gender;
     int No;
     int schoolYear;
+    void ViewScore(Course* HeadCourse );
 };
 struct StaffMember{
     string passWord;
@@ -114,4 +116,5 @@ void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, Us
 void CopyCourseInfo(Course cur_Course, Course newCourse);
 void viewClasses(Class* HeadClass);
 void viewStudentInClass(Class* HeadClass);
+void publishScore();
 #endif // STRUCT_H_INCLUDED
