@@ -1,6 +1,6 @@
 #include "struct.h"
 #include <conio.h>
-
+bool publishedScore = false;
 void createSeveralClasses(Class *&HeadClass){
     string temp;
     cout<<"Enter name of classes separated by space. Finish by entering Q"<<endl;
@@ -686,6 +686,6 @@ void Student::ViewScore(Course* HeadCourse){
             cout <<"Total: " << cur->totalMark << endl;
         }
     }else{
-        cout << "Scores haven't published " << endl; 
+        cout << "Scores haven't published " << endl;
     }
 }

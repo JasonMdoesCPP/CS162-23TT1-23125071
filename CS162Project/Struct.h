@@ -10,7 +10,6 @@
 
 using namespace std;
 struct Student;
-bool publishedScore = false;
 struct DateOfBirth{
     int day;
     int year;
