@@ -114,6 +114,6 @@ void addStudentToClass(Class* clas, Student* stu);
 void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, User &Head_User, int choice);
 void CopyCourseInfo(Course cur_Course, Course newCourse);
 void viewClasses(Class* HeadClass);
-void viewStudentInClass(Class* HeadClass);
+void viewStudentInClass(Class* HeadClass, Student* headStudent);
 void publishScore();
 #endif // STRUCT_H_INCLUDED

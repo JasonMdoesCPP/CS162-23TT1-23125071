@@ -602,7 +602,7 @@ void viewClasses(Class* HeadClass){
     }
 }
 
-void viewStudentInClass(Class* HeadClass){
+void viewStudentInClass(Class* HeadClass, Student* headStudent){
     Class* cur = HeadClass;
     if (!cur) {
         cout << "There are no registered class." << endl;
@@ -623,9 +623,17 @@ void viewStudentInClass(Class* HeadClass){
         system("cls");
         return;
     }
-    cout << "The students in class " << temp << " have their IDs to be: " << endl;
-    StudentEnrolled* curStudent = HeadClass->studentEnroll;
+    cout << "The students in class " << temp << " have their fullname to be: " << endl;
+    StudentEnrolled* curStudent = cur->studentEnroll;
     while (curStudent) {
+        Student* curUserStudent = headStudent;
+        while(curUserStudent){
+            if(curUserStudent->studentId == curStudent->studentId){
+                cout << curUserStudent->firstName << " " << curUserStudent->lastName << endl;
+                break;
+            }
+            curUserStudent = curUserStudent->next;
+        }
         cout << curStudent->studentId << endl;
         curStudent = curStudent -> next;
     }
@@ -640,9 +648,9 @@ void Semester::viewCourse(){
         getch();
         system("cls");
     }
-    cout << "The added courses in this semester have their IDs to be: " << endl;
+    cout << "The added courses in this semester have their courses' name to be: " << endl;
     while (cur) {
-        cout << cur->Course_ID << endl;
+        cout << cur->Course_name << endl;
         cur = cur -> next;
     }
     getch();
@@ -657,7 +665,7 @@ void Course::viewStudent(Student* headStu){
         system("cls");
         return;
     }
-    cout << "The students in this course have their IDs to be:" << endl;
+    cout << "The students in this course have their full name to be:" << endl;
     while (cur){
         Student* temp = headStu;
         while(temp){

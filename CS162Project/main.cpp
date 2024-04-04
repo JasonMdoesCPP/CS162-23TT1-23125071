@@ -326,7 +326,7 @@ int main() {
                 viewClasses(HeadClass);
                 break;
             case 14:
-                viewStudentInClass(HeadClass);
+                viewStudentInClass(HeadClass, user.students);
                 break;
             case 15:
                 cur_semester->viewCourse();
