@@ -1,5 +1,5 @@
 #include "struct.h"
-#include <conio.h>
+
 bool publishedScore = false;
 void createSeveralClasses(Class *&HeadClass){
     string temp;
@@ -606,8 +606,8 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
     Class* cur = HeadClass;
     if (!cur) {
         cout << "There are no registered class." << endl;
-        getch();
-        system("cls");
+        
+        
         return;
     }
     cout << "Please enter the class you want to view: ";
@@ -619,8 +619,8 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
     }
     if (!cur) {
         cout << "There are no classes with this name" << endl;
-        getch();
-        system("cls");
+        
+        
         return;
     }
     cout << "The students in class " << temp << " have their fullname to be: " << endl;
@@ -637,32 +637,32 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
         cout << curStudent->studentId << endl;
         curStudent = curStudent -> next;
     }
-    getch();
-    system("cls");
+    
+    
 }
 
 void Semester::viewCourse(){
     Course* cur = course;
     if (!cur) {
         cout << "There are no courses added yet." << endl;
-        getch();
-        system("cls");
+        
+        
     }
     cout << "The added courses in this semester have their courses' name to be: " << endl;
     while (cur) {
         cout << cur->Course_name << endl;
         cur = cur -> next;
     }
-    getch();
-    system("cls");
+    
+    
 }
 
 void Course::viewStudent(Student* headStu){
     StudentEnrolled* cur = studentEnrolled;
     if (!cur){
         cout << "No students have been added to the course yet!" << endl;
-        getch();
-        system("cls");
+        
+        
         return;
     }
     cout << "The students in this course have their full name to be:" << endl;
@@ -676,8 +676,8 @@ void Course::viewStudent(Student* headStu){
             temp = temp->next;
         }
     }
-    getch();
-    system("cls");
+    
+    
 }
 void publishScore(){
     publishedScore = true;

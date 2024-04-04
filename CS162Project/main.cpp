@@ -177,8 +177,8 @@ int main() {
                 }
                 else {
                     cout << "You have not enrolled any courses yet!" << endl;
-                    getch();
-                    system("cls");
+                    
+                    
                 }
                 break;
             }
@@ -339,8 +339,8 @@ int main() {
                 if (curCourse) curCourse->viewStudent(user.students);
                 else {
                     cout << "Course not found!" << endl;
-                    getch();
-                    system("cls");
+                    
+                    
                 }
                 break;
             }

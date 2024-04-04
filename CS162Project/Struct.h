@@ -6,7 +6,6 @@
 #include <fstream>
 #include <string.h>
 #include<string>
-#include <conio.h>
 
 using namespace std;
 struct Student;
