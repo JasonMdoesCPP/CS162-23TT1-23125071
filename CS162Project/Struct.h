@@ -43,7 +43,7 @@ struct Course{
     void UpdateCourseInfo(User &Head_User);
     void AddStudentToCourse(Student* student);
     void RemoveStudentFromCourse(const string& studentId);
-    void viewStudent();
+    void viewStudent(Student* headStu);
 };
 struct Semester{
     Course *course = nullptr;

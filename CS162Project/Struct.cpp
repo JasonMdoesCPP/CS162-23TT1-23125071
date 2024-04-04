@@ -649,7 +649,7 @@ void Semester::viewCourse(){
     system("cls");
 }
 
-void Course::viewStudent(){
+void Course::viewStudent(Student* headStu){
     StudentEnrolled* cur = studentEnrolled;
     if (!cur){
         cout << "No students have been added to the course yet!" << endl;
@@ -659,8 +659,14 @@ void Course::viewStudent(){
     }
     cout << "The students in this course have their IDs to be:" << endl;
     while (cur){
-        cout << cur->studentId << endl;
-        cur = cur->next;
+        Student* temp = headStu;
+        while(temp){
+            if(temp->studentId == cur->studentId){
+                cout << temp->firstName << " " << temp->lastName;
+                break;
+            }
+            temp = temp->next;
+        }
     }
     getch();
     system("cls");

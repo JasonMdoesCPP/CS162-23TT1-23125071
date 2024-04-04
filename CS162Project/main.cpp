@@ -336,7 +336,7 @@ int main() {
                 cout << "Enter the course ID: ";
                 cin >> courseID;
                 Course* curCourse = cur_semester->findCourseinSemester(courseID);
-                if (curCourse) curCourse->viewStudent();
+                if (curCourse) curCourse->viewStudent(user.students);
                 else {
                     cout << "Course not found!" << endl;
                     getch();
