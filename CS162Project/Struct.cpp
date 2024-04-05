@@ -595,6 +595,10 @@ void Semester::DeleteACourse(const string& courseId) {
 }
 
 void viewClasses(Class* HeadClass){
+    if(!HeadClass){
+        cout << "There are no class having created yet!" << endl;
+        return;
+    }
     cout << "The currently registered classes are: " << endl;
     Class* cur = HeadClass;
     while (cur) {
@@ -651,7 +655,7 @@ void Semester::viewCourse(){
     }
     cout << "The added courses in this semester have their courses' name to be: " << endl;
     while (cur) {
-        cout << cur->Course_name << endl;
+        cout << "- "<< cur->Course_name << endl;
         cur = cur -> next;
     }
     
@@ -662,8 +666,6 @@ void Course::viewStudent(Student* headStu){
     StudentEnrolled* cur = studentEnrolled;
     if (!cur){
         cout << "No students have been added to the course yet!" << endl;
-        
-        
         return;
     }
     cout << "The students in this course have their full name to be:" << endl;
@@ -671,13 +673,14 @@ void Course::viewStudent(Student* headStu){
         Student* temp = headStu;
         while(temp){
             if(temp->studentId == cur->studentId){
-                cout << temp->firstName << " " << temp->lastName;
+                cout <<"- "<< temp->firstName << " " << temp->lastName;
                 break;
             }
             temp = temp->next;
         }
+        cur = cur->next;
     }
-    
+    cout << endl;
     
 }
 void publishScore(){
