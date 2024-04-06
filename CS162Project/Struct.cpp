@@ -714,6 +714,8 @@ void Class::viewScore(Student* stu, Course* headCourse){
         Student*curStu = stu;
         while(curStu){
             if(curStu->studentId == curClasStu->studentId){
+                cout <<"Full name: "<<curStu->firstName << " " << curStu->lastName << endl;
+                cout << " ID: "<< curStu->studentId << endl;
                 curStu->ViewScore(headCourse);
                 cout << "GPA: " << curStu->calGPA();
                 break;
