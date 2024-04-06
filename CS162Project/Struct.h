@@ -117,6 +117,6 @@ void CopyCourseInfo(Course cur_Course, Course newCourse);
 void viewClasses(Class* HeadClass);
 void viewStudentInClass(Class* HeadClass, Student* headStudent);
 void exportStudentInCourseToCsvFile(Student* stu);
-void importScoreboard(Student* stu);
+void importScoreBoard(Student* stu);
 void publishScore();
 #endif // STRUCT_H_INCLUDED
