@@ -611,8 +611,8 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
     Class* cur = HeadClass;
     if (!cur) {
         cout << "There are no registered class." << endl;
-        
-        
+
+
         return;
     }
     cout << "Please enter the class you want to view: ";
@@ -624,8 +624,8 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
     }
     if (!cur) {
         cout << "There are no classes with this name" << endl;
-        
-        
+
+
         return;
     }
     cout << "The students in class " << temp << " have their full name/id to be: " << endl;
@@ -642,24 +642,24 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
         cout << curStudent->studentId << endl;
         curStudent = curStudent -> next;
     }
-    
-    
+
+
 }
 
 void Semester::viewCourse(){
     Course* cur = course;
     if (!cur) {
         cout << "There are no courses added yet." << endl;
-        
-        
+
+
     }
     cout << "The added courses in this semester have their courses' name to be: " << endl;
     while (cur) {
         cout << "- "<< cur->Course_name << endl;
         cur = cur -> next;
     }
-    
-    
+
+
 }
 
 void Course::viewStudent(Student* headStu){
@@ -681,7 +681,7 @@ void Course::viewStudent(Student* headStu){
         cur = cur->next;
     }
     cout << endl;
-    
+
 }
 void publishScore(){
     publishedScore = true;
@@ -715,14 +715,74 @@ void Class::viewScore(Student* stu, Course* headCourse){
         while(curStu){
             if(curStu->studentId == curClasStu->studentId){
                 curStu->ViewScore(headCourse);
-                cout << "GPA: " << curStu->calGPA(); 
+                cout << "GPA: " << curStu->calGPA();
                 break;
             }
             curStu = curStu->next;
         }
         curClasStu = curClasStu->next;
     }
-                      
+
+}
+void exportStudentInCourseToCsvFile(Student* stu)
+{ string CourseId;
+  cout << "Enter Course ID:";
+  cin.ignore();
+  getline(cin, CourseId);
+  string filename = CourseId + ".csv";
+  ofstream fout(filename);
+  if (!fout.is_open())
+  {
+                cout << "Error opening file: " << filename << endl;
+                return;
+  }
+  Student* curStudent = stu;
+  while (curStudent!=nullptr)
+  {
+    if (curStudent->score->Course_ID==CourseId)
+        {
+            fout << curStudent->firstName <<" "<< curStudent->lastName << ",";
+        }
+    curStudent=curStudent->next;
+  }
+  fout.close();
+}
+void importScoreBoard(Student* stu)
+{
+    string CourseId;
+    cout << "Enter Course ID:";
+    cin.ignore();
+    getline(cin, CourseId);
+    string filename = CourseId + ".csv";
+    ifstream fin(filename);
+    if (!fin.is_open())
+        {
+            cout << "Error opening file: " << filename << endl;
+            return;
+        }
+    string line;
+    getline(fin, line);
+    while (getline(fin, line))
+            {
+                string temp;
+                Student* curStudent=stu;
+                getline(fin, temp, ',');
+                getline(fin, temp, ',');
+                while (curStudent!=NULL&& curStudent->studentId!=temp)
+                {
+                    curStudent=curStudent->next;
+                }
+                getline(fin, temp, ',');
+                curStudent->score->totalMark = stod(temp);
+                getline(fin, temp, ',');
+                curStudent->score->finalMark= stod(temp);
+                getline(fin, temp, ',');
+                curStudent->score->midtermMark = stod(temp);
+                getline(fin, temp);
+                curStudent->score->otherMark= stod(temp);
+            }
+    fin.close();
+    cout << "Scoreboard imported successfully." << endl;
 }
 
 

@@ -177,8 +177,8 @@ int main() {
                 }
                 else {
                     cout << "You have not enrolled any courses yet!" << endl;
-                    
-                    
+
+
                 }
                 break;
             }
@@ -187,7 +187,7 @@ int main() {
                     stu->ViewScore(temp);
                     break;
                 }
-                        
+
             case 0:
                 break;
             }
@@ -213,7 +213,9 @@ int main() {
             cout << "14. View a list of students in a class" << endl;
             cout << "15. View a list of courses" << endl;
             cout << "16. View a list of students in a course" << endl;
-            cout << "24. publish student score!!" << endl; 
+            cout << "17. Export the student in course to csv file" << endl;
+            cout << "18. Import a score board" << endl;
+            cout << "24. publish student score!!" << endl;
             cout << "0. Ending program!" << endl;
 
             cout << "Enter your choice: ";
@@ -339,9 +341,17 @@ int main() {
                 if (curCourse) curCourse->viewStudent(user.students);
                 else {
                     cout << "Course not found!" << endl;
-                    
-                    
+
+
                 }
+                break;
+            }
+            case 17: {
+                exportStudentInCourseToCsvFile(user.students);
+                break;
+            }
+            case 18: {
+                importScoreBoard(user.students);
                 break;
             }
                 case 24: {

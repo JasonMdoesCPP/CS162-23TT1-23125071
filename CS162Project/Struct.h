@@ -67,7 +67,7 @@ struct Class{
     StudentEnrolled* studentEnroll = nullptr;  // include file has list of studentID(check if there are exist or not)
     Score *classScore = nullptr;  // create function that calculates the classScore
     void addStudents(Student* stu);
-    void viewScore(Student* stu, Course* headCourse); 
+    void viewScore(Student* stu, Course* headCourse);
 };
 struct Student{
     Student *next = nullptr;
@@ -84,7 +84,7 @@ struct Student{
     int No;
     int schoolYear;
     void ViewScore(Course* HeadCourse );
-    double calGPA(); 
+    double calGPA();
 };
 struct StaffMember{
     string passWord;
@@ -116,5 +116,7 @@ void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, Us
 void CopyCourseInfo(Course cur_Course, Course newCourse);
 void viewClasses(Class* HeadClass);
 void viewStudentInClass(Class* HeadClass, Student* headStudent);
+void exportStudentInCourseToCsvFile(Student* stu);
+void importScoreboard(Student* stu);
 void publishScore();
 #endif // STRUCT_H_INCLUDED
