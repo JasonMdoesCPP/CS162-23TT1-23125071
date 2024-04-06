@@ -193,16 +193,17 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
     string className;
     cout << "Enter class name: ";
     cin >> className;
-    
+
     bool check = false;
     ifstream fin;
-    Class*cur = clas;
-    while(cur){
-        if(cur->className == className){
+    Class* cur_class = clas;
+    //Check if Class exists
+    while(cur_class){
+        if(cur_class->className == className){
             check = true;
             break;
         }
-        cur = cur->next;
+        cur_class = cur_class->next;
     }
     className += ".csv";
     fin.open(className);
@@ -210,41 +211,49 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
         cout << "Doesn't have this class' csv file";
         return;
     }
+    //Read file
     if(check){
         string line;
         getline(fin, line); // Read and discard header line
         while(!fin.eof()){
             bool flag = false;
-            string temp;
-            getline(fin, temp,',');
+            string studentId;
+            getline(fin, studentId,',');
             fin.ignore();
-            if(temp == "eof"){
+            if(studentId == "eof"){
                 break;
             }
-            StudentEnrolled* curStudentEnrolled = cur->studentEnroll;
+            StudentEnrolled* curStudentEnrolled = cur_class->studentEnroll;
+    //Check if student had been here or not
             while(curStudentEnrolled){
-                if(temp == curStudentEnrolled->studentId){
-                    cout << "The student with ID " << temp << " has been added in this class!" << endl;
+                if(studentId == curStudentEnrolled->studentId){
+                    cout << "The student with ID " << studentId << " has been added in this class!" << endl;
                     flag = true;
                 }
                 curStudentEnrolled=curStudentEnrolled->next;
             }
+    //If it is new Student
             if(!flag){
-                Student* cur1 = stu;
-                while(cur1){
-                    if(cur1->studentId == temp){
-                        StudentEnrolled* temp2 = new StudentEnrolled;
-                        temp2->studentId = temp;
-                        temp2->next = clas->studentEnroll;
-                        cur->studentEnroll = temp2;
-                        cur1->className = cur->className;
-                        clas->studentEnroll = temp2;
+                Student* cur_student = stu;
+                while(cur_student){
+                    if(cur_student->studentId == studentId){
+                        if (!cur_student->className.empty())
+                        {
+                            cout << "The student with ID:" << cur_student->studentId << " is already in class " << cur_student->className<<endl;
+                            flag = true;
+                            break;
+                        }
+                        StudentEnrolled* newStudent = new StudentEnrolled;
+                        newStudent->studentId = studentId;
+                        newStudent->next = cur_class->studentEnroll;
+                        cur_class->studentEnroll = newStudent;
+                        cur_student->className = cur_class->className;
                         flag = true;
                         break;
                     }
-                    cur1 = cur1->next;
+                    cur_student = cur_student->next;
                 }
-                if (flag == false) cout << "Student with ID " << temp << " doesn't exist!"<<endl;
+                if (flag == false) cout << "Student with ID " << studentId << " doesn't exist!"<<endl;
             }
         }
     }
@@ -303,6 +312,11 @@ void Class::addStudents(Student* stu)
     }
 }
 void Semester::addCourse() {
+    if (this == nullptr)
+    {
+        cout << "There's no Semester to add Course to";
+        return;
+    }
     Course* temp = new Course;
     cout << "Please enter course ID: ";
     cin >> temp->Course_ID;
@@ -319,8 +333,7 @@ void Semester::addCourse() {
     cout << "Please enter the maximal number of students in the course: ";
     cin >> temp->maxSize;
     cout << "Please enter the day the course will be performed in (M/T/W/Th/F/Sa/Su):";
-    cin.ignore();
-    cin.get(temp->dow, 2, '\n'); // Increase size to accommodate the null terminator
+    cin>>temp->dow; // Increase size to accommodate the null terminator
     cout << "Please enter the session the course will be performed in: ";
     cin >> temp->session;
     if (course == nullptr) {
@@ -344,7 +357,7 @@ void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, Us
             {
                 if (cur_Student->studentId == StudentID)
                 {
-                    
+
                     Score* cur_Score = cur_Student->score;
                     if (cur_Score == nullptr)
                     {
@@ -370,8 +383,8 @@ void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, Us
                         }
                         cur_Score = cur_Score->next;
                     }
-                    
-                    
+
+
                 }
                 cur_Student = cur_Student->next;
             }
@@ -381,7 +394,7 @@ void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, Us
             {
                 if (cur_Student->studentId == StudentID)
                 {
-                    
+
                     Score* cur_Score = cur_Student->score;
                     if (cur_Score == nullptr)
                     {
@@ -408,33 +421,33 @@ void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, Us
                         }
                         cur_Score = cur_Score->next;
                     }
-                    
-                    
+
+
                 }
                 cur_Student = cur_Student->next;
             }
     }
-    
+
 }
 void Course::inputStudent2CourseFromFile(User &Head_User)
 {
     string filename = Course_ID + ".csv";
     ifstream fin(filename);
-    
+
     if (!fin.is_open()) {
         cout << "Error opening file: " << filename << endl;
         return;
     }
-    
+
     string line;
     getline(fin, line); // Read and discard header line
-    
+
     string studentId;
     while (getline(fin, studentId, ',')) {
         if (studentId == "endlist") {
             break;
         }
-        
+
         // Check if the student is already enrolled
         StudentEnrolled *curEnrollment = studentEnrolled;
         bool alreadyEnrolled = false;
@@ -445,20 +458,20 @@ void Course::inputStudent2CourseFromFile(User &Head_User)
             }
             curEnrollment = curEnrollment->next;
         }
-        
+
         if (!alreadyEnrolled) {
             // Create a new StudentEnrolled node
             StudentEnrolled *newEnrollment = new StudentEnrolled;
             newEnrollment->studentId = studentId;
             newEnrollment->next = studentEnrolled;
             studentEnrolled = newEnrollment;
-            
+
             // Update to User
             UpdateCoursetoUser(studentId, Course_ID, Course_ID, Head_User,1);
         }
         fin.ignore();
     }
-    
+
     fin.close();
 }
 //03/04
@@ -493,11 +506,10 @@ void Course::UpdateCourseInfo(User &Head_User)
     cout << "Maximal Number of Students: ";
     cin >> maxSize;
     cout << "Day of Week (M/T/W/Th/F/Sa/Su): ";
-    cin.ignore();
-    cin.get(dow, 2, '\n');
+    cin>>dow;
     cout << "Session: ";
     cin >> session;
-    
+
     // Update course ID in student scores if necessary
     if (newCourseID != Course_ID) {
         Course* tempCourse = this;
@@ -520,26 +532,30 @@ void Course::UpdateCourseInfo(User &Head_User)
             tempCourse = tempCourse->next;
         }
     }
-    
+
     // Update course ID
     Course_ID = newCourseID;
-    
+
 }
 
 // Member function to add a student to the course
 void Course::AddStudentToCourse(Student* student) {
-    
-    while (studentEnrolled)
+    StudentEnrolled *cur_student = studentEnrolled;
+
+    while (cur_student)
     {
-        if (studentEnrolled->studentId == student->studentId)
+        if (cur_student->studentId == student->studentId)
+        {
             cout << "Student's already in the course!";
-        return;
+            return;
+        }
+        cur_student = cur_student->next;
     }
     StudentEnrolled* newEnrollment = new StudentEnrolled;
     newEnrollment->studentId = student->studentId;
     newEnrollment->next = studentEnrolled;
     studentEnrolled = newEnrollment;
-    
+
     // Update student's score with this course
     Score* newScore = new Score;
     newScore->Course_ID = Course_ID;
@@ -547,11 +563,12 @@ void Course::AddStudentToCourse(Student* student) {
     student->score = newScore;
 }
 
+
 // Member function to remove a student from the course
 void Course::RemoveStudentFromCourse(const string& studentId) {
     StudentEnrolled* prev = nullptr;
     StudentEnrolled* current = studentEnrolled;
-    
+
     // Find the student in the enrollment list
     while (current != nullptr) {
         if (current->studentId == studentId) {
@@ -571,10 +588,10 @@ void Course::RemoveStudentFromCourse(const string& studentId) {
 }
 
 // Member function to delete a course from a semester
-void Semester::DeleteACourse(const string& courseId) {
+void Semester::DeleteACourse(const string& courseId, User Head_User) {
     Course* prev = nullptr;
     Course* current = course;
-    
+
     // Traverse the list to find the course
     while (current != nullptr) {
         if (current->Course_ID == courseId) {
@@ -587,12 +604,37 @@ void Semester::DeleteACourse(const string& courseId) {
             }
             // Delete all associated memory
             delete current;
-            return;
+            break;
         }
         prev = current;
         current = current->next;
     }
+    //Update to User
+    Student* cur_student = Head_User.students;
+    while (cur_student)
+    {
+        Score* prev_score = nullptr;
+        Score *cur_score = cur_student->score;
+        while (cur_score)
+        {
+            if (cur_score->Course_ID == courseId)
+            {
+                if (prev_score == nullptr)
+                {
+                    cur_student->score = cur_score->next;
+                }
+                else prev_score->next = cur_score->next;
+
+                delete cur_score;
+                break;
+            }
+            prev_score = cur_score;
+            cur_score = cur_score->next;
+        }
+        cur_student = cur_student->next;
+    }
 }
+
 
 void viewClasses(Class* HeadClass){
     if(!HeadClass){
@@ -611,8 +653,8 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
     Class* cur = HeadClass;
     if (!cur) {
         cout << "There are no registered class." << endl;
-        
-        
+
+
         return;
     }
     cout << "Please enter the class you want to view: ";
@@ -624,8 +666,8 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
     }
     if (!cur) {
         cout << "There are no classes with this name" << endl;
-        
-        
+
+
         return;
     }
     cout << "The students in class " << temp << " have their full name/id to be: " << endl;
@@ -642,24 +684,24 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
         cout << curStudent->studentId << endl;
         curStudent = curStudent -> next;
     }
-    
-    
+
+
 }
 
 void Semester::viewCourse(){
     Course* cur = course;
     if (!cur) {
         cout << "There are no courses added yet." << endl;
-        
-        
+
+
     }
     cout << "The added courses in this semester have their courses' name to be: " << endl;
     while (cur) {
         cout << "- "<< cur->Course_name << endl;
         cur = cur -> next;
     }
-    
-    
+
+
 }
 
 void Course::viewStudent(Student* headStu){
@@ -673,7 +715,7 @@ void Course::viewStudent(Student* headStu){
         Student* temp = headStu;
         while(temp){
             if(temp->studentId == cur->studentId){
-                cout <<"- "<< temp->firstName << " " << temp->lastName;
+                cout <<temp->studentId<<"- "<< temp->firstName << " " << temp->lastName<<endl;
                 break;
             }
             temp = temp->next;
@@ -681,7 +723,7 @@ void Course::viewStudent(Student* headStu){
         cur = cur->next;
     }
     cout << endl;
-    
+
 }
 void publishScore(){
     publishedScore = true;
@@ -724,7 +766,7 @@ void Class::viewScore(Student* stu, Course* headCourse){
         }
         curClasStu = curClasStu->next;
     }
-    
+
 }
 void exportStudentInCourseToCsvFile(Student* stu)
 { string CourseId;
@@ -738,15 +780,17 @@ void exportStudentInCourseToCsvFile(Student* stu)
         cout << "Error opening file: " << filename << endl;
         return;
     }
+    fout<<"StudentID,"<<endl;
     Student* curStudent = stu;
     while (curStudent!=nullptr)
     {
         if (curStudent->score->Course_ID==CourseId)
         {
-            fout << curStudent->firstName <<" "<< curStudent->lastName << ",";
+            fout << curStudent->studentId << ","<<endl;
         }
         curStudent=curStudent->next;
     }
+    fout<<"eof";
     fout.close();
 }
 void importScoreBoard(Student* stu)

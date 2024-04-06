@@ -151,7 +151,7 @@ int main() {
     user.addInformationStudent();
     user.addInformationStaffMembers();
     user.login();
-    
+
     if (user.user1) {
         Student* stu = user.user1;
         int ca;
@@ -178,8 +178,8 @@ int main() {
                     }
                     else {
                         cout << "You have not enrolled any courses yet!" << endl;
-                        
-                        
+
+
                     }
                     break;
                 }
@@ -197,7 +197,7 @@ int main() {
     }
     if (user.user2) {
         StaffMember* staf = user.user2;
-        
+
         int ca;
         do {
             cout << "1. Create a school year" << endl;
@@ -220,10 +220,10 @@ int main() {
             cout << "24. publish student score!!" << endl;
             cout << "25. Change username or password" << endl;
             cout << "0. Ending program!" << endl;
-            
+
             cout << "Enter your choice: ";
             cin >> ca;
-            
+
             switch (ca) {
                 case 1:
                     staf->createSchoolYear();
@@ -323,7 +323,7 @@ int main() {
                     string courseId;
                     cout << "Enter the Course ID to delete: ";
                     cin >> courseId;
-                    cur_semester->DeleteACourse(courseId);
+                    cur_semester->DeleteACourse(courseId,user);
                     cout << "Course deleted successfully!" << endl;
                     break;
                 }
@@ -344,8 +344,8 @@ int main() {
                     if (curCourse) curCourse->viewStudent(user.students);
                     else {
                         cout << "Course not found!" << endl;
-                        
-                        
+
+
                     }
                     break;
                 }
@@ -364,8 +364,8 @@ int main() {
                 case 25:
                     staf->changePasswordOrUserName();
                     break;
-                    
-                    
+
+
                 case 0:
                     break;
                 default:
@@ -378,7 +378,7 @@ int main() {
     UpdateUser(user);
     user.deleteUser();
     deleteClass(HeadClass);
-    
+
     return 0;
 }
 

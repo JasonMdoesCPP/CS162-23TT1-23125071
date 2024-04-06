@@ -51,7 +51,7 @@ struct Semester{
     void addCourse();
     void viewCourse();
     Course* findCourseinSemester(string CourseID);
-    void DeleteACourse(const string& courseId);
+    void DeleteACourse(const string& courseId, User Head_User);
 };
 struct SchoolYear{
     SchoolYear* next=nullptr;
@@ -121,5 +121,5 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent);
 void exportStudentInCourseToCsvFile(Student* stu);
 void importScoreBoard(Student* stu);
 void publishScore();
-void UpdateUser(User user); 
+void UpdateUser(User user);
 #endif // STRUCT_H_INCLUDED
