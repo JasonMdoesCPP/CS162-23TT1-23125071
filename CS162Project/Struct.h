@@ -85,6 +85,7 @@ struct Student{
     int schoolYear;
     void ViewScore(Course* HeadCourse );
     double calGPA();
+    void changePasswordOrUserName();
 };
 struct StaffMember{
     string passWord;
@@ -95,6 +96,7 @@ struct StaffMember{
     string lastName;
     void createSchoolYear();
     void addSemester(int yearStart,Semester *&cur_semester);
+    void changePasswordOrUserName();
 };
 struct User{
     StaffMember *staffMembers;
@@ -119,4 +121,5 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent);
 void exportStudentInCourseToCsvFile(Student* stu);
 void importScoreBoard(Student* stu);
 void publishScore();
+void UpdateUser(User user); 
 #endif // STRUCT_H_INCLUDED

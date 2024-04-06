@@ -157,16 +157,16 @@ void StaffMember::createSchoolYear(){
 void StaffMember::addSemester(int yearStart,Semester *&cur_semester)
 {
     SchoolYear *cur_year = schoolYear;
-                while (cur_year)
-                {
-                    if (cur_year->yearStart == yearStart)
-                    {
-                        cur_year->semester = new Semester;
-                        cur_semester = cur_year->semester;
-                        return;
-                    }
-                    cur_year = cur_year->next;
-                }
+    while (cur_year)
+    {
+        if (cur_year->yearStart == yearStart)
+        {
+            cur_year->semester = new Semester;
+            cur_semester = cur_year->semester;
+            return;
+        }
+        cur_year = cur_year->next;
+    }
     cout << "No SchoolYear found!" << endl;
 }
 
@@ -193,7 +193,7 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
     string className;
     cout << "Enter class name: ";
     cin >> className;
-
+    
     bool check = false;
     ifstream fin;
     Class*cur = clas;
@@ -338,103 +338,103 @@ void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, Us
 {
     Student *cur_Student=Head_User.students;
     switch (choice)
-        {
-    case 1:
-        while (cur_Student)
-        {
-            if (cur_Student->studentId == StudentID)
+    {
+        case 1:
+            while (cur_Student)
             {
-
-                Score* cur_Score = cur_Student->score;
-                if (cur_Score == nullptr)
+                if (cur_Student->studentId == StudentID)
                 {
-                    cur_Student->score = new Score;
-                    cur_Student->score->Course_ID = newCourseID; // Update to newCourseID instead of CourseID
-                    cur_Student->score->next = nullptr;
-                    return;
+                    
+                    Score* cur_Score = cur_Student->score;
+                    if (cur_Score == nullptr)
+                    {
+                        cur_Student->score = new Score;
+                        cur_Student->score->Course_ID = newCourseID; // Update to newCourseID instead of CourseID
+                        cur_Student->score->next = nullptr;
+                        return;
+                    }
+                    while (cur_Score)
+                    {
+                        if (cur_Score->Course_ID == CourseID)
+                        {
+                            cur_Score->Course_ID = newCourseID;
+                            return;
+                        }
+                        if (cur_Score->next == nullptr)
+                        {
+                            cur_Score->next = new Score;
+                            cur_Score = cur_Score->next;
+                            cur_Score->Course_ID = newCourseID; // Update to newCourseID instead of newCourseName
+                            cur_Score->next = nullptr;
+                            return;
+                        }
+                        cur_Score = cur_Score->next;
+                    }
+                    
+                    
                 }
-                while (cur_Score)
+                cur_Student = cur_Student->next;
+            }
+            break;
+        case 2:
+            while (cur_Student)
+            {
+                if (cur_Student->studentId == StudentID)
                 {
+                    
+                    Score* cur_Score = cur_Student->score;
+                    if (cur_Score == nullptr)
+                    {
+                        return;
+                    }
                     if (cur_Score->Course_ID == CourseID)
                     {
-                        cur_Score->Course_ID = newCourseID;
+                        delete cur_Score;
+                        cur_Score = nullptr;
                         return;
                     }
-                    if (cur_Score->next == nullptr)
+                    while (cur_Score)
                     {
-                        cur_Score->next = new Score;
+                        if (cur_Score->next->Course_ID == CourseID)
+                        {
+                            Score *tempScore = cur_Score->next;
+                            cur_Score->next = tempScore->next;
+                            delete tempScore;
+                            return;
+                        }
+                        if (cur_Score->next == nullptr)
+                        {
+                            return;
+                        }
                         cur_Score = cur_Score->next;
-                        cur_Score->Course_ID = newCourseID; // Update to newCourseID instead of newCourseName
-                        cur_Score->next = nullptr;
-                        return;
                     }
-                    cur_Score = cur_Score->next;
+                    
+                    
                 }
-
-
+                cur_Student = cur_Student->next;
             }
-            cur_Student = cur_Student->next;
-        }
-        break;
-    case 2:
-        while (cur_Student)
-        {
-            if (cur_Student->studentId == StudentID)
-            {
-
-                Score* cur_Score = cur_Student->score;
-                if (cur_Score == nullptr)
-                {
-                    return;
-                }
-                if (cur_Score->Course_ID == CourseID)
-                {
-                    delete cur_Score;
-                    cur_Score = nullptr;
-                    return;
-                }
-                while (cur_Score)
-                {
-                    if (cur_Score->next->Course_ID == CourseID)
-                    {
-                        Score *tempScore = cur_Score->next;
-                        cur_Score->next = tempScore->next;
-                        delete tempScore;
-                        return;
-                    }
-                    if (cur_Score->next == nullptr)
-                    {
-                        return;
-                    }
-                    cur_Score = cur_Score->next;
-                }
-
-
-            }
-            cur_Student = cur_Student->next;
-        }
-        }
-
+    }
+    
 }
 void Course::inputStudent2CourseFromFile(User &Head_User)
 {
-string filename = Course_ID + ".csv";
+    string filename = Course_ID + ".csv";
     ifstream fin(filename);
-
+    
     if (!fin.is_open()) {
         cout << "Error opening file: " << filename << endl;
         return;
     }
-
+    
     string line;
     getline(fin, line); // Read and discard header line
-
+    
     string studentId;
     while (getline(fin, studentId, ',')) {
         if (studentId == "endlist") {
             break;
         }
-
+        
         // Check if the student is already enrolled
         StudentEnrolled *curEnrollment = studentEnrolled;
         bool alreadyEnrolled = false;
@@ -445,20 +445,20 @@ string filename = Course_ID + ".csv";
             }
             curEnrollment = curEnrollment->next;
         }
-
+        
         if (!alreadyEnrolled) {
             // Create a new StudentEnrolled node
             StudentEnrolled *newEnrollment = new StudentEnrolled;
             newEnrollment->studentId = studentId;
             newEnrollment->next = studentEnrolled;
             studentEnrolled = newEnrollment;
-
+            
             // Update to User
             UpdateCoursetoUser(studentId, Course_ID, Course_ID, Head_User,1);
         }
         fin.ignore();
     }
-
+    
     fin.close();
 }
 //03/04
@@ -497,7 +497,7 @@ void Course::UpdateCourseInfo(User &Head_User)
     cin.get(dow, 2, '\n');
     cout << "Session: ";
     cin >> session;
-
+    
     // Update course ID in student scores if necessary
     if (newCourseID != Course_ID) {
         Course* tempCourse = this;
@@ -520,15 +520,15 @@ void Course::UpdateCourseInfo(User &Head_User)
             tempCourse = tempCourse->next;
         }
     }
-
+    
     // Update course ID
     Course_ID = newCourseID;
-
+    
 }
 
 // Member function to add a student to the course
 void Course::AddStudentToCourse(Student* student) {
-
+    
     while (studentEnrolled)
     {
         if (studentEnrolled->studentId == student->studentId)
@@ -539,7 +539,7 @@ void Course::AddStudentToCourse(Student* student) {
     newEnrollment->studentId = student->studentId;
     newEnrollment->next = studentEnrolled;
     studentEnrolled = newEnrollment;
-
+    
     // Update student's score with this course
     Score* newScore = new Score;
     newScore->Course_ID = Course_ID;
@@ -551,7 +551,7 @@ void Course::AddStudentToCourse(Student* student) {
 void Course::RemoveStudentFromCourse(const string& studentId) {
     StudentEnrolled* prev = nullptr;
     StudentEnrolled* current = studentEnrolled;
-
+    
     // Find the student in the enrollment list
     while (current != nullptr) {
         if (current->studentId == studentId) {
@@ -574,7 +574,7 @@ void Course::RemoveStudentFromCourse(const string& studentId) {
 void Semester::DeleteACourse(const string& courseId) {
     Course* prev = nullptr;
     Course* current = course;
-
+    
     // Traverse the list to find the course
     while (current != nullptr) {
         if (current->Course_ID == courseId) {
@@ -611,8 +611,8 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
     Class* cur = HeadClass;
     if (!cur) {
         cout << "There are no registered class." << endl;
-
-
+        
+        
         return;
     }
     cout << "Please enter the class you want to view: ";
@@ -624,8 +624,8 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
     }
     if (!cur) {
         cout << "There are no classes with this name" << endl;
-
-
+        
+        
         return;
     }
     cout << "The students in class " << temp << " have their full name/id to be: " << endl;
@@ -642,24 +642,24 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
         cout << curStudent->studentId << endl;
         curStudent = curStudent -> next;
     }
-
-
+    
+    
 }
 
 void Semester::viewCourse(){
     Course* cur = course;
     if (!cur) {
         cout << "There are no courses added yet." << endl;
-
-
+        
+        
     }
     cout << "The added courses in this semester have their courses' name to be: " << endl;
     while (cur) {
         cout << "- "<< cur->Course_name << endl;
         cur = cur -> next;
     }
-
-
+    
+    
 }
 
 void Course::viewStudent(Student* headStu){
@@ -681,7 +681,7 @@ void Course::viewStudent(Student* headStu){
         cur = cur->next;
     }
     cout << endl;
-
+    
 }
 void publishScore(){
     publishedScore = true;
@@ -724,30 +724,30 @@ void Class::viewScore(Student* stu, Course* headCourse){
         }
         curClasStu = curClasStu->next;
     }
-
+    
 }
 void exportStudentInCourseToCsvFile(Student* stu)
 { string CourseId;
-  cout << "Enter Course ID:";
-  cin.ignore();
-  getline(cin, CourseId);
-  string filename = CourseId + ".csv";
-  ofstream fout(filename);
-  if (!fout.is_open())
-  {
-                cout << "Error opening file: " << filename << endl;
-                return;
-  }
-  Student* curStudent = stu;
-  while (curStudent!=nullptr)
-  {
-    if (curStudent->score->Course_ID==CourseId)
+    cout << "Enter Course ID:";
+    cin.ignore();
+    getline(cin, CourseId);
+    string filename = CourseId + ".csv";
+    ofstream fout(filename);
+    if (!fout.is_open())
+    {
+        cout << "Error opening file: " << filename << endl;
+        return;
+    }
+    Student* curStudent = stu;
+    while (curStudent!=nullptr)
+    {
+        if (curStudent->score->Course_ID==CourseId)
         {
             fout << curStudent->firstName <<" "<< curStudent->lastName << ",";
         }
-    curStudent=curStudent->next;
-  }
-  fout.close();
+        curStudent=curStudent->next;
+    }
+    fout.close();
 }
 void importScoreBoard(Student* stu)
 {
@@ -758,31 +758,31 @@ void importScoreBoard(Student* stu)
     string filename = CourseId + ".csv";
     ifstream fin(filename);
     if (!fin.is_open())
-        {
-            cout << "Error opening file: " << filename << endl;
-            return;
-        }
+    {
+        cout << "Error opening file: " << filename << endl;
+        return;
+    }
     string line;
     getline(fin, line);
     while (getline(fin, line))
-            {
-                string temp;
-                Student* curStudent=stu;
-                getline(fin, temp, ',');
-                getline(fin, temp, ',');
-                while (curStudent!=NULL&& curStudent->studentId!=temp)
-                {
-                    curStudent=curStudent->next;
-                }
-                getline(fin, temp, ',');
-                curStudent->score->totalMark = stod(temp);
-                getline(fin, temp, ',');
-                curStudent->score->finalMark= stod(temp);
-                getline(fin, temp, ',');
-                curStudent->score->midtermMark = stod(temp);
-                getline(fin, temp);
-                curStudent->score->otherMark= stod(temp);
-            }
+    {
+        string temp;
+        Student* curStudent=stu;
+        getline(fin, temp, ',');
+        getline(fin, temp, ',');
+        while (curStudent!=NULL&& curStudent->studentId!=temp)
+        {
+            curStudent=curStudent->next;
+        }
+        getline(fin, temp, ',');
+        curStudent->score->totalMark = stod(temp);
+        getline(fin, temp, ',');
+        curStudent->score->finalMark= stod(temp);
+        getline(fin, temp, ',');
+        curStudent->score->midtermMark = stod(temp);
+        getline(fin, temp);
+        curStudent->score->otherMark= stod(temp);
+    }
     fin.close();
     cout << "Scoreboard imported successfully." << endl;
 }
@@ -799,4 +799,137 @@ double Student::calGPA(){
     }
     total/=cnt;
     return total/10*4;
+}
+
+void Student::changePasswordOrUserName(){
+    string temp;
+    int ca;
+    char c;
+    do{
+        cout << "1: Username" << endl;
+        cout << "2: Password" << endl;
+        cout << "Enter: ";
+        cin >> ca;
+        if(ca == 1){
+            cout << "New username: " ;
+            cin >> temp;
+            if(temp == userName){
+                cout << "Similar to the old one" << endl;
+                break;
+            }
+            cout << "Your new username: " << temp << endl;
+            cout << "Are you sure?(y/n)";
+            cin >> c;
+            if(c == 'y'){
+                userName = temp;
+                cout << "Succesful!" << endl;
+            }else
+                cout << "Cancel the operation!" << endl;
+            break;
+        }else if(ca == 2){
+            cout << "New password: " ;
+            cin >> temp;
+            if(temp == passWord){
+                cout << "Similar to the old one!" << endl;
+                break;
+            }
+            cout << "Your new password: " << temp << endl;
+            cout << "Are you sure?(y/n)";
+            cin >> c;
+            if(c == 'y'){
+                passWord = temp;
+                cout << "Succesful!" << endl;
+            }else
+                cout << "Cancel the operation!" << endl;
+            break;
+        }else
+            cout << "Only choose (1|2)" << endl;
+    }while(true);
+}
+
+void StaffMember::changePasswordOrUserName(){
+    string temp;
+    int ca;
+    char c;
+    do{
+        cout << "1: Username" << endl;
+        cout << "2: Password" << endl;
+        cout << "Enter: ";
+        cin >> ca;
+        if(ca == 1){
+            cout << "New username: " ;
+            cin >> temp;
+            if(temp == userName){
+                cout << "Similar to the old one" << endl;
+                break;
+            }
+            cout << "Your new username: " << temp << endl;
+            cout << "Are you sure?(y/n)";
+            cin >> c;
+            if(c == 'y'){
+                userName = temp;
+                cout << "Succesful!" << endl;
+            }else
+                cout << "Cancel the operation!" << endl;
+            break;
+        }else if(ca == 2){
+            cout << "New password: " ;
+            cin >> temp;
+            if(temp == passWord){
+                cout << "Similar to the old one" << endl;
+                break;
+            }
+            cout << "Your new password: " << temp << endl;
+            cout << "Are you sure?(y/n)";
+            cin >> c;
+            if(c == 'y'){
+                passWord = temp;
+                cout << "Succesful!" << endl;
+            }else
+                cout << "Cancel the operation!" << endl;
+            break;
+        }else
+            cout << "Only choose (1|2)" << endl;
+    }while(true);
+}
+
+
+void UpdateUser(User user){
+    ofstream fout;
+    fout.open("student.txt", ios::trunc);
+    if(!fout.is_open()){
+        cout << "Error update file" << endl;
+        return;
+    }
+    Student* cur = user.students;
+    while(cur){
+        fout << cur->passWord << " ";
+        fout << cur->userName << " ";
+        fout <<  cur->studentId<< " ";
+        fout <<  cur->socialId<< " ";
+        fout <<  cur->firstName<< " ";
+        fout <<  cur->lastName<< " ";
+        fout <<  cur->gender<< " ";
+        fout <<  cur->schoolYear;
+        cur = cur->next;
+        fout << endl;
+    }
+    fout << "eof" << endl;
+    fout.close();
+    fout.open("staffMember.txt", ios::trunc);
+    if(!fout.is_open()){
+        cout << "Errol update file" << endl;
+        return;
+    }
+    StaffMember* cur1 = user.staffMembers;
+    while(cur1){
+        fout << cur1->passWord<< " ";
+        fout << cur1->userName<< " ";
+        fout <<cur1->firstName<< " ";
+        fout <<cur1->lastName;
+        cur1 = cur1->next;
+        fout << endl;
+    }
+    fout << "eof" << endl;
+    fout.close();
 }
