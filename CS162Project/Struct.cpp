@@ -977,3 +977,44 @@ void UpdateUser(User user){
     fout << "eof" << endl;
     fout.close();
 }
+
+void viewScoreOfCourse(Semester* semester, Student* student){
+    string courseName;
+    cout << "Enter course name: " ;
+    cin >> courseName;
+    Course *curCourse = semester->course;
+    while(curCourse){
+        if(curCourse->Course_name == courseName){
+            break;
+        }
+    }
+    if(!curCourse){
+        cout << "Doesn't have this course name!" << endl;
+        return;
+    }
+    Student* curStu=student;
+    Score* res = new Score;
+    res->finalMark = 0;
+    res->midtermMark = 0;
+    res->otherMark = 0;
+    res->totalMark = 0;
+    int cnt = 0;
+    while(curStu){
+        Score* curScore = curStu->score;
+        while(curScore){
+            if(curScore->Course_ID == curCourse->Course_ID){
+                cnt++;
+                res->finalMark += curScore->finalMark;
+                res->midtermMark += curScore->midtermMark;
+                res->otherMark += curScore->otherMark;
+                res->totalMark +=curScore->totalMark;
+            }
+        }
+    }
+    cout <<"This " << curCourse->Course_name << " course has the score board: " << endl;
+    cout << "Midtemp: " << (float)res->midtermMark/cnt << endl;
+    cout << "Final: " << (float)res->finalMark/cnt << endl;
+    cout << "Other: " << (float)res->totalMark/cnt << endl;
+    cout << "Total: " << (float)res->finalMark/cnt << endl;
+    delete res;
+}

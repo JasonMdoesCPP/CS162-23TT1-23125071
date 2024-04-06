@@ -122,4 +122,5 @@ void exportStudentInCourseToCsvFile(Student* stu);
 void importScoreBoard(Student* stu);
 void publishScore();
 void UpdateUser(User user);
+void viewScoreOfCourse(Semester* semester, Student* student); 
 #endif // STRUCT_H_INCLUDED
