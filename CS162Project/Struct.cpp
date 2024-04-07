@@ -962,7 +962,7 @@ void UpdateUser(User user){
     fout.close();
     fout.open("staffMember.txt", ios::trunc);
     if(!fout.is_open()){
-        cout << "Errol update file" << endl;
+        cout << "Error update file" << endl;
         return;
     }
     StaffMember* cur1 = user.staffMembers;

@@ -219,8 +219,8 @@ int main() {
             cout << "18. Import a score board" << endl;
             cout << "19. View score board of the course" << endl;
             cout << "20. Update a student's result " << endl;
-            cout << "24. publish student score!!" << endl;
-            cout << "25. Change username or password" << endl;
+            cout << "21. publish student score!!" << endl;
+            cout << "22. Change username or password" << endl;
             cout << "0. Ending program!" << endl;
 
             cout << "Enter your choice: ";
@@ -360,18 +360,18 @@ int main() {
                     break;
                 }
                 case 19:{
-                    viewScoreOfCourse(staf->schoolYear->semester, user.students); 
+                    viewScoreOfCourse(staf->schoolYear->semester, user.students);
                     break;
                 }
                 case 20:{
                     updateStudentRes(user.students);
                     break;
                 }
-                case 24: {
+                case 21: {
                     publishScore();
                     break;
                 }
-                case 25:
+                case 22:
                     staf->changePasswordOrUserName();
                     break;
 
