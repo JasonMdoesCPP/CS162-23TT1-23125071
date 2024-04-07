@@ -218,6 +218,7 @@ int main() {
             cout << "17. Export the student in course to csv file" << endl;
             cout << "18. Import a score board" << endl;
             cout << "19. View score board of the course" << endl;
+            cout << "20. Update a student's result " << endl;
             cout << "24. publish student score!!" << endl;
             cout << "25. Change username or password" << endl;
             cout << "0. Ending program!" << endl;
@@ -360,6 +361,10 @@ int main() {
                 }
                 case 19:{
                     viewScoreOfCourse(staf->schoolYear->semester, user.students); 
+                    break;
+                }
+                case 20:{
+                    updateStudentRes(user.students);
                     break;
                 }
                 case 24: {

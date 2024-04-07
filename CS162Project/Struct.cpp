@@ -1018,3 +1018,42 @@ void viewScoreOfCourse(Semester* semester, Student* student){
     cout << "Total: " << (float)res->finalMark/cnt << endl;
     delete res;
 }
+
+void updateStudentRes(Student *stu){
+    string studentID;
+    cout << "Enter Student ID you want to update: ";
+    cin >> studentID;
+    Student* curStu = stu;
+    while(curStu){
+        if(curStu->studentId == studentID){
+            break;
+        }
+        curStu = curStu->next;
+    }
+    if(!curStu){
+        cout << "Don't have any student have this ID"<< endl;
+        return;
+    }
+    Score* curScore = curStu->score;
+    while(curScore){
+        char ca;
+        cout << "Do you want to update the result of the course have ID:" << curScore->Course_ID << endl;
+        cout << "(y/n): ";
+        cin >> ca;
+        if(ca == 'y'){
+            cout << "Midtemp:";
+            cin >> curScore->midtermMark;
+            cout << "Final: ";
+            cin >> curScore->finalMark;
+            cout << "Other: ";
+            cin >> curScore->otherMark;
+            cout << "Total: ";
+            cin >> curScore->totalMark;
+            curScore=curScore->next;
+        }else if(ca == 'n'){
+            curScore=curScore->next;
+        }else{
+            cout << "Choose y/n only " << endl;
+        }
+    }
+}
