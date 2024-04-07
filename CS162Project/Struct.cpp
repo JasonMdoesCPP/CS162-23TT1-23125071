@@ -866,7 +866,7 @@ void Student::changePasswordOrUserName(){
             cin >> c;
             if(c == 'y'){
                 userName = temp;
-                cout << "Succesful!" << endl;
+                cout << "Successful!" << endl;
             }else
                 cout << "Cancel the operation!" << endl;
             break;
@@ -882,7 +882,7 @@ void Student::changePasswordOrUserName(){
             cin >> c;
             if(c == 'y'){
                 passWord = temp;
-                cout << "Succesful!" << endl;
+                cout << "Successful!" << endl;
             }else
                 cout << "Cancel the operation!" << endl;
             break;
@@ -912,7 +912,7 @@ void StaffMember::changePasswordOrUserName(){
             cin >> c;
             if(c == 'y'){
                 userName = temp;
-                cout << "Succesful!" << endl;
+                cout << "Successful!" << endl;
             }else
                 cout << "Cancel the operation!" << endl;
             break;
@@ -928,7 +928,7 @@ void StaffMember::changePasswordOrUserName(){
             cin >> c;
             if(c == 'y'){
                 passWord = temp;
-                cout << "Succesful!" << endl;
+                cout << "Successful!" << endl;
             }else
                 cout << "Cancel the operation!" << endl;
             break;
@@ -1012,7 +1012,7 @@ void viewScoreOfCourse(Semester* semester, Student* student){
         }
     }
     cout <<"This " << curCourse->Course_name << " course has the score board: " << endl;
-    cout << "Midtemp: " << (float)res->midtermMark/cnt << endl;
+    cout << "Midterm: " << (float)res->midtermMark/cnt << endl;
     cout << "Final: " << (float)res->finalMark/cnt << endl;
     cout << "Other: " << (float)res->totalMark/cnt << endl;
     cout << "Total: " << (float)res->finalMark/cnt << endl;
@@ -1041,7 +1041,7 @@ void updateStudentRes(Student *stu){
         cout << "(y/n): ";
         cin >> ca;
         if(ca == 'y'){
-            cout << "Midtemp:";
+            cout << "Midterm:";
             cin >> curScore->midtermMark;
             cout << "Final: ";
             cin >> curScore->finalMark;
