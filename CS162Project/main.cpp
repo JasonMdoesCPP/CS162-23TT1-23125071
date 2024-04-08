@@ -288,7 +288,6 @@ int main() {
                         while (curStudent) {
                             if (curStudent->studentId == studentId) {
                                 curCourse->AddStudentToCourse(curStudent);
-                                cout << "Student added to the course successfully!" << endl;
                                 break;
                             }
                             curStudent = curStudent->next;
@@ -352,11 +351,19 @@ int main() {
                     break;
                 }
                 case 17: {
-                    exportStudentInCourseToCsvFile(user.students);
+                    if(!staf->schoolYear->semester){
+                        cout << "Semester hasn't created yet" << endl;
+                        break;
+                    }
+                    exportStudentInCourseToCsvFile(staf->schoolYear->semester);
                     break;
                 }
                 case 18: {
-                    importScoreBoard(user.students);
+                    if(!staf->schoolYear->semester){
+                        cout << "No semester created" << endl;
+                        break;
+                    }
+                    importScoreBoard(user.students, staf->schoolYear->semester);
                     break;
                 }
                 case 19:{

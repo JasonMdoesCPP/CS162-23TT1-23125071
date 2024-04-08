@@ -431,7 +431,7 @@ void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, Us
 }
 void Course::inputStudent2CourseFromFile(User &Head_User)
 {
-    string filename = Course_ID + ".csv";
+    string filename = Course_ID + "Students.csv";
     ifstream fin(filename);
 
     if (!fin.is_open()) {
@@ -441,10 +441,9 @@ void Course::inputStudent2CourseFromFile(User &Head_User)
 
     string line;
     getline(fin, line); // Read and discard header line
-
     string studentId;
     while (getline(fin, studentId, ',')) {
-        if (studentId == "endlist") {
+        if (studentId == "eof") {
             break;
         }
 
@@ -768,38 +767,45 @@ void Class::viewScore(Student* stu, Course* headCourse){
     }
 
 }
-void exportStudentInCourseToCsvFile(Student* stu)
+void exportStudentInCourseToCsvFile(Semester* semester)
 { string CourseId;
     cout << "Enter Course ID:";
     cin.ignore();
     getline(cin, CourseId);
-    string filename = CourseId + ".csv";
-    ofstream fout(filename);
+    Course* curCourse = semester->course;
+    while(curCourse){
+        if(curCourse->Course_ID == CourseId){
+            break;
+        }
+        curCourse = curCourse->next;
+    }
+    if(!curCourse){
+        cout << "Don't have any course having this name!" <<endl;
+        return;
+    }
+    string filename = CourseId + "Students.csv";
+    ofstream fout(filename, ios::trunc);
     if (!fout.is_open())
     {
         cout << "Error opening file: " << filename << endl;
         return;
     }
     fout<<"StudentID,"<<endl;
-    Student* curStudent = stu;
-    while (curStudent!=nullptr)
-    {
-        if (curStudent->score->Course_ID==CourseId)
-        {
-            fout << curStudent->studentId << ","<<endl;
-        }
-        curStudent=curStudent->next;
+    StudentEnrolled* curStu = curCourse->studentEnrolled;
+    while (curStu){
+        fout << curStu->studentId << "," << endl;
+        curStu = curStu->next; 
     }
-    fout<<"eof";
+    fout<<"eof,";
     fout.close();
 }
-void importScoreBoard(Student* stu)
+void importScoreBoard(Student* stu, Semester *semester)
 {
     string CourseId;
     cout << "Enter Course ID:";
     cin.ignore();
     getline(cin, CourseId);
-    string filename = CourseId + ".csv";
+    string filename = CourseId + "Score.csv";
     ifstream fin(filename);
     if (!fin.is_open())
     {
@@ -808,24 +814,36 @@ void importScoreBoard(Student* stu)
     }
     string line;
     getline(fin, line);
-    while (getline(fin, line))
+    while (true)
     {
         string temp;
+        getline(fin, temp, ',');
+        if(temp == "eof"){
+            break;
+        }
         Student* curStudent=stu;
-        getline(fin, temp, ',');
-        getline(fin, temp, ',');
         while (curStudent!=NULL&& curStudent->studentId!=temp)
         {
             curStudent=curStudent->next;
         }
         getline(fin, temp, ',');
-        curStudent->score->totalMark = stod(temp);
+        Score* curScore = curStudent->score;
+        while (curScore){
+            if(curScore->Course_ID == temp)
+            {
+                break;
+            }
+            curScore = curScore->next;
+        }
         getline(fin, temp, ',');
-        curStudent->score->finalMark= stod(temp);
+        curScore->midtermMark = stod(temp);
         getline(fin, temp, ',');
-        curStudent->score->midtermMark = stod(temp);
-        getline(fin, temp);
-        curStudent->score->otherMark= stod(temp);
+        curScore->finalMark= stod(temp);
+        getline(fin, temp, ',');
+        curScore->otherMark = stod(temp);
+        getline(fin, temp, ',');
+        curScore->totalMark= stod(temp);
+        fin.ignore();
     }
     fin.close();
     cout << "Scoreboard imported successfully." << endl;
@@ -987,6 +1005,7 @@ void viewScoreOfCourse(Semester* semester, Student* student){
         if(curCourse->Course_name == courseName){
             break;
         }
+        curCourse = curCourse->next; 
     }
     if(!curCourse){
         cout << "Doesn't have this course name!" << endl;
@@ -1009,7 +1028,9 @@ void viewScoreOfCourse(Semester* semester, Student* student){
                 res->otherMark += curScore->otherMark;
                 res->totalMark +=curScore->totalMark;
             }
+            curScore = curScore->next; 
         }
+        curStu = curStu->next;
     }
     cout <<"This " << curCourse->Course_name << " course has the score board: " << endl;
     cout << "Midterm: " << (float)res->midtermMark/cnt << endl;
