@@ -175,7 +175,10 @@ int main() {
                             while (cur) {
                                 StudentEnrolled* curStudent = cur->studentEnrolled;
                                 while (curStudent) {
-                                    if (curStudent->studentId == stu->studentId) cout << cur->Course_ID << endl;
+                                    if (curStudent->studentId == stu->studentId) {
+                                        cout <<  "- "<< cur->Course_name << endl;
+                                        break;
+                                    }
                                     curStudent = curStudent->next;
                                 }
                                 cur = cur -> next;

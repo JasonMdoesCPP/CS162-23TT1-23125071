@@ -545,7 +545,7 @@ void Course::AddStudentToCourse(Student* student) {
     {
         if (cur_student->studentId == student->studentId)
         {
-            cout << "Student's already in the course!";
+            cout << "Student's already in the course!" << endl; 
             return;
         }
         cur_student = cur_student->next;
@@ -691,8 +691,6 @@ void Semester::viewCourse(){
     Course* cur = course;
     if (!cur) {
         cout << "There are no courses added yet." << endl;
-
-
     }
     cout << "The added courses in this semester have their courses' name to be: " << endl;
     while (cur) {
@@ -743,6 +741,7 @@ void Student::ViewScore(Course* HeadCourse){
             cout << "Final: "<<cur->finalMark << endl;
             cout <<"Other: " <<cur->otherMark << endl;
             cout <<"Total: " << cur->totalMark << endl;
+            cur = cur->next;
         }
     }else{
         cout << "Scores haven't published " << endl;
