@@ -153,6 +153,7 @@ int main() {
     int op;
     cout << "1. Log in" << endl;
     cout << "0. End program!" << endl;
+    cout << "Enter: " ;
     cin >> op;
     while(op){
         user.login();
@@ -401,6 +402,7 @@ int main() {
         }
         cout << "1. Log in" << endl;
         cout << "0. End program!" << endl;
+        cout << "Enter: " ;
         cin >> op;
     }
     cout << "Finish";
