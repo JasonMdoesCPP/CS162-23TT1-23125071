@@ -183,7 +183,7 @@ int main() {
                         }
                         else {
                             cout << "You have not enrolled any courses yet!" << endl;
-                            
+
                         }
                         break;
                     }
@@ -205,7 +205,7 @@ int main() {
         }
         if (user.user2) {
             StaffMember* staf = user.user2;
-            
+
             int ca;
             do {
                 cout << "1. Create a school year" << endl;
@@ -230,10 +230,10 @@ int main() {
                 cout << "21. publish student score!!" << endl;
                 cout << "22. Change username or password" << endl;
                 cout << "0. Log in another account" << endl;
-                
+
                 cout << "Enter your choice: ";
                 cin >> ca;
-                
+
                 switch (ca) {
                     case 1:
                         staf->createSchoolYear();
@@ -353,8 +353,8 @@ int main() {
                         if (curCourse) curCourse->viewStudent(user.students);
                         else {
                             cout << "Course not found!" << endl;
-                            
-                            
+
+
                         }
                         break;
                     }
@@ -389,8 +389,8 @@ int main() {
                     case 22:
                         staf->changePasswordOrUserName();
                         break;
-                        
-                        
+
+
                     case 0:
                         break;
                     default:
@@ -409,6 +409,7 @@ int main() {
     UpdateUser(user);
     user.deleteUser();
     deleteClass(HeadClass);
+     deleteAll(user, HeadClass);
     return 0;
 }
 
