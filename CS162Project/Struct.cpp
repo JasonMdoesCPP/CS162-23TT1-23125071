@@ -403,7 +403,7 @@ void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, Us
                     if (cur_Score->Course_ID == CourseID)
                     {
                         delete cur_Score;
-                        cur_Score = nullptr;
+                        cur_Student->score = nullptr;
                         return;
                     }
                     while (cur_Score)
@@ -793,12 +793,12 @@ void exportStudentInCourseToCsvFile(Semester* semester)
     StudentEnrolled* curStu = curCourse->studentEnrolled;
     while (curStu){
         fout << curStu->studentId << "," << endl;
-        curStu = curStu->next; 
+        curStu = curStu->next;
     }
     fout<<"eof,";
     fout.close();
 }
-void importScoreBoard(Student* stu, Semester *semester)
+void importScoreBoard(Student* stu, Semester* semester)
 {
     string CourseId;
     cout << "Enter Course ID:";
@@ -817,38 +817,69 @@ void importScoreBoard(Student* stu, Semester *semester)
     {
         string temp;
         getline(fin, temp, ',');
-        if(temp == "eof"){
+        if (temp == "eof") {
             break;
         }
-        Student* curStudent=stu;
-        while (curStudent!=NULL&& curStudent->studentId!=temp)
+        Student* curStudent = stu;
+        bool studentFound = false;
+        while (curStudent != NULL)
         {
-            curStudent=curStudent->next;
-        }
-        getline(fin, temp, ',');
-        Score* curScore = curStudent->score;
-        while (curScore){
-            if(curScore->Course_ID == temp)
+            if (curStudent->studentId == temp)
             {
+                studentFound = true;
+                break;
+            }
+            curStudent = curStudent->next;
+        }
+        if (!studentFound)
+        {
+            // Print out the student ID of the unmatched student
+            cout << "Unmatched student ID: " << temp << endl<<endl;
+            getline(fin, temp); // Ignore the rest of the line
+            continue; // Move to the next line
+        }
+
+        getline(fin, temp, ',');
+        string courseID = temp;
+        Score* curScore = curStudent->score;
+        if (courseID != CourseId)
+        {
+            cout << "Problem with student " << curStudent->studentId << endl;
+            cout << "We are updating for course "<< CourseId<<" not course "<<courseID<<endl<<endl;
+            getline(fin, temp);
+            continue;
+        }
+        bool courseFound = false;
+        while (curScore)
+        {
+            if (curScore->Course_ID == courseID)
+            {
+                courseFound = true;
                 break;
             }
             curScore = curScore->next;
         }
+        if (!courseFound)
+        {
+            // Print out the course ID that doesn't match
+            cout << "Student with ID " << curStudent->studentId<<" has not attended to course "<< courseID<<endl<<endl;
+            getline(fin, temp); // Ignore the rest of the line
+            continue; // Move to the next line
+        }
+
         getline(fin, temp, ',');
         curScore->midtermMark = stod(temp);
         getline(fin, temp, ',');
-        curScore->finalMark= stod(temp);
+        curScore->finalMark = stod(temp);
         getline(fin, temp, ',');
         curScore->otherMark = stod(temp);
         getline(fin, temp, ',');
-        curScore->totalMark= stod(temp);
-        fin.ignore();
+        curScore->totalMark = stod(temp);
+        fin.ignore(); // Ignore the newline character
     }
     fin.close();
     cout << "Scoreboard imported successfully." << endl;
 }
-
-
 double Student::calGPA(){
     Score* curScore = score;
     double total = 0;
@@ -1004,7 +1035,7 @@ void viewScoreOfCourse(Semester* semester, Student* student){
         if(curCourse->Course_name == courseName){
             break;
         }
-        curCourse = curCourse->next; 
+        curCourse = curCourse->next;
     }
     if(!curCourse){
         cout << "Doesn't have this course name!" << endl;
@@ -1027,7 +1058,7 @@ void viewScoreOfCourse(Semester* semester, Student* student){
                 res->otherMark += curScore->otherMark;
                 res->totalMark +=curScore->totalMark;
             }
-            curScore = curScore->next; 
+            curScore = curScore->next;
         }
         curStu = curStu->next;
     }
@@ -1075,5 +1106,86 @@ void updateStudentRes(Student *stu){
         }else{
             cout << "Choose y/n only " << endl;
         }
+    }
+}
+void deleteAll(User& user, Class* headClass) {
+    // Delete all students in User
+    Student* studentPtr = user.students;
+    while (studentPtr != nullptr) {
+        // Delete scores
+        Score* scorePtr = studentPtr->score;
+        while (scorePtr != nullptr) {
+            Score* temp = scorePtr;
+            scorePtr = scorePtr->next;
+            delete temp;
+        }
+        // Delete the student
+        Student* temp = studentPtr;
+        studentPtr = studentPtr->next;
+        delete temp;
+    }
+    user.students = nullptr; // Set user's students pointer to null
+
+    // Delete all staff members in User
+    StaffMember* staffPtr = user.staffMembers;
+    while (staffPtr != nullptr) {
+        // Delete school years
+        SchoolYear* yearPtr = staffPtr->schoolYear;
+        while (yearPtr != nullptr) {
+            // Delete semesters
+            Semester* semesterPtr = yearPtr->semester;
+            while (semesterPtr != nullptr) {
+                // Delete courses
+                Course* coursePtr = semesterPtr->course;
+                while (coursePtr != nullptr) {
+                    // Delete students enrolled in the course
+                    StudentEnrolled* enrolledPtr = coursePtr->studentEnrolled;
+                    while (enrolledPtr != nullptr) {
+                        StudentEnrolled* temp = enrolledPtr;
+                        enrolledPtr = enrolledPtr->next;
+                        delete temp;
+                    }
+                    // Delete the course
+                    Course* temp = coursePtr;
+                    coursePtr = coursePtr->next;
+                    delete temp;
+                }
+                // Delete the semester
+                Semester* temp = semesterPtr;
+                delete temp;
+            }
+            // Delete the school year
+            SchoolYear* temp = yearPtr;
+            yearPtr = yearPtr->next;
+            delete temp;
+        }
+        // Delete the staff member
+        StaffMember* temp = staffPtr;
+        staffPtr = staffPtr->next;
+        delete temp;
+    }
+    user.staffMembers = nullptr; // Set user's staff members pointer to null
+
+    // Delete all classes
+    Class* classPtr = headClass;
+    while (classPtr != nullptr) {
+        // Delete enrolled students
+        StudentEnrolled* enrolledPtr = classPtr->studentEnroll;
+        while (enrolledPtr != nullptr) {
+            StudentEnrolled* temp = enrolledPtr;
+            enrolledPtr = enrolledPtr->next;
+            delete temp;
+        }
+        // Delete class scores
+        Score* scorePtr = classPtr->classScore;
+        while (scorePtr != nullptr) {
+            Score* temp = scorePtr;
+            scorePtr = scorePtr->next;
+            delete temp;
+        }
+        // Delete the class
+        Class* temp = classPtr;
+        classPtr = classPtr->next;
+        delete temp;
     }
 }

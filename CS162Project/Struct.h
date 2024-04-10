@@ -97,7 +97,7 @@ struct StaffMember{
     void createSchoolYear();
     void addSemester(int yearStart,Semester *&cur_semester);
     void changePasswordOrUserName();
-    
+
 };
 struct User{
     StaffMember *staffMembers;
@@ -119,10 +119,11 @@ void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, Us
 void CopyCourseInfo(Course cur_Course, Course newCourse);
 void viewClasses(Class* HeadClass);
 void viewStudentInClass(Class* HeadClass, Student* headStudent);
-void exportStudentInCourseToCsvFile(Semester* semester); 
+void exportStudentInCourseToCsvFile(Semester* semester);
 void importScoreBoard(Student* stu, Semester *semester);
 void publishScore();
 void UpdateUser(User user);
 void viewScoreOfCourse(Semester* semester, Student* student);
 void updateStudentRes(Student *stu);
+void deleteAll(User& user, Class* headClass);
 #endif // STRUCT_H_INCLUDED
