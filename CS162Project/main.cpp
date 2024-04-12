@@ -1,152 +1,10 @@
-//#include"Struct.h"
-//using namespace std;
-//int main()
-//{
-//    User user;
-//    Semester* cur_semester=nullptr;
-//    Class *HeadClass = nullptr;
-//    user.addInformationStudent();
-//    user.addInformationStaffMembers();
-//    user.login();
-//    if(user.user1){
-//        Student* stu = user.user1;
-//    }
-//    if(user.user2){
-//        StaffMember * staf = user.user2;
-//        cout << "1. Create a school year " << endl;
-//        cout << "2. Create several classes for 1st-year students" << endl;
-//        cout << "3. Add new 1st year students to 1st-year classes." << endl;
-//        cout << "4. Adding student to class from csv file" << endl;
-//        cout << "5. Add Semester to School Year" << endl;
-//        cout << "6 Add new Course"<<endl;
-//        cout << "7. Add Student to Course" << endl;
-//        cout << "0. Ending program!" << endl;
-//        int ca;
-//        cin >> ca;
-//        while(ca){
-//            if(ca == 1){
-//                staf->createSchoolYear();
-//            }else if(ca == 2){
-//                createSeveralClasses(HeadClass);
-//            }else if(ca == 3){
-//                addStudentToClass(HeadClass, user.students);
-//            }else if(ca == 4){
-//                addStudentToClassFromCsvFile(HeadClass, user.students);
-//            }
-//            else if (ca == 5)
-//            {
-//                int yearStart=0;
-//                cout << "Enter SchoolYear (Start Year):";
-//                cin >> yearStart;
-//                staf->addSemester(yearStart, cur_semester);
-//            }
-//            else if (ca == 6)
-//            {
-//                cur_semester->addCourse();
-//            }
-//            else if (ca == 7)
-//            {
-//                string CourseID;
-//                cout << "Enter Course ID:";
-//                cin.ignore();
-//                getline(cin, CourseID);
-//                Course* cur_Course=cur_semester->findCourseinSemester(CourseID);
-//                if (cur_Course)
-//                {
-//                    cur_Course->inputStudent2CourseFromFile(user);
-//                }
-//            }
-//            else if (ca == 10) {
-//                string courseId;
-//                cout << "Enter the Course ID to update: ";
-//                cin >> courseId;
-//                Course* curCourse = cur_semester->findCourseinSemester(courseId);
-//                if (curCourse) {
-//                    curCourse->UpdateCourseInfo();
-//                    cout << "Course information updated successfully!" << endl;
-//                }
-//                else {
-//                    cout << "Course not found!" << endl;
-//                }
-//            }
-//            else if (ca == 11) {
-//                // Add student to the course
-//                string courseId;
-//                cout << "Enter the Course ID to add student: ";
-//                cin >> courseId;
-//                Course* curCourse = cur_semester->findCourseinSemester(courseId);
-//                if (curCourse) {
-//                    // Prompt for student ID
-//                    string studentId;
-//                    cout << "Enter the Student ID to add to the course: ";
-//                    cin >> studentId;
-//                    // Find the student
-//                    Student* curStudent = user.students;
-//                    while (curStudent) {
-//                        if (curStudent->studentId == studentId) {
-//                            // Add student to the course
-//                            curCourse->AddStudentToCourse(curStudent);
-//                            cout << "Student added to the course successfully!" << endl;
-//                            break;
-//                        }
-//                        curStudent = curStudent->next;
-//                    }
-//                    if (!curStudent) {
-//                        cout << "Student not found!" << endl;
-//                    }
-//                }
-//                else {
-//                    cout << "Course not found!" << endl;
-//                }
-//            }
-//            else if (ca == 12) {
-//                // Remove student from the course
-//                string courseId;
-//                cout << "Enter the Course ID to remove student: ";
-//                cin >> courseId;
-//                Course* curCourse = cur_semester->findCourseinSemester(courseId);
-//                if (curCourse) {
-//                    // Prompt for student ID
-//                    string studentId;
-//                    cout << "Enter the Student ID to remove from the course: ";
-//                    cin >> studentId;
-//                    // Remove student from the course
-//                    curCourse->RemoveStudentFromCourse(studentId);
-//                    cout << "Student removed from the course successfully!" << endl;
-//                }
-//                else {
-//                    cout << "Course not found!" << endl;
-//                }
-//            }
-//            else if (ca == 13) {
-//                // Delete a course
-//                string courseId;
-//                cout << "Enter the Course ID to delete: ";
-//                cin >> courseId;
-//                cur_semester->DeleteACourse(courseId);
-//                cout << "Course deleted successfully!" << endl;
-//            }
-//            else
-//                cout << "Enter wrong number!"  << endl;
-//
-//            cout << "1. Create a school year (2020-2021, for example)" << endl;
-//            cout << "2. Create several classes for 1st-year students" << endl;
-//            cout << "3. Add new 1st year students to 1st-year classes." << endl;
-//            cout << "4. Adding student to class from csv file" << endl;
-//            cout << "0. Ending program!" << endl;
-//            cin >> ca;
-//        }
-//    }
-//    cout << "finish";
-//    user.deleteUser();
-//    deleteClass(HeadClass);
-//}
 #include"Struct.h"
 using namespace std;
 
 int main() {
+    bool publishedScore = false;
     User user;
-    Semester* cur_semester = nullptr;
+    Semester *cur_semester=nullptr;
     Class* HeadClass = nullptr;
     user.addInformationStudent();
     user.addInformationStaffMembers();
@@ -192,7 +50,7 @@ int main() {
                     }
                     case 2: {
                         Course* temp = user.staffMembers->schoolYear->semester->course;
-                        stu->ViewScore(temp);
+                        stu->ViewScore(temp, publishedScore);
                         break;
                     }
                     case 3:
@@ -204,7 +62,12 @@ int main() {
                         break;
                 }
             } while (ca!=0);
-            user.user1 = nullptr;
+            /*user.user1 = nullptr;*/ //What is it for?
+            //Update all the files
+
+
+
+
         }
         if (user.user2) {
             StaffMember* staf = user.user2;
@@ -386,7 +249,7 @@ int main() {
                         break;
                     }
                     case 21: {
-                        publishScore();
+                        publishScore(publishedScore);
                         break;
                     }
                     case 22:
@@ -401,7 +264,11 @@ int main() {
                         break;
                 }
             } while (ca != 0);
-            user.user2 = nullptr;
+           /* user.user2 = nullptr;*/ //What is it for?
+            //Create and Update all the files
+
+
+
         }
         cout << "1. Log in" << endl;
         cout << "0. End program!" << endl;

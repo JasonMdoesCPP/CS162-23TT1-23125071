@@ -1,7 +1,6 @@
 #ifndef STRUCT_H_INCLUDED
 #define STRUCT_H_INCLUDED
 
-
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -9,7 +8,7 @@
 
 using namespace std;
 struct Student;
-struct DateOfBirth{
+struct Date{
     int day;
     int year;
     int month;
@@ -46,8 +45,8 @@ struct Course{
 };
 struct Semester{
     Course *course = nullptr;
-    int startDay;
-    int endDay;
+    Date startDay;
+    Date endDay;
     void addCourse();
     void viewCourse();
     Course* findCourseinSemester(string CourseID);
@@ -55,7 +54,7 @@ struct Semester{
 };
 struct SchoolYear{
     SchoolYear* next=nullptr;
-    Semester *semester = nullptr; //3 semester only
+    Semester *semester = new Semester[3]; //3 semester only
     int yearStart;
     int yearEnd;
 
@@ -67,12 +66,12 @@ struct Class{
     StudentEnrolled* studentEnroll = nullptr;  // include file has list of studentID(check if there are exist or not)
     Score *classScore = nullptr;  // create function that calculates the classScore
     void addStudents(Student* stu);
-    void viewScore(Student* stu, Course* headCourse);
+    void viewScore(Student* stu, Course* headCourse, bool publishedScore);
 };
 struct Student{
     Student *next = nullptr;
     Score *score=nullptr; /*include courses name so if wanting to allocate the course enrolled allocate this*/
-    DateOfBirth dateOfBirth;
+    Date dateOfBirth;
     string className;
     string passWord;
     string userName;
@@ -83,7 +82,7 @@ struct Student{
     string gender;
     int No;
     int schoolYear;
-    void ViewScore(Course* HeadCourse );
+    void ViewScore(Course* HeadCourse, bool publishedScore);
     double calGPA();
     void changePasswordOrUserName();
 };
@@ -121,7 +120,7 @@ void viewClasses(Class* HeadClass);
 void viewStudentInClass(Class* HeadClass, Student* headStudent);
 void exportStudentInCourseToCsvFile(Semester* semester);
 void importScoreBoard(Student* stu, Semester *semester);
-void publishScore();
+void publishScore(bool &publishedScore);
 void UpdateUser(User user);
 void viewScoreOfCourse(Semester* semester, Student* student);
 void updateStudentRes(Student *stu);

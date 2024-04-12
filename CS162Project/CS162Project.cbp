@@ -32,8 +32,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Class.cpp" />
+		<Unit filename="Course.cpp" />
+		<Unit filename="Semester.cpp" />
+		<Unit filename="Staff.cpp" />
 		<Unit filename="Struct.cpp" />
 		<Unit filename="Struct.h" />
+		<Unit filename="Student.cpp" />
+		<Unit filename="User.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions />
 	</Project>
