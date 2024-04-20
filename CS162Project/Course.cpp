@@ -3,20 +3,14 @@ void Course::inputStudent2CourseFromFile(User& Head_User)
 {
     string filename = Course_ID + "Students.csv";
     ifstream fin(filename);
-
     if (!fin.is_open()) {
         cout << "Error opening file: " << filename << endl;
         return;
     }
-
     string line;
     getline(fin, line); // Read and discard header line
     string studentId;
     while (getline(fin, studentId, ',')) {
-        if (studentId == "eof") {
-            break;
-        }
-
         // Check if the student is already enrolled
         StudentEnrolled* curEnrollment = studentEnrolled;
         bool alreadyEnrolled = false;
@@ -40,7 +34,6 @@ void Course::inputStudent2CourseFromFile(User& Head_User)
         }
         fin.ignore();
     }
-
     fin.close();
 }
 // Member function to update course information

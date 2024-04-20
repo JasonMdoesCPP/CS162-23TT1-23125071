@@ -75,14 +75,11 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
     if(check){
         string line;
         getline(fin, line); // Read and discard header line
-        while(!fin.eof()){
+        while(getline(fin,line,',')){
             bool flag = false;
             string studentId;
-            getline(fin, studentId,',');
+            studentId = line;
             fin.ignore();
-            if(studentId == "eof"){
-                break;
-            }
             StudentEnrolled* curStudentEnrolled = cur_class->studentEnroll;
     //Check if student had been here or not
             while(curStudentEnrolled){
@@ -119,6 +116,7 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
     }
     else
         cout << "The class doesn't exist " << endl;
+    
 }
 //1 for adding, 2 for deleting
 void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, User &Head_User,int choice)
@@ -285,7 +283,6 @@ void exportStudentInCourseToCsvFile(Semester* semester)
         fout << curStu->studentId << "," << endl;
         curStu = curStu->next;
     }
-    fout<<"eof,";
     fout.close();
 }
 void importScoreBoard(Student* stu, Semester* semester)
@@ -303,13 +300,9 @@ void importScoreBoard(Student* stu, Semester* semester)
     }
     string line;
     getline(fin, line);
-    while (true)
+    string temp;
+    while (getline(fin, temp, ','))
     {
-        string temp;
-        getline(fin, temp, ',');
-        if (temp == "eof") {
-            break;
-        }
         Student* curStudent = stu;
         bool studentFound = false;
         while (curStudent != NULL)
