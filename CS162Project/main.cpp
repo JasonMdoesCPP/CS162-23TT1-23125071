@@ -62,7 +62,7 @@ int main() {
                         break;
                 }
             } while (ca!=0);
-            /*user.user1 = nullptr;*/ //What is it for?
+            user.user1 = nullptr; //What is it for?
             //Update all the files
 
 
@@ -264,7 +264,7 @@ int main() {
                         break;
                 }
             } while (ca != 0);
-           /* user.user2 = nullptr;*/ //What is it for?
+            user.user2 = nullptr; //What is it for?
             //Create and Update all the files
 
 

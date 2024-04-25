@@ -75,11 +75,10 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
     if(check){
         string line;
         getline(fin, line); // Read and discard header line
-        while(getline(fin,line,',')){
+        while(getline(fin,line)){
             bool flag = false;
             string studentId;
             studentId = line;
-            fin.ignore();
             StudentEnrolled* curStudentEnrolled = cur_class->studentEnroll;
     //Check if student had been here or not
             while(curStudentEnrolled){
@@ -277,10 +276,10 @@ void exportStudentInCourseToCsvFile(Semester* semester)
         cout << "Error opening file: " << filename << endl;
         return;
     }
-    fout<<"StudentID,"<<endl;
+    fout<<"StudentID"<<endl;
     StudentEnrolled* curStu = curCourse->studentEnrolled;
     while (curStu){
-        fout << curStu->studentId << "," << endl;
+        fout << curStu->studentId << endl;
         curStu = curStu->next;
     }
     fout.close();
@@ -356,9 +355,9 @@ void importScoreBoard(Student* stu, Semester* semester)
         curScore->finalMark = stod(temp);
         getline(fin, temp, ',');
         curScore->otherMark = stod(temp);
-        getline(fin, temp, ',');
+        getline(fin, temp);
         curScore->totalMark = stod(temp);
-        fin.ignore(); // Ignore the newline character
+    
     }
     fin.close();
     cout << "Scoreboard imported successfully." << endl;
@@ -403,12 +402,12 @@ void UpdateUser(User user){
     fout.close();
 }
 void viewScoreOfCourse(Semester* semester, Student* student){
-    string courseName;
-    cout << "Enter course name: " ;
-    cin >> courseName;
+    string courseID;
+    cout << "Enter course ID: " ;
+    cin >> courseID;
     Course *curCourse = semester->course;
     while(curCourse){
-        if(curCourse->Course_name == courseName){
+        if(curCourse->Course_ID == courseID){
             break;
         }
         curCourse = curCourse->next;

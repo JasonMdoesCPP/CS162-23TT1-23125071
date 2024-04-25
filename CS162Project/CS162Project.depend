@@ -13,3 +13,33 @@
 	"struct.h"
 	<conio.h>
 
+1712907180 source:c:\hcmus\cs162-23tt1-23125071\cs162project\main.cpp
+	"Struct.h"
+
+1712902996 c:\hcmus\cs162-23tt1-23125071\cs162project\struct.h
+	<iostream>
+	<fstream>
+	<string.h>
+	<string>
+
+1714038443 source:c:\hcmus\cs162-23tt1-23125071\cs162project\struct.cpp
+	"Struct.h"
+
+1712898578 source:c:\hcmus\cs162-23tt1-23125071\cs162project\class.cpp
+	"Struct.h"
+
+1714038917 source:c:\hcmus\cs162-23tt1-23125071\cs162project\course.cpp
+	"Struct.h"
+
+1712897843 source:c:\hcmus\cs162-23tt1-23125071\cs162project\semester.cpp
+	"Struct.h"
+
+1712903088 source:c:\hcmus\cs162-23tt1-23125071\cs162project\staff.cpp
+	"Struct.h"
+
+1712898401 source:c:\hcmus\cs162-23tt1-23125071\cs162project\student.cpp
+	"Struct.h"
+
+1712897847 source:c:\hcmus\cs162-23tt1-23125071\cs162project\user.cpp
+	"Struct.h"
+

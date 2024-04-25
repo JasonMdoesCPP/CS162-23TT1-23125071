@@ -10,7 +10,21 @@ void Course::inputStudent2CourseFromFile(User& Head_User)
     string line;
     getline(fin, line); // Read and discard header line
     string studentId;
-    while (getline(fin, studentId, ',')) {
+    while (getline(fin, studentId)) {
+
+        //Check in user
+        bool check = false;
+        Student *cur = Head_User.students;
+        while (cur)
+        {
+            if (cur->studentId==studentId)
+            {   
+                check = true;
+                break;
+            }
+            cur = cur->next;
+        }
+        
         // Check if the student is already enrolled
         StudentEnrolled* curEnrollment = studentEnrolled;
         bool alreadyEnrolled = false;
@@ -22,7 +36,7 @@ void Course::inputStudent2CourseFromFile(User& Head_User)
             curEnrollment = curEnrollment->next;
         }
 
-        if (!alreadyEnrolled) {
+        if (!alreadyEnrolled && check) {
             // Create a new StudentEnrolled node
             StudentEnrolled* newEnrollment = new StudentEnrolled;
             newEnrollment->studentId = studentId;
@@ -32,7 +46,7 @@ void Course::inputStudent2CourseFromFile(User& Head_User)
             // Update to User
             UpdateCoursetoUser(studentId, Course_ID, Course_ID, Head_User, 1);
         }
-        fin.ignore();
+
     }
     fin.close();
 }
