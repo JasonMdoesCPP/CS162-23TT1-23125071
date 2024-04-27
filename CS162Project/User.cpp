@@ -47,52 +47,90 @@ void User::login() {
 }
 void User::addInformationStudent() {
     ifstream fin;
-    fin.open("student.txt");
-    students = new Student;
-    Student* cur = students;
-    Student* before = students;
-    string temp;
-    while (fin >> temp) {
-        if (temp == "eof") {
-            break;
-        }
-        cur->passWord = temp;
-        fin >> cur->userName;
-        fin >> cur->studentId;
-        fin >> cur->socialId;
-        fin >> cur->firstName;
-        fin >> cur->lastName;
-        fin >> cur->gender;
-        fin >> cur->schoolYear;
-        cur->next = new Student;
-        before = cur;
-        cur = cur->next;
+    fin.open("student.csv");
+    if (!fin)
+    {
+        cout << "Cannot open file student.csv";
+        return;
     }
-    before->next = nullptr;
-    delete cur;
-}
-void User::addInformationStaffMembers() {
-    ifstream fin;
-    fin.open("staffMember.txt");
-    staffMembers = new StaffMember;
-    StaffMember* cur = staffMembers;
-    StaffMember* before = staffMembers;
+    students = nullptr;
+
+
+    string line;
+    getline(fin, line);
     string temp;
-    while (fin >> temp) {
-        if (temp == "eof") {
-            break;
+
+    while (getline(fin, temp, ','))
+    {
+        Student* newStudent = new Student;
+        newStudent->next = nullptr;
+        newStudent->passWord = temp;
+        getline(fin, newStudent->userName, ',');
+        getline(fin, newStudent->studentId, ',');
+        getline(fin, newStudent->socialId, ',');
+        getline(fin, newStudent->firstName, ',');
+        getline(fin, newStudent->lastName, ',');
+        string temp;
+        getline(fin, temp, ',');
+        newStudent->gender = stoi(temp);
+        getline(fin, temp, ',');
+        newStudent->schoolYear = stoi(temp);
+        //Date
+        getline(fin, temp, ',');
+        newStudent->dateOfBirth.day = stoi(temp);
+        getline(fin, temp, ',');
+        newStudent->dateOfBirth.month = stoi(temp);
+        getline(fin, temp);
+        newStudent->dateOfBirth.year = stoi(temp);
+
+        if (students == nullptr)
+        {
+            students = newStudent;
         }
-        cur->passWord = temp;
-        fin >> cur->userName;
-        fin >> cur->firstName;
-        fin >> cur->lastName;
-        cur->next = new StaffMember;
-        before = cur;
-        cur = cur->next;
+        else
+        {
+            newStudent->next = students;
+            students = newStudent;
+        }
     }
-    before->next = nullptr;
-    delete cur;
+
 }
+void User::addInformationStaffMembers(){} 
+//    ifstream fin;
+//    fin.open("staffMember.csv");
+//    if (!fin) {
+//        cout << "Cannot open file staffMember.csv" << endl;
+//        return;
+//    }
+//
+//    staffMembers = nullptr;
+//
+//    string line;
+//    getline(fin, line); // Skip header line (assuming CSV has a header)
+//    while (getline(fin, line)) {
+//        StaffMember* newStaffMember = new StaffMember;
+//        newStaffMember->next = nullptr;
+//
+//        stringstream ss(line); // Use stringstream to parse comma-separated values
+//
+//        getline(ss, newStaffMember->userName, ',');
+//        getline(ss, newStaffMember->passwWord, ',');
+//        getline(ss, newStaffMember->firstName, ',');
+//        getline(ss, newStaffMember->lastName, ',');
+//
+//        // Handle additional staff member fields (assuming no comma in these fields)
+//        fin >> newStaffMember->schoolYear; // Assuming schoolYear can be directly read from file
+//        newStaffMember->createSchoolYear(); // Call function to process schoolYear data (if needed)
+//
+//        if (staffMembers == nullptr) {
+//            staffMembers = newStaffMember;
+//        }
+//        else {
+//            newStaffMember->next = staffMembers;
+//            staffMembers = newStaffMember;
+//        }
+//    }
+//}
 void User::deleteUser() {
     while (students) {
         Student* temp = students;

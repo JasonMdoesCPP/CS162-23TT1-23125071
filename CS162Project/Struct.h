@@ -5,7 +5,7 @@
 #include <fstream>
 #include <string.h>
 #include<string>
-
+#include<sstream>
 using namespace std;
 struct Student;
 struct Date{
@@ -79,7 +79,7 @@ struct Student{
     string socialId;
     string firstName;
     string lastName;
-    string gender;
+    bool gender;
     int No;
     int schoolYear;
     void ViewScore(Course* HeadCourse, bool publishedScore);
