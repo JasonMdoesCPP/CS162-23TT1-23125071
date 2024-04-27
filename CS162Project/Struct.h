@@ -97,7 +97,7 @@ struct StaffMember{
     void changePasswordOrUserName();
 //All Updating function here
     void updateSchoolYear(Semester *&cur_semester);
-    void importSchoolYear(); 
+    void importSchoolYear();
 
 };
 struct User{
@@ -129,5 +129,6 @@ void updateStudentRes(Student *stu);
 void deleteAll(User& user, Class* headClass);
 bool isValidDate(Date& date);
 void UpdateClass(Class* &headClass, Student*stu);
-void ImportClass(Class* headClass); 
+void ImportClass(Class* headClass);
+void viewScoreOfClass(Semester* semester, Student* student, Course* HeadCourse);
 #endif // STRUCT_H_INCLUDED

@@ -8,7 +8,7 @@ int main() {
     Class* HeadClass = nullptr;
     user.addInformationStudent();
     user.addInformationStaffMembers();
-    UpdateClass(HeadClass, user.students); 
+    UpdateClass(HeadClass, user.students);
     int op;
     cout << "1. Log in" << endl;
     cout << "0. End program!" << endl;
@@ -20,7 +20,7 @@ int main() {
             Student* stu = user.user1;
             user.staffMembers->updateSchoolYear(cur_semester);
 //Update information
-            
+
 
     //
             int ca;
@@ -78,7 +78,7 @@ int main() {
         if (user.user2) {
             StaffMember* staf = user.user2;
  // Update information
-            staf->updateSchoolYear(cur_semester);
+            //staf->updateSchoolYear(cur_semester);
             int ca;
             do {
                 cout << "1. Create a school year" << endl;
@@ -102,6 +102,7 @@ int main() {
                 cout << "20. Update a student's result " << endl;
                 cout << "21. publish student score!!" << endl;
                 cout << "22. Change username or password" << endl;
+                cout << "23. View the scoreboard of a class" << endl;
                 cout << "0. Log in another account" << endl;
 
                 cout << "Enter your choice: ";
@@ -267,8 +268,9 @@ int main() {
                     case 22:
                         staf->changePasswordOrUserName();
                         break;
-
-
+                    case 23:
+                        viewScoreOfClass(staf->schoolYear->semester, user.students, user.staffMembers->schoolYear->semester->course);
+                        break;
                     case 0:
                         break;
                     default:
@@ -292,7 +294,7 @@ int main() {
         user.user2->importSchoolYear();
     }
     UpdateUser(user);
-    ImportClass(HeadClass); 
+    ImportClass(HeadClass);
     user.deleteUser();
     deleteClass(HeadClass);
     deleteAll(user, HeadClass);

@@ -50,7 +50,7 @@ void addStudentToClass(Class* clas, Student* stu){
         cout << "The class doesn't exist " << endl;
 }
 void addStudentToClassFromCsvFile(Class*clas, Student*stu, string className){
-    
+
 
     bool check = false;
     ifstream fin;
@@ -425,6 +425,7 @@ void viewScoreOfCourse(Semester* semester, Student* student){
         Score* curScore = curStu->score;
         while(curScore){
             if(curScore->Course_ID == curCourse->Course_ID){
+                cout << curStu->studentId << " " << curStu->firstName << " " << curStu->lastName << " " << curScore->midtermMark << " " << curScore->finalMark << " " << curScore->otherMark << " " << curScore->totalMark << endl;
                 cnt++;
                 res->finalMark += curScore->finalMark;
                 res->midtermMark += curScore->midtermMark;
@@ -438,8 +439,8 @@ void viewScoreOfCourse(Semester* semester, Student* student){
     cout <<"This " << curCourse->Course_name << " course has the score board: " << endl;
     cout << "Midterm: " << (float)res->midtermMark/cnt << endl;
     cout << "Final: " << (float)res->finalMark/cnt << endl;
-    cout << "Other: " << (float)res->totalMark/cnt << endl;
-    cout << "Total: " << (float)res->finalMark/cnt << endl;
+    cout << "Other: " << (float)res->otherMark/cnt << endl;
+    cout << "Total: " << (float)res->totalMark/cnt << endl;
     delete res;
 }
 void updateStudentRes(Student* stu) {
@@ -656,7 +657,7 @@ void ImportClass(Class* headClass){
         fout << cur_Class->className << endl;
         cur_Class = cur_Class->next;
     }
-    fout.close(); 
+    fout.close();
 }
 
 void StaffMember::updateSchoolYear(Semester *&cur_semester){
@@ -719,4 +720,29 @@ void StaffMember::importSchoolYear(){
         }
         curSchoolYear = curSchoolYear->next;
     }
+}
+
+void viewScoreOfClass(Semester* semester, Student* student, Course* HeadCourse){
+	string classname;
+	cout << "Enter class name: ";
+	cin >> classname;
+	Student* curStu = student;
+	while (curStu){
+		if (curStu->className == classname){
+			cout << "Student ID: " << curStu->studentId << endl;
+			cout << "Student's name: " << curStu->firstName << " " << curStu->lastName << endl;
+			Score* curScore = curStu->score;
+			while (curScore) {
+                Course* curCourse = HeadCourse;
+                while (curCourse){
+                    if (curCourse->Course_ID == curScore->Course_ID) break;
+                    curCourse = curCourse->next;
+                }
+                cout << "Course " << curCourse->Course_name << ": " << curScore->totalMark << endl;
+                curScore = curScore->next;
+			}
+			cout << "Overall GPA: " << (float)curStu->calGPA() << endl;
+		}
+		curStu = curStu->next;
+	}
 }
