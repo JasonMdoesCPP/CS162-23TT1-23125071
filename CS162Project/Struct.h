@@ -97,6 +97,8 @@ struct StaffMember{
     void createSchoolYear();
     void addSemester(int yearStart,Semester *&cur_semester);
     void changePasswordOrUserName();
+//All Updating function here
+
 
 };
 struct User{

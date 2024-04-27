@@ -17,6 +17,11 @@ int main() {
         user.login();
         if (user.user1) {
             Student* stu = user.user1;
+            user.user2 = user.staffMembers;
+//Update information
+
+
+    //
             int ca;
             do {
                 cout << "1. View a list of courses you will study" << endl;
@@ -71,7 +76,9 @@ int main() {
         }
         if (user.user2) {
             StaffMember* staf = user.user2;
+ // Update information
 
+ //
             int ca;
             do {
                 cout << "1. Create a school year" << endl;
