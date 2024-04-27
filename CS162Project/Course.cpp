@@ -1,7 +1,7 @@
 #include"Struct.h"
 void Course::inputStudent2CourseFromFile(User& Head_User)
 {
-    string filename = Course_ID + "Students.csv";
+    string filename = "Course/"+ Course_ID + "Students.csv";
     ifstream fin(filename);
     if (!fin.is_open()) {
         cout << "Error opening file: " << filename << endl;

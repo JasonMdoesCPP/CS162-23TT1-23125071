@@ -65,8 +65,8 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
         }
         cur_class = cur_class->next;
     }
-    className += ".csv";
-    fin.open(className);
+   
+    fin.open("Class/"+className+".csv");
     if(!fin.is_open()){
         cout << "Doesn't have this class' csv file";
         return;
@@ -290,7 +290,7 @@ void importScoreBoard(Student* stu, Semester* semester)
     cout << "Enter Course ID:";
     cin.ignore();
     getline(cin, CourseId);
-    string filename = CourseId + "Score.csv";
+    string filename = "Course/"+CourseId + "Score.csv";
     ifstream fin(filename);
     if (!fin.is_open())
     {

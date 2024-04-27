@@ -47,7 +47,7 @@ void User::login() {
 }
 void User::addInformationStudent() {
     ifstream fin;
-    fin.open("student.csv");
+    fin.open("User/student.csv");
     if (!fin)
     {
         cout << "Cannot open file student.csv";
@@ -97,7 +97,7 @@ void User::addInformationStudent() {
 }
 void User::addInformationStaffMembers(){
     ifstream fin;
-    fin.open("staffMember.csv");
+    fin.open("User/staffMember.csv");
     if(!fin) {
         cout << "Cannot open file staffMember.csv" << endl;
         return;
