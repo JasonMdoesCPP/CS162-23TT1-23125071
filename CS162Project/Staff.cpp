@@ -1,78 +1,115 @@
 #include"Struct.h"
 void StaffMember::createSchoolYear() {
-    SchoolYear* cur = schoolYear;
-    bool yearExists = false;
+  SchoolYear* cur = schoolYear;
+  bool yearExists = false;
+  int data;
 
-    cout << "Please input school year: ";
-    int data;
+  do {
+    cout << "Please input a valid school year (positive integer): ";
     cin >> data;
 
-    // Check if the school year already exists
-    while (cur) {
-        if (cur->yearStart == data) {
-            yearExists = true;
-            break;
-        }
-        cur = cur->next;
+    // Check if input is valid (positive integer)
+    if (!cin || data <= 0) {
+      cout << "Invalid input. Please enter a positive integer." << endl;
+      cin.clear(); // Clear error state from cin
+      cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
     }
+  } while (!cin || data <= 0); // Repeat until valid input is entered
 
-    if (yearExists) {
-        cout << "School year already exists." << endl;
+  // Check if the school year already exists (same as before)
+  while (cur) {
+    if (cur->yearStart == data) {
+      yearExists = true;
+      break;
     }
-    else {
-        SchoolYear* newYear = new SchoolYear;
-        newYear->next = nullptr;
-        newYear->yearStart = data;
-        newYear->yearEnd = data + 1;
+    cur = cur->next;
+  }
 
-        if (schoolYear) {
-            newYear->next=schoolYear;
-            schoolYear = newYear;
-        }
-        else {
-            schoolYear = newYear;
-        }
+  if (yearExists) {
+    cout << "School year already exists." << endl;
+  } else {
+    SchoolYear* newYear = new SchoolYear;
+    newYear->next = nullptr;
+    newYear->yearStart = data;
+    newYear->yearEnd = data + 1;
+
+    if (schoolYear) {
+      newYear->next = schoolYear;
+      schoolYear = newYear;
+    } else {
+      schoolYear = newYear;
     }
+  }
 }
 
-void StaffMember::addSemester(int yearStart, Semester*& cur_semester)
-{
-    SchoolYear* cur_year = schoolYear;
-    while (cur_year)
-    {
-        if (cur_year->yearStart == yearStart)
-        {
-            cout << "You want to add semester 1, 2, or 3: ";
-            int index;
-            cin >> index;
 
-            if (index < 1 || index > 3) {
-                cout << "Invalid semester index!" << endl;
-                return;
-            }
+void StaffMember::addSemester(int yearStart, Semester*& cur_semester) {
+  SchoolYear* cur_year = schoolYear;
+  while (cur_year) {
+    if (cur_year->yearStart == yearStart) {
+      int index;
+      bool validInput = false;
 
-            cur_semester = cur_year->semester + index - 1 ;
+      // Input validation loop for semester index
+      while (!validInput) {
+        cout << "You want to add semester 1, 2, or 3: ";
+        cin >> index;
 
-            // Check if the semester already exists by examining its courses
-            if (cur_semester->course != nullptr) {
-                cout << "Semester " << index << " already exists." << endl;
-                cur_semester = nullptr;
-                return;
-            }
-            // Input start day
-            cout << "Enter start day (dd mm yyyy): ";
-            cin >> cur_semester->startDay.day >> cur_semester->startDay.month >> cur_semester->startDay.year;
-
-            // Input end day
-            cout << "Enter end day (dd mm yyyy): ";
-            cin >> cur_semester->endDay.day >> cur_semester->endDay.month >> cur_semester->endDay.year;
-
-            return;
+        if (cin.fail() || index < 1 || index > 3) {
+          cout << "Invalid semester index! Please enter 1, 2, or 3." << endl;
+          cin.clear();
+          cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        } else {
+          validInput = true;
         }
-        cur_year = cur_year->next;
+      }
+
+      cur_semester = cur_year->semester + index - 1;
+
+      // Check if the semester already exists
+      if (cur_semester->course != nullptr) {
+        cout << "Semester " << index << " already exists." << endl;
+        cur_semester = nullptr;
+        return;
+      }
+
+      // Input validation loop for start date
+      validInput = false;
+      while (!validInput) {
+        cout << "Enter start day (dd mm yyyy): ";
+        cin >> cur_semester->startDay.day >> cur_semester->startDay.month >> cur_semester->startDay.year;
+
+        if (cin.fail() || !isValidDate(cur_semester->startDay)) {
+          cout << "Invalid start date format! Please enter in dd mm yyyy format." << endl;
+          cin.clear();
+          cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        } else {
+          validInput = true;
+        }
+      }
+
+      // Input validation loop for end date (similar to start date)
+      validInput = false;
+      while (!validInput) {
+        cout << "Enter end day (dd mm yyyy): ";
+        cin >> cur_semester->endDay.day >> cur_semester->endDay.month >> cur_semester->endDay.year;
+
+        if (cin.fail() || !isValidDate(cur_semester->endDay)) {
+          cout << "Invalid end date format! Please enter in dd mm yyyy format." << endl;
+          cin.clear();
+          cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        } else {
+          validInput = true;
+        }
+      }
+
+      return;
     }
-    cout << "No SchoolYear found!" << endl;
+    cur_year = cur_year->next;
+  }
+  cout << "No SchoolYear found!" << endl;
 }
+
 void StaffMember::changePasswordOrUserName() {
     string temp;
     int ca;

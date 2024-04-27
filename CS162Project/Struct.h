@@ -6,6 +6,7 @@
 #include <string.h>
 #include<string>
 #include<sstream>
+#include<limits>
 using namespace std;
 struct Student;
 struct Date{
@@ -125,4 +126,5 @@ void UpdateUser(User user);
 void viewScoreOfCourse(Semester* semester, Student* student);
 void updateStudentRes(Student *stu);
 void deleteAll(User& user, Class* headClass);
+bool isValidDate(Date& date);
 #endif // STRUCT_H_INCLUDED

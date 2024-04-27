@@ -65,7 +65,7 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
         }
         cur_class = cur_class->next;
     }
-   
+
     fin.open("Class/"+className+".csv");
     if(!fin.is_open()){
         cout << "Doesn't have this class' csv file";
@@ -115,7 +115,7 @@ void addStudentToClassFromCsvFile(Class*clas, Student*stu){
     }
     else
         cout << "The class doesn't exist " << endl;
-    
+
 }
 //1 for adding, 2 for deleting
 void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, User &Head_User,int choice)
@@ -269,7 +269,7 @@ void exportStudentInCourseToCsvFile(Semester* semester)
         cout << "Don't have any course having this name!" <<endl;
         return;
     }
-    string filename = CourseId + "Students.csv";
+    string filename ="Course/" + CourseId + "Students.csv";
     ofstream fout(filename, ios::trunc);
     if (!fout.is_open())
     {
@@ -357,7 +357,7 @@ void importScoreBoard(Student* stu, Semester* semester)
         curScore->otherMark = stod(temp);
         getline(fin, temp);
         curScore->totalMark = stod(temp);
-    
+
     }
     fin.close();
     cout << "Scoreboard imported successfully." << endl;
@@ -444,44 +444,94 @@ void viewScoreOfCourse(Semester* semester, Student* student){
     cout << "Total: " << (float)res->finalMark/cnt << endl;
     delete res;
 }
-void updateStudentRes(Student *stu){
+void updateStudentRes(Student* stu) {
     string studentID;
     cout << "Enter Student ID you want to update: ";
     cin >> studentID;
+
     Student* curStu = stu;
-    while(curStu){
-        if(curStu->studentId == studentID){
+    while (curStu) {
+        if (curStu->studentId == studentID) {
             break;
         }
         curStu = curStu->next;
     }
-    if(!curStu){
-        cout << "Don't have any student have this ID"<< endl;
+
+    if (!curStu) {
+        cout << "Don't have any student with this ID" << endl;
         return;
     }
+
+    string courseID;
+    cout << "Enter the course ID you want to update: ";
+    cin >> courseID;
+
     Score* curScore = curStu->score;
-    while(curScore){
-        char ca;
-        cout << "Do you want to update the result of the course have ID:" << curScore->Course_ID << endl;
-        cout << "(y/n): ";
-        cin >> ca;
-        if(ca == 'y'){
-            cout << "Midterm:";
-            cin >> curScore->midtermMark;
-            cout << "Final: ";
-            cin >> curScore->finalMark;
-            cout << "Other: ";
-            cin >> curScore->otherMark;
-            cout << "Total: ";
-            cin >> curScore->totalMark;
-            curScore=curScore->next;
-        }else if(ca == 'n'){
-            curScore=curScore->next;
-        }else{
-            cout << "Choose y/n only " << endl;
+    bool courseFound = false;
+    while (curScore) {
+        if (curScore->Course_ID == courseID) {
+            courseFound = true;
+            break;
         }
+        curScore = curScore->next;
+    }
+
+    if (!courseFound) {
+        cout << "Course with ID " << courseID << " not found for this student." << endl;
+        return;
+    }
+
+    char ca;
+    cout << "Do you want to update the result for course ID: " << curScore->Course_ID << endl;
+    cout << "(y/n): ";
+    cin >> ca;
+
+    while (!(ca == 'y' || ca == 'n')) {
+        cout << "Invalid choice. Please enter 'y' or 'n': ";
+        cin >> ca;
+    }
+    if (ca == 'y') {
+        int input;
+
+        // Update midterm mark
+        cout << "Midterm (positive integer only): ";
+        while (!(cin >> input) || input < 0) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a positive integer: ";
+        }
+        curScore->midtermMark = input;
+
+        // Update final mark
+        cout << "Final (positive integer only): ";
+        while (!(cin >> input) || input < 0) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a positive integer: ";
+        }
+        curScore->finalMark = input;
+
+        // Update other mark (optional modification based on your data structure)
+        cout << "Other (positive integer only): ";
+        while (!(cin >> input) || input < 0) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a positive integer: ";
+        }
+        curScore->otherMark = input;
+
+        // Calculate total mark (optional modification based on your data structure)
+        curScore->totalMark = curScore->midtermMark + curScore->finalMark + curScore->otherMark;  // Assuming total is calculated from these
+
+        curScore = curScore->next;
+    }
+    else { // ca == 'n'
+        curScore = curScore->next;
     }
 }
+
+
+
 void deleteAll(User& user, Class* headClass) {
     // Delete all students in User
     Student* studentPtr = user.students;
@@ -562,4 +612,21 @@ void deleteAll(User& user, Class* headClass) {
         classPtr = classPtr->next;
         delete temp;
     }
+}
+// Function to check if the date is valid
+bool isValidDate(Date& date) {
+  // Check month range (1-12)
+  if (date.month < 1 || date.month > 12) {
+    return false;
+  }
+
+  // Check day range based on month (assuming non-leap year for simplicity)
+  int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+  if (date.day < 1 || date.day > daysInMonth[date.month - 1]) {
+    return false;
+  }
+
+  // Year validation can be added here (e.g., minimum year)
+
+  return true;
 }

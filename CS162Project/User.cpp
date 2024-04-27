@@ -1,50 +1,80 @@
 #include"Struct.h"
 void User::login() {
-    cout << "1: Student" << endl;
-    cout << "2: Staff member" << endl;
-    cout << "Enter: ";
-    int ca;
-    cin >> ca;
-    while (ca != 1 && ca != 2) {
-        cout << "Wrong number !" << endl;
+    bool validInput = false; // Flag to track valid case selection
+
+    while (!validInput) {
         cout << "1: Student" << endl;
         cout << "2: Staff member" << endl;
         cout << "Enter: ";
-        cin >> ca;
+
+        // Validate case selection (integer between 1 and 2)
+        int ca;
+        if (cin >> ca) {
+            if (ca == 1 || ca == 2) {
+                validInput = true;
+                this->ca = ca; // Store valid case selection
+            }
+            else {
+                cout << "Wrong number! Please enter 1 for student or 2 for staff member." << endl;
+                cin.clear(); // Clear error state
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
+            }
+        }
+        else {
+            cout << "Invalid input! Please enter a number (1 or 2)." << endl;
+            cin.clear(); // Clear error state
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
+        }
     }
+
     string x, y;
+
     cout << "Username: ";
-    cin.ignore();
+    cin.ignore(); // Discard any remaining newline character
     getline(cin, x);
+
     cout << "Password: ";
     getline(cin, y);
+
+    Student* curStudent = students;
+    StaffMember* curStaff = staffMembers;
+
     if (ca == 1) {
-        Student* cur = students;
-        while (cur) {
-            if (x == cur->userName)
-                if (y == cur->passWord) {
-                    user1 = cur;
-                    return;
-                }
-            cur = cur->next;
+        while (curStudent) {
+            if (x == curStudent->userName && y == curStudent->passWord) {
+                user1 = curStudent;
+                return;
+            }
+            curStudent = curStudent->next;
         }
     }
     else {
-        StaffMember* cur = staffMembers;
-        while (cur) {
-            if (x == cur->userName)
-                if (y == cur->passWord) {
-                    user2 = cur;
-                    return;
-                }
-            cur = cur->next;
+        while (curStaff) {
+            if (x == curStaff->userName && y == curStaff->passWord) {
+                user2 = curStaff;
+                return;
+            }
+            curStaff = curStaff->next;
         }
     }
-    if (!user1 && !user2) {
-        cout << " Wrong Username or Password" << endl;
-        login();
+
+    cout << "Wrong Username or Password." << endl;
+    // Offer retry or exit option
+    char choice;
+    do {
+        cout << "Try again (y/n)? ";
+        cin >> choice;
+        choice = tolower(choice); // Convert input to lowercase for case-insensitive comparison
+    } while (choice != 'y' && choice != 'n');
+
+    if (choice == 'y') {
+        login(); // Recursive call to retry login
+    }
+    else {
+        cout << "Exiting login." << endl;
     }
 }
+
 void User::addInformationStudent() {
     ifstream fin;
     fin.open("User/student.csv");
