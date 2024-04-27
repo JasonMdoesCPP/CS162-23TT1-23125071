@@ -95,42 +95,34 @@ void User::addInformationStudent() {
     }
 
 }
-void User::addInformationStaffMembers(){} 
-//    ifstream fin;
-//    fin.open("staffMember.csv");
-//    if (!fin) {
-//        cout << "Cannot open file staffMember.csv" << endl;
-//        return;
-//    }
-//
-//    staffMembers = nullptr;
-//
-//    string line;
-//    getline(fin, line); // Skip header line (assuming CSV has a header)
-//    while (getline(fin, line)) {
-//        StaffMember* newStaffMember = new StaffMember;
-//        newStaffMember->next = nullptr;
-//
-//        stringstream ss(line); // Use stringstream to parse comma-separated values
-//
-//        getline(ss, newStaffMember->userName, ',');
-//        getline(ss, newStaffMember->passwWord, ',');
-//        getline(ss, newStaffMember->firstName, ',');
-//        getline(ss, newStaffMember->lastName, ',');
-//
-//        // Handle additional staff member fields (assuming no comma in these fields)
-//        fin >> newStaffMember->schoolYear; // Assuming schoolYear can be directly read from file
-//        newStaffMember->createSchoolYear(); // Call function to process schoolYear data (if needed)
-//
-//        if (staffMembers == nullptr) {
-//            staffMembers = newStaffMember;
-//        }
-//        else {
-//            newStaffMember->next = staffMembers;
-//            staffMembers = newStaffMember;
-//        }
-//    }
-//}
+void User::addInformationStaffMembers(){
+    ifstream fin;
+    fin.open("staffMember.csv");
+    if(!fin) {
+        cout << "Cannot open file staffMember.csv" << endl;
+        return;
+    }
+    staffMembers = nullptr;
+    string line;
+    getline(fin, line); // Skip header line (assuming CSV has a header)
+    while (getline(fin, line)) {
+        StaffMember* newStaffMember = new StaffMember;
+        newStaffMember->next = nullptr;
+        stringstream ss(line); // Use stringstream to parse comma-separated values
+        getline(ss, newStaffMember->passWord, ',');
+        getline(ss, newStaffMember->userName, ',');
+        getline(ss, newStaffMember->firstName, ',');
+        getline(ss, newStaffMember->lastName, ',');
+        // Handle additional staff member fields (assuming no comma in these fields
+        if (staffMembers == nullptr) {
+            staffMembers = newStaffMember;
+        }
+        else {
+            newStaffMember->next = staffMembers;
+            staffMembers = newStaffMember;
+        }
+    }
+}
 void User::deleteUser() {
     while (students) {
         Student* temp = students;
