@@ -58,8 +58,6 @@ struct SchoolYear{
     Semester *semester = new Semester[3]; //3 semester only
     int yearStart;
     int yearEnd;
-
-
 };
 struct Class{
     Class* next=nullptr;
@@ -98,7 +96,8 @@ struct StaffMember{
     void addSemester(int yearStart,Semester *&cur_semester);
     void changePasswordOrUserName();
 //All Updating function here
-
+    void updateSchoolYear(Semester *&cur_semester);
+    void importSchoolYear(); 
 
 };
 struct User{
@@ -113,7 +112,7 @@ struct User{
     void deleteUser();
 };
 
-void addStudentToClassFromCsvFile(Class*clas, Student*stu);
+void addStudentToClassFromCsvFile(Class*clas, Student*stu, string className);
 void createSeveralClasses(Class *&HeadClass);
 void deleteClass(Class *&clas);
 void addStudentToClass(Class* clas, Student* stu);
@@ -129,4 +128,6 @@ void viewScoreOfCourse(Semester* semester, Student* student);
 void updateStudentRes(Student *stu);
 void deleteAll(User& user, Class* headClass);
 bool isValidDate(Date& date);
+void UpdateClass(Class* &headClass, Student*stu);
+void ImportClass(Class* headClass); 
 #endif // STRUCT_H_INCLUDED

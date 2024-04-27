@@ -8,6 +8,7 @@ int main() {
     Class* HeadClass = nullptr;
     user.addInformationStudent();
     user.addInformationStaffMembers();
+    UpdateClass(HeadClass, user.students); 
     int op;
     cout << "1. Log in" << endl;
     cout << "0. End program!" << endl;
@@ -17,9 +18,9 @@ int main() {
         user.login();
         if (user.user1) {
             Student* stu = user.user1;
-            user.user2 = user.staffMembers;
+            user.staffMembers->updateSchoolYear(cur_semester);
 //Update information
-
+            
 
     //
             int ca;
@@ -77,8 +78,7 @@ int main() {
         if (user.user2) {
             StaffMember* staf = user.user2;
  // Update information
-
- //
+            staf->updateSchoolYear(cur_semester);
             int ca;
             do {
                 cout << "1. Create a school year" << endl;
@@ -118,8 +118,13 @@ int main() {
                         addStudentToClass(HeadClass, user.students);
                         break;
                     case 4:
-                        addStudentToClassFromCsvFile(HeadClass, user.students);
+                    {
+                        string className;
+                        cout << "Enter class name: ";
+                        cin >> className;
+                        addStudentToClassFromCsvFile(HeadClass, user.students, className);
                         break;
+                    }
                     case 5: {
                         int yearStart = 0;
                         cout << "Enter SchoolYear (Start Year):";
@@ -271,7 +276,7 @@ int main() {
                         break;
                 }
             } while (ca != 0);
-            user.user2 = nullptr; //What is it for?
+            //What is it for?
             //Create and Update all the files
 
 
@@ -283,10 +288,14 @@ int main() {
         cin >> op;
     }
     cout << "Finish";
+    if(user.user2){
+        user.user2->importSchoolYear();
+    }
     UpdateUser(user);
+    ImportClass(HeadClass); 
     user.deleteUser();
     deleteClass(HeadClass);
-     deleteAll(user, HeadClass);
+    deleteAll(user, HeadClass);
     return 0;
 }
 
