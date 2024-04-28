@@ -1,39 +1,91 @@
 #include"Struct.h"
 void Semester::addCourse() {
-    if (this == nullptr)
-    {
-        cout << "There's no Semester to add Course to";
+    if (this == nullptr) {
+        std::cout << "There's no Semester to add Course to" << std::endl;
         return;
     }
+
     Course* temp = new Course;
-    cout << "Please enter course ID: ";
-    cin >> temp->Course_ID;
-    cout << "Please enter course name: ";
-    cin.ignore();
-    getline(cin, temp->Course_name);
-    cout << "Please enter class name: ";
-    cin >> temp->classname;
-    cout << "Please enter teacher's name: ";
-    cin.ignore();
-    getline(cin, temp->teacherName);
-    cout << "Please enter the number of credits: ";
-    cin >> temp->numberOfCredits;
-    cout << "Please enter the maximal number of students in the course: ";
-    cin >> temp->maxSize;
-    cout << "Please enter the day the course will be performed in (M/T/W/Th/F/Sa/Su):";
-    cin.ignore();
-    cin.get(temp->dow,3); // Increase size to accommodate the null terminator
-    cout << "Please enter the session the course will be performed in: ";
-    cin >> temp->session;
-    if (course == nullptr) {
-        course = temp;
-        temp->next = nullptr;
+
+    // Get course ID
+    std::cout << "Please enter course ID: ";
+    std::cin >> temp->Course_ID;
+
+    //Check if a course with the same ID alreadu exists
+    Course* current = course;
+    while (current != nullptr) {
+        if (current->Course_ID == temp->Course_ID) {
+            std::cout << "Error: A course with ID " << temp->Course_ID << " already exists." << std::endl;
+            delete temp; // Clean up temporary course
+            return;
+        }
+        current = current->next;
     }
-    else {
-        temp->next = course;
-        course = temp;
+
+    // Get course name
+    std::cout << "Please enter course name: ";
+    std::cin.ignore(); // Clear input buffer
+    std::getline(std::cin, temp->Course_name);
+
+    // Get class name
+    std::cout << "Please enter class name: ";
+    std::cin >> temp->classname;
+
+    // Get teacher's name
+    std::cout << "Please enter teacher's name: ";
+    std::cin.ignore();
+    std::getline(std::cin, temp->teacherName);
+
+    // Get number of credits with validation
+    bool validCredits = false;
+    while (!validCredits) {
+        std::cout << "Please enter the number of credits (positive integer): ";
+        std::cin >> temp->numberOfCredits;
+
+        if (std::cin.fail() || temp->numberOfCredits <= 0) {
+            std::cin.clear(); // Clear error state
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Discard invalid input
+            std::cout << "Invalid input. Please enter a positive integer." << std::endl;
+        }
+        else {
+            validCredits = true;
+        }
     }
-    cout << "Course created!" << endl;
+
+
+    // Get maximum number of students with validation
+    bool validMaxSize = false;
+    while (!validMaxSize) {
+        std::cout << "Please enter the maximal number of students in the course (positive integer): ";
+        std::cin >> temp->maxSize;
+
+        if (std::cin.fail() || temp->maxSize <= 0) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please enter a positive integer." << std::endl;
+        }
+        else {
+            validMaxSize = true;
+        }
+    }
+
+    // Get day of week with validation
+    bool validDow = false;
+    while (!validDow) {
+        std::cout << "Please enter the day the course will be performed in (M/T/W/Th/F/Sa/Su): ";
+        std::cin.ignore(); // Clear input buffer
+        std::cin.get(temp->dow, 3); // Read up to 2 characters + null terminator
+
+        if (std::cin.fail() || (strlen(temp->dow) != 2) ||
+            !(strchr("MTWHFSaSu", temp->dow[0]) && temp->dow[1] == '\0')) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please enter a valid day of the week (M, T, W, Th, F, Sa, Su)." << std::endl;
+        }
+        else {
+            validDow = true;
+        }
+    }
 }
 Course* Semester::findCourseinSemester(string CourseID)
 {
