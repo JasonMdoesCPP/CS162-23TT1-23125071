@@ -381,7 +381,7 @@ void UpdateUser(User user){
         fout << endl;
     }
     fout.close();
-    
+
     fout.open("staffMember.csv", ios::trunc);
     if(!fout.is_open()){
         cout << "Error update file" << endl;
@@ -421,11 +421,13 @@ void viewScoreOfCourse(Semester* semester, Student* student){
     res->otherMark = 0;
     res->totalMark = 0;
     int cnt = 0;
+    cout <<"This " << curCourse->Course_name << " course has the score board: " << endl;
+    cout << "Student ID    First name    Last Name    Midterm Mark    Final Mark    Other Mark    Total mark" << endl;
     while(curStu){
         Score* curScore = curStu->score;
         while(curScore){
             if(curScore->Course_ID == curCourse->Course_ID){
-                cout << curStu->studentId << " " << curStu->firstName << " " << curStu->lastName << " " << curScore->midtermMark << " " << curScore->finalMark << " " << curScore->otherMark << " " << curScore->totalMark << endl;
+                cout << setw(15) << left << curStu->studentId << setw(15) << left << curStu->firstName << setw(15) << left << curStu->lastName << setw(15) << left << curScore->midtermMark << setw(15) << left << curScore->finalMark << setw(15) << left << curScore->otherMark << setw(15) << left << curScore->totalMark << endl;
                 cnt++;
                 res->finalMark += curScore->finalMark;
                 res->midtermMark += curScore->midtermMark;
@@ -436,11 +438,7 @@ void viewScoreOfCourse(Semester* semester, Student* student){
         }
         curStu = curStu->next;
     }
-    cout <<"This " << curCourse->Course_name << " course has the score board: " << endl;
-    cout << "Midterm: " << (float)res->midtermMark/cnt << endl;
-    cout << "Final: " << (float)res->finalMark/cnt << endl;
-    cout << "Other: " << (float)res->otherMark/cnt << endl;
-    cout << "Total: " << (float)res->totalMark/cnt << endl;
+    cout << setw(45) << left << "Average: " << setw(15) << left << (float)res->midtermMark/cnt << setw(15) << left << (float)res->finalMark/cnt << setw(15) << left << (float)res->otherMark/cnt << setw(15) << left << (float)res->totalMark/cnt << endl;
     delete res;
 }
 void updateStudentRes(Student* stu) {
@@ -630,7 +628,6 @@ bool isValidDate(Date& date) {
   return true;
 }
 
-
 void viewScoreOfClass(Semester* semester, Student* student, Course* HeadCourse){
 	string classname;
 	cout << "Enter class name: ";
@@ -640,6 +637,7 @@ void viewScoreOfClass(Semester* semester, Student* student, Course* HeadCourse){
 		if (curStu->className == classname){
 			cout << "Student ID: " << curStu->studentId << endl;
 			cout << "Student's name: " << curStu->firstName << " " << curStu->lastName << endl;
+			int score=0, cnt=0;
 			Score* curScore = curStu->score;
 			while (curScore) {
                 Course* curCourse = HeadCourse;
@@ -647,10 +645,18 @@ void viewScoreOfClass(Semester* semester, Student* student, Course* HeadCourse){
                     if (curCourse->Course_ID == curScore->Course_ID) break;
                     curCourse = curCourse->next;
                 }
-                cout << "Course " << curCourse->Course_name << ": " << curScore->totalMark << endl;
+                if (curCourse) {
+                    cout << "Course " << curCourse->Course_name << ": " << curScore->totalMark << endl;
+                    score += curScore -> totalMark;
+                    ++cnt;
+                    curScore = curScore->next;
+                }
                 curScore = curScore->next;
 			}
-			cout << "Overall GPA: " << (float)curStu->calGPA() << endl;
+			if (cnt!=0) cout << "GPA in this semester: " << (float)score/cnt*4.0/10 << endl;
+			else cout << "This student has not received any scores yet!" << endl;
+			if (curStu->calGPA()!=-1) cout << "Overall GPA: " << (float)curStu->calGPA() << endl;
+			else cout << "This student has not received any scores yet!" << endl;
 		}
 		curStu = curStu->next;
 	}
