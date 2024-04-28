@@ -58,7 +58,11 @@ void StaffMember::updateSchoolYear(Semester*& cur_semester) {
             cur_schoolYear = schoolYear;
         }
         else
+        {
             cur_schoolYear->next = newSchoolYear;
+            cur_schoolYear = newSchoolYear;
+        }
+        
         if (!flag) {
             cur_semester = &(newSchoolYear->semester[numSem - 1]);
             flag = true;
@@ -129,4 +133,100 @@ void StaffMember::importCourse()
     }
 
     fout.close();
+}
+void StaffMember::updateCourse(User& Head_User) {
+    ifstream fin("Course/Course.csv");
+
+    if (!fin.is_open()) {
+        cerr << "Error: Could not open course file." << endl;
+        return;
+    }
+
+    // Skip the header line
+    string header;
+    getline(fin, header);
+
+    string line;
+    while (getline(fin, line)) {
+        stringstream ss(line);
+        vector<string> tokens;
+
+        // Split the line into tokens based on commas
+        while (getline(ss, header, ',')) {
+            tokens.push_back(header);
+        }
+
+        if (tokens.size() != 10) {
+            cerr << "Warning: Invalid line format in course file." << endl;
+            continue;
+        }
+
+        // Extract course information from tokens
+        int yearStart = stoi(tokens[0]);
+        int semester = stoi(tokens[1]);
+        string courseID = tokens[2];
+        string courseName = tokens[3];
+        string className = tokens[4];
+        string teacherName = tokens[5];
+        int numberOfCredits = stoi(tokens[6]);
+        int maxSize = stoi(tokens[7]);
+        string dow = tokens[8];
+        int session = stoi(tokens[9]);
+
+        // Find the corresponding semester in SchoolYear
+        SchoolYear* currentYear = schoolYear;
+        bool foundYear = false;
+        while (currentYear) {
+            if (currentYear->yearStart == yearStart) {
+                foundYear = true;
+                break;
+            }
+            currentYear = currentYear->next;
+        }
+
+        if (!foundYear) {
+            cerr << "Warning: School year " << yearStart << " not found." << endl;
+            continue;
+        }
+
+        // Check if semester index is valid (1-based indexing)
+        if (semester < 1 || semester > 3) {
+            cerr << "Warning: Invalid semester number: " << semester << endl;
+            continue;
+        }
+
+
+        // Create a new course node
+        Course* newCourse = new Course;
+        newCourse->Course_ID = courseID;
+        newCourse->Course_name = courseName;
+        newCourse->classname = className;
+        newCourse->teacherName = teacherName;
+        newCourse->numberOfCredits = numberOfCredits;
+        newCourse->maxSize = maxSize;
+        strcpy_s(newCourse->dow, dow.c_str()); // Assuming dow is a char array
+        newCourse->session = session;
+        newCourse->next = nullptr;
+
+        //Add Student to Course
+        newCourse->inputStudent2CourseFromFile(Head_User);
+
+        //Add Score
+        importScoreBoard(Head_User.students,nullptr, courseID);
+
+        // Add the course to the linked list of the semester
+        if (currentYear->semester[semester - 1].course == nullptr) {
+            currentYear->semester[semester - 1].course = newCourse;
+        }
+        else {
+            Course* temp = currentYear->semester[semester - 1].course;
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            temp->next = newCourse;
+        }
+    }
+
+    fin.close();
+    cout << "Courses read from file successfully." << endl;
 }

@@ -282,12 +282,8 @@ void exportStudentInCourseToCsvFile(Semester* semester)
     }
     fout.close();
 }
-void importScoreBoard(Student* stu, Semester* semester)
+void importScoreBoard(Student* stu, Semester* semester,string CourseId)
 {
-    string CourseId;
-    cout << "Enter Course ID:";
-    cin.ignore();
-    getline(cin, CourseId);
     string filename = "Course/"+CourseId + "Score.csv";
     ifstream fin(filename);
     if (!fin.is_open())

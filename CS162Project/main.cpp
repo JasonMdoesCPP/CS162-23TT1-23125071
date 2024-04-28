@@ -19,6 +19,7 @@ int main() {
         if (user.user1) {
             Student* stu = user.user1;
             user.staffMembers->updateSchoolYear(cur_semester);
+            user.staffMembers->updateCourse(user);
 //Update information
 
 
@@ -78,7 +79,8 @@ int main() {
         if (user.user2) {
             StaffMember* staf = user.user2;
  // Update information
-            //staf->updateSchoolYear(cur_semester);
+            staf->updateSchoolYear(cur_semester);
+            staf->updateCourse(user);
             int ca;
             do {
                 cout << "1. Create a school year" << endl;
@@ -250,7 +252,11 @@ int main() {
                             cout << "No semester created" << endl;
                             break;
                         }
-                        importScoreBoard(user.students, staf->schoolYear->semester);
+                        string CourseId;
+                        cout << "Enter Course ID:";
+                        cin.ignore();
+                        getline(cin, CourseId);
+                        importScoreBoard(user.students, staf->schoolYear->semester, CourseId);
                         break;
                     }
                     case 19:{
@@ -290,9 +296,9 @@ int main() {
         cin >> op;
     }
     cout << "Finish";
-//    if(user.user2){
-//        user.user2->importSchoolYear();
-//    }
+    if(user.user2){
+        user.user2->importSchoolYear();
+    }
     UpdateUser(user);
     ImportClass(HeadClass);
     user.staffMembers->importCourse();

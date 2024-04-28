@@ -7,6 +7,7 @@
 #include<string>
 #include<sstream>
 #include<limits>
+#include<vector>
 using namespace std;
 struct Student;
 struct Date{
@@ -99,6 +100,7 @@ struct StaffMember{
     void updateSchoolYear(Semester *&cur_semester);
     void importSchoolYear();
     void importCourse();
+    void updateCourse(User& Head_User);
 };
 struct User{
     StaffMember *staffMembers;
@@ -121,7 +123,7 @@ void CopyCourseInfo(Course cur_Course, Course newCourse);
 void viewClasses(Class* HeadClass);
 void viewStudentInClass(Class* HeadClass, Student* headStudent);
 void exportStudentInCourseToCsvFile(Semester* semester);
-void importScoreBoard(Student* stu, Semester *semester);
+void importScoreBoard(Student* stu, Semester *semester,string CourseId);
 void publishScore(bool &publishedScore);
 void UpdateUser(User user);
 void viewScoreOfCourse(Semester* semester, Student* student);
