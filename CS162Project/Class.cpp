@@ -45,6 +45,21 @@ void Class::addStudents(Student* stu)
                 temp1->studentId = temp;
                 temp1->next = studentEnroll;
                 studentEnroll = temp1;
+                //Update file Class/classname.csv
+                ofstream fout;
+                fout.open("Class/" + this->className + ".csv");
+                if (!fout)
+                {
+                    cout << "Cannot update student " << temp << " to file " << "Class/" << this->className << ".csv";
+                }
+                curStudentEnroll = studentEnroll;
+                fout << "StudentID" << endl;
+                while (curStudentEnroll)
+                {
+                    fout << curStudentEnroll->studentId << endl;
+                    curStudentEnroll = curStudentEnroll->next;
+                }
+                fout.close();
             }
             else {
                 cout << "Doesn't find any student having this id" << endl;
