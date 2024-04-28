@@ -39,6 +39,7 @@
 		<Unit filename="Struct.cpp" />
 		<Unit filename="Struct.h" />
 		<Unit filename="Student.cpp" />
+		<Unit filename="UpdateData.cpp" />
 		<Unit filename="User.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions />
