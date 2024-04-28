@@ -13,7 +13,7 @@ using namespace std;
 struct Student;
 struct Date{
     int day;
-    int year;
+    int year=0;
     int month;
 };
 struct Score{
@@ -97,7 +97,7 @@ struct StaffMember{
     void createSchoolYear();
     void addSemester(int yearStart,Semester *&cur_semester);
     void changePasswordOrUserName();
-//All Updating function here
+//All Updating function hlere
     void updateSchoolYear(Semester *&cur_semester);
     void importSchoolYear();
     void importCourse();

@@ -81,7 +81,7 @@ void StaffMember::importSchoolYear() {
     while (curSchoolYear) {
         int n = 0;
         fout << curSchoolYear->yearStart << endl;
-        while (curSchoolYear->semester[n].course || n < 3)
+        while (curSchoolYear->semester[n].startDay.year!=0 && n < 3)
             n++;
         fout << n << endl;
         for (int i = 0; i < n; i++) {

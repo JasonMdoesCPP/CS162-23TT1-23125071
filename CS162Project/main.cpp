@@ -88,12 +88,14 @@ int main() {
                 cout << "3. Add new 1st year students to 1st-year classes." << endl;
                 cout << "4. Adding student to class from csv file" << endl;
                 cout << "5. Add Semester to School Year" << endl;
+
                 cout << "6. Add new Course" << endl;
                 cout << "7. Add Student to Course from csv file" << endl;
                 cout << "9. Update course information" << endl;
                 cout << "10. Add a student to the course" << endl;
                 cout << "11. Remove a student from the course" << endl;
                 cout << "12. Delete a course" << endl;
+
                 cout << "13. View a list of classes" << endl;
                 cout << "14. View a list of students in a class" << endl;
                 cout << "15. View a list of courses" << endl;
