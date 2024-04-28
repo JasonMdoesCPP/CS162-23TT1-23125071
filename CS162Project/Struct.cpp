@@ -358,41 +358,45 @@ void importScoreBoard(Student* stu, Semester* semester,string CourseId)
 }
 void UpdateUser(User user){
     ofstream fout;
-    fout.open("student.txt", ios::trunc);
+    fout.open("student.csv", ios::trunc);
     if(!fout.is_open()){
         cout << "Error update file" << endl;
         return;
     }
     Student* cur = user.students;
+    fout << "password,username,studentID,socialID,firstname,lastname,gender,schoolyear,day,month,year" << endl;
     while(cur){
-        fout << cur->passWord << " ";
-        fout << cur->userName << " ";
-        fout <<  cur->studentId<< " ";
-        fout <<  cur->socialId<< " ";
-        fout <<  cur->firstName<< " ";
-        fout <<  cur->lastName<< " ";
-        fout <<  cur->gender<< " ";
-        fout <<  cur->schoolYear;
+        fout << cur->passWord << ",";
+        fout << cur->userName << ",";
+        fout <<  cur->studentId<< ",";
+        fout <<  cur->socialId<< ",";
+        fout <<  cur->firstName<< ",";
+        fout <<  cur->lastName<< ",";
+        fout <<  cur->gender<< ",";
+        fout <<  cur->schoolYear << ",";
+        fout << cur->dateOfBirth.day<< ",";
+        fout << cur->dateOfBirth.month<< ",";
+        fout << cur->dateOfBirth.year<< ",";
         cur = cur->next;
         fout << endl;
     }
-    fout << "eof" << endl;
     fout.close();
-    fout.open("staffMember.txt", ios::trunc);
+    
+    fout.open("staffMember.csv", ios::trunc);
     if(!fout.is_open()){
         cout << "Error update file" << endl;
         return;
     }
     StaffMember* cur1 = user.staffMembers;
+    fout << "password,username,firstname,lastname" << endl;
     while(cur1){
-        fout << cur1->passWord<< " ";
-        fout << cur1->userName<< " ";
-        fout <<cur1->firstName<< " ";
+        fout << cur1->passWord<< ",";
+        fout << cur1->userName<< ",";
+        fout <<cur1->firstName<< ",";
         fout <<cur1->lastName;
         cur1 = cur1->next;
         fout << endl;
     }
-    fout << "eof" << endl;
     fout.close();
 }
 void viewScoreOfCourse(Semester* semester, Student* student){
