@@ -62,7 +62,7 @@ void StaffMember::updateSchoolYear(Semester*& cur_semester) {
             cur_schoolYear->next = newSchoolYear;
             cur_schoolYear = newSchoolYear;
         }
-        
+
         if (!flag) {
             cur_semester = &(newSchoolYear->semester[numSem - 1]);
             flag = true;
@@ -204,7 +204,13 @@ void StaffMember::updateCourse(User& Head_User) {
         newCourse->teacherName = teacherName;
         newCourse->numberOfCredits = numberOfCredits;
         newCourse->maxSize = maxSize;
-        strcpy_s(newCourse->dow, dow.c_str()); // Assuming dow is a char array
+        int index=0;
+        while((dow[index]>='A'&&dow[index]<='Z')||(dow[index]>='a'&&dow[index]<='z'))
+        {
+            newCourse->dow[index]=dow[index];
+            index++;
+        }
+        newCourse->dow[index] = '\0';
         newCourse->session = session;
         newCourse->next = nullptr;
 
