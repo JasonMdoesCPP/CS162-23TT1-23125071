@@ -30,6 +30,7 @@ double Student::calGPA() {
         curScore = curScore->next;
         cnt++;
     }
+    if (cnt==0) return -1;
     total /= cnt;
     return total / 10 * 4;
 }
