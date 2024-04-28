@@ -358,7 +358,7 @@ void importScoreBoard(Student* stu, Semester* semester,string CourseId)
 }
 void UpdateUser(User user){
     ofstream fout;
-    fout.open("student.csv", ios::trunc);
+    fout.open("User/student.csv", ios::trunc);
     if(!fout.is_open()){
         cout << "Error update file" << endl;
         return;
@@ -382,7 +382,7 @@ void UpdateUser(User user){
     }
     fout.close();
 
-    fout.open("staffMember.csv", ios::trunc);
+    fout.open("User/staffMember.csv", ios::trunc);
     if(!fout.is_open()){
         cout << "Error update file" << endl;
         return;
