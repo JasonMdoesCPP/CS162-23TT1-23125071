@@ -290,9 +290,9 @@ int main() {
         cin >> op;
     }
     cout << "Finish";
-    if(user.user2){
-        user.user2->importSchoolYear();
-    }
+//    if(user.user2){
+//        user.user2->importSchoolYear();
+//    }
     UpdateUser(user);
     ImportClass(HeadClass);
     user.deleteUser();
