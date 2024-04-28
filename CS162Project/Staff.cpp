@@ -56,14 +56,29 @@ void StaffMember::addSemester(int yearStart, Semester*& cur_semester) {
         cin >> index;
 
         if (cin.fail() || index < 1 || index > 3) {
-          cout << "Invalid semester index! Please enter 1, 2, or 3." << endl;
-          cin.clear();
-          cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        } else {
-          validInput = true;
+            cout << "Invalid semester index! Please enter 1, 2, or 3." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        else {
+            // Check if creating semester makes sense based on previous semesters
+            if (index > 1) {
+                // Check if semester 1 already exists
+                if (cur_year->semester[0].startDay.year == 0) {
+                    cout << "Please create Semester 1 before Semester " << index << endl;
+                    return; // Exit without adding semester
+                }
+            }
+            if (index > 2) {
+                // Check if semester 2 already exists (assuming semesters are added sequentially)
+                if (cur_year->semester[1].startDay.year == 0) {
+                    cout << "Please create Semester 2 before Semester " << index << endl;
+                    return; // Exit without adding semester
+                }
+            }
+            validInput = true;
         }
       }
-
       cur_semester = cur_year->semester + index - 1;
 
       // Check if the semester already exists

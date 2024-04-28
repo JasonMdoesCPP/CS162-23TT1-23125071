@@ -1,19 +1,40 @@
 #include "Struct.h"
 void createSeveralClasses(Class *&HeadClass){
     string temp;
-    cout<<"Enter name of classes separated by space. Finish by entering Q"<<endl;
-    while(true){
-        cin>>temp;
-        if(temp=="Q") break;  //exit loop when user enters 'Q'.
-        Class *newOne = new Class;
-        newOne->className = temp;
-        newOne->next=nullptr;
-        if(HeadClass==nullptr){
-            HeadClass=newOne;
-        }else{
-            newOne->next=HeadClass;
-            HeadClass=newOne;
+    vector<string> existingClassNames; // Store class names for efficient lookup
+    Class* curClass = HeadClass;
+    while (curClass)
+    {
+        existingClassNames.push_back(curClass->className);
+        curClass = curClass->next;
+    }
+    cout << "Enter name of classes separated by space. Finish by entering Q" << endl;
+
+    while (true) {
+        cin >> temp;
+        if (temp == "Q") {
+            break;
         }
+
+        // Check for existing class using vector search
+        if (find(existingClassNames.begin(), existingClassNames.end(), temp) != existingClassNames.end()) {
+            cout << "Error: Class '" << temp << "' already exists." << endl;
+            continue; // Skip adding the duplicate class
+        }
+
+        Class* newOne = new Class;
+        newOne->className = temp;
+        newOne->next = nullptr;
+
+        if (HeadClass == nullptr) {
+            HeadClass = newOne;
+        }
+        else {
+            newOne->next = HeadClass;
+            HeadClass = newOne;
+        }
+        cout << "Create class " << temp << " successfully\n";
+        existingClassNames.push_back(temp); // Add the new class name to the vector
     }
 }
 void deleteClass(Class *&clas){
