@@ -36,7 +36,7 @@ struct Course{
     string teacherName;
     int numberOfCredits;
     int maxSize = 50;
-    char dow[2] ;// day of week
+    char dow[3] ;// day of week
     int session;
     void inputStudent2CourseFromFile(User &Head_User);
     void UpdateCourseInfo(User &Head_User);
@@ -98,7 +98,7 @@ struct StaffMember{
 //All Updating function here
     void updateSchoolYear(Semester *&cur_semester);
     void importSchoolYear();
-
+    void importCourse();
 };
 struct User{
     StaffMember *staffMembers;

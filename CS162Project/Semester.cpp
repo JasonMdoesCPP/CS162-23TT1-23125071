@@ -21,7 +21,8 @@ void Semester::addCourse() {
     cout << "Please enter the maximal number of students in the course: ";
     cin >> temp->maxSize;
     cout << "Please enter the day the course will be performed in (M/T/W/Th/F/Sa/Su):";
-    cin >> temp->dow; // Increase size to accommodate the null terminator
+    cin.ignore();
+    cin.get(temp->dow,3); // Increase size to accommodate the null terminator
     cout << "Please enter the session the course will be performed in: ";
     cin >> temp->session;
     if (course == nullptr) {

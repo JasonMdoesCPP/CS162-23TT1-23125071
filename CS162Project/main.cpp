@@ -295,6 +295,7 @@ int main() {
 //    }
     UpdateUser(user);
     ImportClass(HeadClass);
+    user.staffMembers->importCourse();
     user.deleteUser();
     deleteClass(HeadClass);
     deleteAll(user, HeadClass);

@@ -91,3 +91,42 @@ void StaffMember::importSchoolYear() {
         curSchoolYear = curSchoolYear->next;
     }
 }
+void StaffMember::importCourse()
+{
+    ofstream fout;
+    fout.open("Course/Course.csv", ios::trunc);
+    SchoolYear* curSchoolYear = schoolYear;
+    bool flag = true;
+    while (curSchoolYear)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Semester curSemester = curSchoolYear->semester[i];
+            if (curSemester.course == nullptr) continue;//The condition to check if semester is null or not
+            Course* curCourse = curSemester.course;
+            while (curCourse)
+            {
+                if (flag)
+                {
+                    fout << "SchoolYear,Semester,Course_ID,Course_name,classname,teacherName,numberOfCredits,maxSize,dow,session\n";
+                    flag = false;
+                }
+                fout << curSchoolYear->yearStart << ","
+                    << i + 1 << "," // Semester (1-based indexing)
+                    << curCourse->Course_ID << ","
+                    << curCourse->Course_name << ","
+                    << curCourse->classname << ","
+                    << curCourse->teacherName << ","
+                    << curCourse->numberOfCredits << ","
+                    << curCourse->maxSize << ","
+                    << curCourse->dow << ","
+                    << curCourse->session << endl;
+
+                curCourse = curCourse->next;
+            }
+        }
+        curSchoolYear = curSchoolYear->next;
+    }
+
+    fout.close();
+}
