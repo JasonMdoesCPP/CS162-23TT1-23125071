@@ -79,15 +79,15 @@ void StaffMember::addSemester(int yearStart, Semester*& cur_semester) {
             validInput = true;
         }
       }
-      cur_semester = cur_year->semester + index - 1;
+ 
 
       // Check if the semester already exists
       if (cur_semester->startDay.year != 0) {
         cout << "Semester " << index << " already exists." << endl;
-        cur_semester = nullptr;
         return;
       }
-
+      //Update cur semester
+     cur_semester = cur_year->semester + index - 1;
       // Input validation loop for start date
       validInput = false;
       while (!validInput) {
