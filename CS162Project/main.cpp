@@ -75,10 +75,6 @@ int main() {
             } while (ca!=0);
             user.user1 = nullptr; //What is it for?
             //Update all the files
-
-
-
-
         }
         if (user.user2) {
             StaffMember* staf = user.user2;
@@ -295,9 +291,9 @@ int main() {
             } while (ca != 0);
             //What is it for?
             //Create and Update all the files
-
-
-
+            user.user2->importSchoolYear();
+            user.staffMembers->importCourse();
+            user.user2 = nullptr;
         }
         cout << "1. Log in" << endl;
         cout << "0. End program!" << endl;
@@ -305,12 +301,8 @@ int main() {
         cin >> op;
     }
     cout << "Finish";
-    if(user.user2){
-        user.user2->importSchoolYear();
-    }
     UpdateUser(user);
     ImportClass(HeadClass);
-    user.staffMembers->importCourse();
     user.deleteUser();
     deleteClass(HeadClass);
     deleteAll(user, HeadClass);
