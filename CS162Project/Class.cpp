@@ -1,68 +1,78 @@
 #include"Struct.h"
-void Class::addStudents(Student* stu)
-{
-    cout << "Only need the Id of students for adding" << endl;
+void Class::addStudents(Student* stu) {
+    cout << "Adding students (only student IDs required)." << endl;
+
     cout << "Enter number of students: ";
     int n;
     cin >> n;
+
     if (n <= 0) {
-        cout << "Pls input the positive integer number" << endl;
+        cout << "Please input a positive integer number." << endl;
         cout << "Enter: ";
+        cin >> n;
     }
+
     while (n--) {
-        Student* cur = stu;
         string temp;
-        cout << "Student Id: ";
+        cout << "Student ID: ";
         cin >> temp;
+
         StudentEnrolled* curStudentEnroll = studentEnroll;
-        // check if in class ?
         bool check = false;
+
+        // Check if student already enrolled in this class
         while (curStudentEnroll) {
             if (temp == curStudentEnroll->studentId) {
                 check = true;
+                cout << "This student (" << temp << ") has already been added to this class!" << endl;
                 break;
             }
             curStudentEnroll = curStudentEnroll->next;
         }
-        if (check) {
-            cout << "This student has been added in this class!" << endl;
-        }
+
         if (!check) {
+            Student* cur = stu;
+
+            // Find student by ID
             while (cur) {
                 if (cur->studentId == temp) {
-                    if (cur->schoolYear == 1) {
-                        cur->className = className;
-                        check = true;
-                        break;
+                    check = true;
+                    if (cur->schoolYear != 1) {
+                        cout << "Student with ID " << temp << " is not a 1st year student." << endl;
                     }
-                    else
-                        break;
+                    else if (!cur->className.empty()) {
+                        cout << "Student with ID " << temp << " has already been added to class " << cur->className << "." << endl;
+                    }
+                    else {
+                        // Add student to class and update file
+                        cur->className = className;
+                        StudentEnrolled* temp1 = new StudentEnrolled;
+                        temp1->studentId = temp;
+                        temp1->next = studentEnroll;
+                        studentEnroll = temp1;
+
+                        ofstream fout("Class/" + this->className + ".csv");
+                        if (!fout) {
+                            cout << "Cannot update student " << temp << " to file Class/" << this->className << ".csv" << endl;
+                        }
+                        else {
+                            fout << "StudentID" << endl;
+                            curStudentEnroll = studentEnroll;
+                            while (curStudentEnroll) {
+                                fout << curStudentEnroll->studentId << endl;
+                                curStudentEnroll = curStudentEnroll->next;
+                            }
+                            fout.close();
+                            cout << "Student with ID " << temp << " added to class " << className << "." << endl;
+                        }
+                    }
+                    break;
                 }
                 cur = cur->next;
             }
-            if (check) {
-                StudentEnrolled* temp1 = new StudentEnrolled;
-                temp1->studentId = temp;
-                temp1->next = studentEnroll;
-                studentEnroll = temp1;
-                //Update file Class/classname.csv
-                ofstream fout;
-                fout.open("Class/" + this->className + ".csv");
-                if (!fout)
-                {
-                    cout << "Cannot update student " << temp << " to file " << "Class/" << this->className << ".csv";
-                }
-                curStudentEnroll = studentEnroll;
-                fout << "StudentID" << endl;
-                while (curStudentEnroll)
-                {
-                    fout << curStudentEnroll->studentId << endl;
-                    curStudentEnroll = curStudentEnroll->next;
-                }
-                fout.close();
-            }
-            else {
-                cout << "Doesn't find any student having this id" << endl;
+
+            if (!check) {
+                cout << "Student with ID " << temp << " not found." << endl;
             }
         }
     }
