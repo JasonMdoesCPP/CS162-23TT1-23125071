@@ -14,12 +14,16 @@ int main() {
     cout << "0. End program!" << endl;
     cout << "Enter: " ;
     cin >> op;
+    bool checkUpdate = false;
     while(op){
         user.login();
         if (user.user1) {
             Student* stu = user.user1;
-            user.staffMembers->updateSchoolYear(cur_semester);
-            user.staffMembers->updateCourse(user);
+            if(!checkUpdate){
+                user.staffMembers->updateSchoolYear(cur_semester);
+                user.staffMembers->updateCourse(user);
+                checkUpdate = true;
+            }
 //Update information
 
 
@@ -36,7 +40,7 @@ int main() {
                     case 1: {
                         Course* cur = cur_semester->course;
                         if (cur) {
-                            cout << "The courses you will study are: " << endl;
+                            cout << "The courses you will study in this course are: " << endl;
                             while (cur) {
                                 StudentEnrolled* curStudent = cur->studentEnrolled;
                                 while (curStudent) {
@@ -56,7 +60,7 @@ int main() {
                         break;
                     }
                     case 2: {
-                        Course* temp = user.staffMembers->schoolYear->semester->course;
+                        Course* temp = cur_semester->course;
                         stu->ViewScore(temp, publishedScore);
                         break;
                     }
@@ -79,8 +83,11 @@ int main() {
         if (user.user2) {
             StaffMember* staf = user.user2;
  // Update information
-            staf->updateSchoolYear(cur_semester);
-            staf->updateCourse(user);
+            if(!checkUpdate){
+                staf->updateSchoolYear(cur_semester);
+                staf->updateCourse(user);
+                checkUpdate = true;
+            }
             int ca;
             do {
                 cout << "1. Create a school year" << endl;

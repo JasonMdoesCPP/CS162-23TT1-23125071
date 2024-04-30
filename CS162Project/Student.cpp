@@ -1,20 +1,22 @@
 #include"Struct.h"
 void Student::ViewScore(Course* HeadCourse,bool publishedScore) {
     if (publishedScore) {
-        Score* cur = score;
-        while (cur) {
-            Course* curCourse = HeadCourse;
-            while (curCourse) {
+        Course* curCourse = HeadCourse;
+        while (curCourse) {
+            Score* cur = score;
+            while (cur) {
                 if (curCourse->Course_ID == cur->Course_ID)
                     break;
-                curCourse = curCourse->next;
+                cur = cur->next;
             }
-            cout << "Course: " << curCourse->Course_name << endl;
-            cout << "Mid term: " << cur->midtermMark << endl;
-            cout << "Final: " << cur->finalMark << endl;
-            cout << "Other: " << cur->otherMark << endl;
-            cout << "Total: " << cur->totalMark << endl;
-            cur = cur->next;
+            if(cur){
+                cout << "Course: " << curCourse->Course_name << endl;
+                cout << "Mid term: " << cur->midtermMark << endl;
+                cout << "Final: " << cur->finalMark << endl;
+                cout << "Other: " << cur->otherMark << endl;
+                cout << "Total: " << cur->totalMark << endl;
+            }
+            curCourse = curCourse->next;
         }
     }
     else {
