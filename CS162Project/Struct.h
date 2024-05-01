@@ -127,7 +127,7 @@ void viewClasses(Class* HeadClass);
 void viewStudentInClass(Class* HeadClass, Student* headStudent);
 void exportStudentInCourseToCsvFile(Semester* semester);
 void importScoreBoard(Student* stu, Semester *semester,string CourseId);
-void publishScore(bool &publishedScore);
+void publishScore();
 void UpdateUser(User user);
 void viewScoreOfCourse(Semester* semester, Student* student);
 void updateStudentRes(Student *stu);
@@ -136,4 +136,5 @@ bool isValidDate(Date& date);
 void UpdateClass(Class* &headClass, Student*stu);
 void ImportClass(Class* headClass);
 void viewScoreOfClass(Semester* semester, Student* student, Course* HeadCourse);
+bool checkPublish(); 
 #endif // STRUCT_H_INCLUDED

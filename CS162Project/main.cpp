@@ -2,7 +2,9 @@
 using namespace std;
 
 int main() {
-    bool publishedScore = false;
+    
+    bool publish = checkPublish(); 
+    
     User user;
     Semester *cur_semester=nullptr;
     Class* HeadClass = nullptr;
@@ -62,7 +64,7 @@ int main() {
                     }
                     case 2: {
                         Course* temp = cur_semester->course;
-                        stu->ViewScore(temp, publishedScore);
+                        stu->ViewScore(temp, publish);
                         break;
                     }
                     case 3:
@@ -277,7 +279,8 @@ int main() {
                         break;
                     }
                     case 21: {
-                        publishScore(publishedScore);
+                        publishScore();
+                        publish = checkPublish();
                         break;
                     }
                     case 22:

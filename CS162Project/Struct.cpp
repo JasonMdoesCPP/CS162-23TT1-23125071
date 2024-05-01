@@ -269,8 +269,49 @@ void viewStudentInClass(Class* HeadClass, Student* headStudent){
 
 
 }
-void publishScore(bool &publishedScore){
-    publishedScore = true;
+void publishScore(){
+    ifstream fin;
+    fin.open("User/published.txt");
+    if(!fin.is_open()){
+        cout << "Error opening file" << endl;
+        return; 
+    }
+    string temp;
+    fin >> temp;
+    cout << "Current status: " << temp << endl; 
+    fin.close();
+    cout << "(0:Pulished|1:Unpublished) "<< endl;
+    cout << "Enter: ";
+    int ca;
+    cin >> ca;
+    ofstream fout;
+    fout.open("User/published.txt", ios::trunc);
+    if(!fout.is_open()){
+        cout << "Error opening file!" << endl;
+        return;
+    }
+    switch (ca) {
+        case 0:
+            fout << "Pulished";
+            break;
+        case 1:
+            fout << "Unpublished";
+            break;
+        default:
+            cout << "Wrong try again!" << endl;
+            break;
+    }
+    fout.close();
+}
+bool checkPublish(){
+    ifstream fin;
+    fin.open("User/published.txt");
+    string temp;
+    fin >> temp;
+    if(temp == "Pulished")
+        return true;
+    else
+        return false;
 }
 void exportStudentInCourseToCsvFile(Semester* semester)
 { string CourseId;
