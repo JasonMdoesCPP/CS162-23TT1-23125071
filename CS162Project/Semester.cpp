@@ -75,18 +75,36 @@ void Semester::addCourse() {
         std::cout << "Please enter the day the course will be performed in (M/T/W/Th/F/Sa/Su): ";
         std::cin.ignore(); // Clear input buffer
         std::cin.get(temp->dow, 3); // Read up to 2 characters + null terminator
+        validDow = true;
+       
+    }
+    // Input session
 
-        if (std::cin.fail() || (strlen(temp->dow) != 2) ||
-            !(strchr("MTWHFSaSu", temp->dow[0]) && temp->dow[1] == '\0')) {
+    bool validSession = false;
+    while (!validSession) {
+        cout << "Please enter the session (1 to 3): ";
+        cin >> temp->session;
+
+        if (std::cin.fail() || temp->session <= 0) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Invalid input. Please enter a valid day of the week (M, T, W, Th, F, Sa, Su)." << std::endl;
+            std::cout << "Invalid input. Please enter a positive integer." << std::endl;
         }
         else {
-            validDow = true;
+            validSession = true;
         }
     }
-}
+    if (course == nullptr)
+    {
+        temp->next = nullptr;
+        course = temp;
+    }
+    else
+    {
+        temp->next = course;
+        course = temp;
+    }
+} 
 Course* Semester::findCourseinSemester(string CourseID)
 {
     Course* cur_Course = course;
