@@ -2,9 +2,9 @@
 using namespace std;
 
 int main() {
-    
-    bool publish = checkPublish(); 
-    
+
+    bool publish = checkPublish();
+
     User user;
     Semester *cur_semester=nullptr;
     Class* HeadClass = nullptr;
@@ -69,8 +69,10 @@ int main() {
                     }
                     case 3:
                         stu->changePasswordOrUserName();
+                        break;
                     case 4:
                         stu->viewProfile();
+                        break;
                     case 0:
                         break;
                     default:
@@ -291,6 +293,7 @@ int main() {
                         break;
                     case 24:
                         staf->viewProfile();
+                        break;
                     case 0:
                         break;
                     default:
