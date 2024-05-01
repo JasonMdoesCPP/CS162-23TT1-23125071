@@ -1,6 +1,5 @@
 #include"Struct.h"
 void StaffMember::createSchoolYear() {
-  SchoolYear* cur = schoolYear;
   bool yearExists = false;
   int data;
 
@@ -17,17 +16,14 @@ void StaffMember::createSchoolYear() {
   } while (!cin || data <= 0); // Repeat until valid input is entered
 
 
-  // Check if the school year already exists (same as before)
-  while (cur) {
-    if (cur->yearStart == data) {
-      yearExists = true;
-      break;
-    }
-    cur = cur->next;
-  }
+  // Check if the school year in present or not
+  if (data <= schoolYear->yearStart)
+{
+    yearExists = true;
+}
 
   if (yearExists) {
-    cout << "School year already exists." << endl;
+    cout << "School year is NOT valid" << endl;
   } else {
     SchoolYear* newYear = new SchoolYear;
     newYear->next = nullptr;
