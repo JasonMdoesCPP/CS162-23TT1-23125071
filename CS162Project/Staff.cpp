@@ -16,6 +16,7 @@ void StaffMember::createSchoolYear() {
     }
   } while (!cin || data <= 0); // Repeat until valid input is entered
 
+
   // Check if the school year already exists (same as before)
   while (cur) {
     if (cur->yearStart == data) {
@@ -82,7 +83,7 @@ void StaffMember::addSemester(int yearStart, Semester*& cur_semester) {
       
 
       // Check if the semester already exists
-      if (cur_semester->startDay.year != 0) {
+      if (cur_year->semester[index].startDay.year != 0) {
         cout << "Semester " << index << " already exists." << endl;
         return;
       }
