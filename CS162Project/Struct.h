@@ -9,6 +9,7 @@
 #include<limits>
 #include<vector>
 #include <iomanip>
+#include<algorithm>
 using namespace std;
 struct Student;
 struct Date{
@@ -136,6 +137,6 @@ bool isValidDate(Date& date);
 void UpdateClass(Class* &headClass, Student*stu);
 void ImportClass(Class* headClass);
 void viewScoreOfClass(Semester* semester, Student* student, Course* HeadCourse);
-bool checkPublish(); 
+bool checkPublish();
 void exportScoreBoard(Semester* semester, const string& filename, User head_User);
 #endif // STRUCT_H_INCLUDED
