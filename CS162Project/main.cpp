@@ -273,13 +273,13 @@ int main() {
                         break;
                     }
                     case 19:{
-                        viewScoreOfCourse(staf->schoolYear->semester, user.students);
+                        viewScoreOfCourse(cur_semester, user.students);
                         break;
                     }
                     case 20:{
                         string tempCourse;
-                        updateStudentRes(user.students, tempCourse);
-                        importScoreBoard(user.students, cur_semester, tempCourse);
+                        updateStudentRes(user.students, tempCourse, cur_semester);
+                        exportScoreBoard(cur_semester, tempCourse, user);
                         break;
                     }
                     case 21: {
@@ -291,7 +291,7 @@ int main() {
                         staf->changePasswordOrUserName();
                         break;
                     case 23:
-                        viewScoreOfClass(staf->schoolYear->semester, user.students, user.staffMembers->schoolYear->semester->course);
+                        viewScoreOfClass(cur_semester, user.students, cur_semester->course);
                         break;
                     case 24:
                         staf->viewProfile();

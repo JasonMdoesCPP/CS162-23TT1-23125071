@@ -418,6 +418,70 @@ void importScoreBoard(Student* stu, Semester* semester,string CourseId)
     fin.close();
     cout << "Scoreboard imported successfully." << endl;
 }
+void exportScoreBoard(Semester* semester, const string& filename, User head_User) {
+    if (!semester || filename.empty()) {
+        cerr << "Error: Invalid semester or filename provided." << endl;
+        return;
+    }
+
+    ofstream csvFile("Course/" + filename + "Score.csv");
+    if (!csvFile.is_open()) {
+        cerr << "Error: Could not open file for writing." << endl;
+        return;
+    }
+
+    // Write header row with field names
+    csvFile << "studentId,courseId,midtermMark,finalMark,otherMark,totalMark" << endl;
+
+    Course* currentCourse = semester->course;
+    while (currentCourse) {
+        if (currentCourse->Course_ID == filename)
+        {
+            StudentEnrolled* enrolledStudent = currentCourse->studentEnrolled;
+            while (enrolledStudent) {
+                Student* student = nullptr;
+                Student* cur_Student = head_User.students;
+                while (cur_Student)
+                {
+                    if (cur_Student->studentId == enrolledStudent->studentId)
+                    {
+                        student = cur_Student;
+                        break;
+                    }
+                    cur_Student = cur_Student->next;
+                }
+                if (student) {
+
+                    Score* cur_Score = student->score;
+                    while (cur_Score)
+                    {
+                        if (cur_Score->Course_ID == currentCourse->Course_ID)
+                        {
+                            csvFile << student->studentId << ","
+                                << currentCourse->Course_ID << ","
+                                << cur_Score->midtermMark << ","
+                                << cur_Score->finalMark << ","
+                                << cur_Score->otherMark << ","
+                                << cur_Score->totalMark << endl;
+                            break;
+                        }
+                        cur_Score = cur_Score->next;
+                    }
+
+                }
+                else {
+                    // Handle case where student is enrolled but not found in student list (potential data integrity issue)
+                    cerr << "Warning: Enrolled student with ID " << enrolledStudent->studentId << " not found in student list." << endl;
+                }
+                enrolledStudent = enrolledStudent->next;
+            }
+            break;
+        }
+        currentCourse = currentCourse->next;
+    }
+
+    csvFile.close();
+}
 void UpdateUser(User user){
     ofstream fout;
     fout.open("User/student.csv", ios::trunc);
@@ -503,7 +567,7 @@ void viewScoreOfCourse(Semester* semester, Student* student){
     cout << setw(45) << left << "Average: " << setw(15) << left << (float)res->midtermMark/cnt << setw(15) << left << (float)res->finalMark/cnt << setw(15) << left << (float)res->otherMark/cnt << setw(15) << left << (float)res->totalMark/cnt << endl;
     delete res;
 }
-void updateStudentRes(Student* stu,string &course_ID) {
+void updateStudentRes(Student* stu,string &course_ID, Semester *cur_semester) {
     string studentID;
     cout << "Enter Student ID you want to update: ";
     cin >> studentID;
@@ -520,6 +584,21 @@ void updateStudentRes(Student* stu,string &course_ID) {
         cout << "Don't have any student with this ID" << endl;
         return;
     }
+
+    Course* cur_course = cur_semester->course;
+    cout << "This is the list of course in this semester:" << endl;
+    if (cur_course == nullptr)
+    {
+        cout << "There's no coures yet" << endl;
+        return;
+    }
+
+    while (cur_course)
+    {
+        cout << "- " << cur_course->Course_name<<" - ID: "<<cur_course->Course_ID << endl;
+        cur_course = cur_course->next;
+    }
+
 
     string courseID;
     cout << "Enter the course ID you want to update: ";
@@ -589,9 +668,6 @@ void updateStudentRes(Student* stu,string &course_ID) {
             cout << "Invalid input. Please enter a positive integer: ";
         }
         curScore->otherMark = input;
-
-        // Calculate total mark (optional modification based on your data structure)
-        curScore->totalMark = curScore->midtermMark + curScore->finalMark + curScore->otherMark;  // Assuming total is calculated from these
 
         curScore = curScore->next;
     }
@@ -722,7 +798,6 @@ void viewScoreOfClass(Semester* semester, Student* student, Course* HeadCourse){
                     cout << "Course " << curCourse->Course_name << ": " << curScore->totalMark << endl;
                     score += curScore -> totalMark;
                     ++cnt;
-                    curScore = curScore->next;
                 }
                 curScore = curScore->next;
 			}

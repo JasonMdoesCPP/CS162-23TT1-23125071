@@ -130,11 +130,12 @@ void importScoreBoard(Student* stu, Semester *semester,string CourseId);
 void publishScore();
 void UpdateUser(User user);
 void viewScoreOfCourse(Semester* semester, Student* student);
-void updateStudentRes(Student *stu, string &course_ID);
+void updateStudentRes(Student *stu, string &course_ID, Semester *cur_semester);
 void deleteAll(User& user, Class* headClass);
 bool isValidDate(Date& date);
 void UpdateClass(Class* &headClass, Student*stu);
 void ImportClass(Class* headClass);
 void viewScoreOfClass(Semester* semester, Student* student, Course* HeadCourse);
 bool checkPublish(); 
+void exportScoreBoard(Semester* semester, const string& filename, User head_User);
 #endif // STRUCT_H_INCLUDED
