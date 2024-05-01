@@ -86,6 +86,7 @@ struct Student{
     void ViewScore(Course* HeadCourse, bool publishedScore);
     double calGPA();
     void changePasswordOrUserName();
+    void viewProfile();
 };
 struct StaffMember{
     string passWord;
@@ -97,6 +98,7 @@ struct StaffMember{
     void createSchoolYear();
     void addSemester(int yearStart,Semester *&cur_semester);
     void changePasswordOrUserName();
+    void viewProfile();
 //All Updating function hlere
     void updateSchoolYear(Semester *&cur_semester);
     void importSchoolYear();

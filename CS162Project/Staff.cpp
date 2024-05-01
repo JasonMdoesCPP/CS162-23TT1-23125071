@@ -179,3 +179,8 @@ void StaffMember::changePasswordOrUserName() {
             cout << "Only choose (1|2)" << endl;
     } while (true);
 }
+void StaffMember::viewProfile() {
+    cout << "Staff Member Profile:" << endl;
+    cout << "  Name: " << firstName << " " << lastName << endl;
+    cout << "  Username: " << userName << endl;  // Mask username
+}

@@ -33,6 +33,7 @@ int main() {
                 cout << "1. View a list of courses you will study" << endl;
                 cout << "2. View score" << endl;
                 cout << "3. Change username or password" << endl;
+                cout << "4. View your profile" << endl;
                 cout << "0. Log in with another account" << endl;
                 cout << "Enter your choice: ";
                 cin >> ca;
@@ -66,6 +67,8 @@ int main() {
                     }
                     case 3:
                         stu->changePasswordOrUserName();
+                    case 4:
+                        stu->viewProfile();
                     case 0:
                         break;
                     default:
@@ -110,6 +113,7 @@ int main() {
                 cout << "21. publish student score!!" << endl;
                 cout << "22. Change username or password" << endl;
                 cout << "23. View the scoreboard of a class" << endl;
+                cout << "24. View your profile" << endl;
                 cout << "0. Log in another account" << endl;
 
                 cout << "Enter your choice: ";
@@ -282,6 +286,8 @@ int main() {
                     case 23:
                         viewScoreOfClass(staf->schoolYear->semester, user.students, user.staffMembers->schoolYear->semester->course);
                         break;
+                    case 24:
+                        staf->viewProfile();
                     case 0:
                         break;
                     default:

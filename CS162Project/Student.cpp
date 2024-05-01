@@ -86,3 +86,13 @@ void Student::changePasswordOrUserName() {
             cout << "Only choose (1|2)" << endl;
     } while (true);
 }
+void Student::viewProfile() {
+    cout << "Student Profile:" << endl;
+    cout << "  Student ID: " << studentId << endl;
+    cout << "  Social ID: " << socialId<< endl;  // Mask social ID
+    cout << "  Name: " << firstName << " " << lastName << endl;
+    cout << "  Gender: " << (gender ? "Male" : "Female") << endl;
+    cout << "  School Year: " << schoolYear << endl;
+    cout << "  Class Name: " << className << endl;
+    cout << "  Date of Birth: " << dateOfBirth.day << "/" << dateOfBirth.month << "/" << dateOfBirth.year << endl;
+}
