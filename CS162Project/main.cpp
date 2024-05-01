@@ -253,11 +253,11 @@ int main() {
                         break;
                     }
                     case 17: {
-                        if(!staf->schoolYear->semester){
+                        if(!cur_semester){
                             cout << "Semester hasn't created yet" << endl;
                             break;
                         }
-                        exportStudentInCourseToCsvFile(staf->schoolYear->semester);
+                        exportStudentInCourseToCsvFile(cur_semester);
                         break;
                     }
                     case 18: {
