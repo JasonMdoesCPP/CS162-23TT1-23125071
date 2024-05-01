@@ -125,7 +125,7 @@ void UpdateCoursetoUser(string StudentID,string CourseID, string newCourseID, Us
 void CopyCourseInfo(Course cur_Course, Course newCourse);
 void viewClasses(Class* HeadClass);
 void viewStudentInClass(Class* HeadClass, Student* headStudent);
-void exportStudentInCourseToCsvFile(Semester* semester);
+void exportStudentInCourseToCsvFile(Semester* semester, string CourseId);
 void importScoreBoard(Student* stu, Semester *semester,string CourseId);
 void publishScore();
 void UpdateUser(User user);

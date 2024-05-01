@@ -190,6 +190,7 @@ int main() {
                             while (curStudent) {
                                 if (curStudent->studentId == studentId) {
                                     curCourse->AddStudentToCourse(curStudent);
+                                    exportStudentInCourseToCsvFile(cur_semester, courseId); 
                                     break;
                                 }
                                 curStudent = curStudent->next;
@@ -215,6 +216,7 @@ int main() {
                             curCourse->RemoveStudentFromCourse(studentId);
                             //Update to User
                             UpdateCoursetoUser(studentId, courseId, courseId, user, 2);
+                            exportStudentInCourseToCsvFile(cur_semester, courseId);
                             cout << "Student removed from the course successfully!" << endl;
                         }
                         else {
@@ -257,7 +259,10 @@ int main() {
                             cout << "Semester hasn't created yet" << endl;
                             break;
                         }
-                        exportStudentInCourseToCsvFile(cur_semester);
+                        cout << "Enter the course you want to export: ";
+                        string courseID;
+                        cin >> courseID;
+                        exportStudentInCourseToCsvFile(cur_semester, courseID);
                         break;
                     }
                     case 18: {

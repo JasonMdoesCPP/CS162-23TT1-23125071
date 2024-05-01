@@ -313,11 +313,8 @@ bool checkPublish(){
     else
         return false;
 }
-void exportStudentInCourseToCsvFile(Semester* semester)
-{ string CourseId;
-    cout << "Enter Course ID:";
-    cin.ignore();
-    getline(cin, CourseId);
+void exportStudentInCourseToCsvFile(Semester* semester, string CourseId)
+{
     Course* curCourse = semester->course;
     while(curCourse){
         if(curCourse->Course_ID == CourseId){
