@@ -277,7 +277,9 @@ int main() {
                         break;
                     }
                     case 20:{
-                        updateStudentRes(user.students);
+                        string tempCourse;
+                        updateStudentRes(user.students, tempCourse);
+                        importScoreBoard(user.students, cur_semester, tempCourse);
                         break;
                     }
                     case 21: {

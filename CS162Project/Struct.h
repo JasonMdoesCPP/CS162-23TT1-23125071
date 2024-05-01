@@ -130,7 +130,7 @@ void importScoreBoard(Student* stu, Semester *semester,string CourseId);
 void publishScore();
 void UpdateUser(User user);
 void viewScoreOfCourse(Semester* semester, Student* student);
-void updateStudentRes(Student *stu);
+void updateStudentRes(Student *stu, string &course_ID);
 void deleteAll(User& user, Class* headClass);
 bool isValidDate(Date& date);
 void UpdateClass(Class* &headClass, Student*stu);

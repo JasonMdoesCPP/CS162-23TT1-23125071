@@ -503,7 +503,7 @@ void viewScoreOfCourse(Semester* semester, Student* student){
     cout << setw(45) << left << "Average: " << setw(15) << left << (float)res->midtermMark/cnt << setw(15) << left << (float)res->finalMark/cnt << setw(15) << left << (float)res->otherMark/cnt << setw(15) << left << (float)res->totalMark/cnt << endl;
     delete res;
 }
-void updateStudentRes(Student* stu) {
+void updateStudentRes(Student* stu,string &course_ID) {
     string studentID;
     cout << "Enter Student ID you want to update: ";
     cin >> studentID;
@@ -545,6 +545,8 @@ void updateStudentRes(Student* stu) {
     cout << "(y/n): ";
     cin >> ca;
 
+    course_ID = courseID;
+
     while (!(ca == 'y' || ca == 'n')) {
         cout << "Invalid choice. Please enter 'y' or 'n': ";
         cin >> ca;
@@ -569,6 +571,15 @@ void updateStudentRes(Student* stu) {
             cout << "Invalid input. Please enter a positive integer: ";
         }
         curScore->finalMark = input;
+
+        // Update total mark
+        cout << "Total (positive integer only): ";
+        while (!(cin >> input) || input < 0) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a positive integer: ";
+        }
+        curScore->totalMark = input;
 
         // Update other mark (optional modification based on your data structure)
         cout << "Other (positive integer only): ";
