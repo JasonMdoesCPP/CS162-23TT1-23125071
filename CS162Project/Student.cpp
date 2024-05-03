@@ -1,6 +1,7 @@
 #include"Struct.h"
 void Student::ViewScore(Course* HeadCourse,bool publishedScore) {
     if (publishedScore) {
+        bool check = false;
         Course* curCourse = HeadCourse;
         while (curCourse) {
             Score* cur = score;
@@ -10,6 +11,7 @@ void Student::ViewScore(Course* HeadCourse,bool publishedScore) {
                 cur = cur->next;
             }
             if(cur){
+                check = true;
                 cout << "Course: " << curCourse->Course_name << endl;
                 cout << "Mid term: " << cur->midtermMark << endl;
                 cout << "Final: " << cur->finalMark << endl;
@@ -18,6 +20,7 @@ void Student::ViewScore(Course* HeadCourse,bool publishedScore) {
             }
             curCourse = curCourse->next;
         }
+        if (check == false) cout << "You haven't joined any course";
     }
     else {
         cout << "Scores haven't published " << endl;
@@ -95,4 +98,35 @@ void Student::viewProfile() {
     cout << "  School Year: " << schoolYear << endl;
     cout << "  Class Name: " << className << endl;
     cout << "  Date of Birth: " << dateOfBirth.day << "/" << dateOfBirth.month << "/" << dateOfBirth.year << endl;
+}
+void viewYourCourse(Semester* cur_semester, Student* stu) {
+    Course* cur = cur_semester->course;
+
+    if (cur) {
+        // Print table header
+        cout << setw(20) << left << "Course ID" << setw(30) << left << "Course Name"
+             << setw(20) << left << "Teacher"
+            << setw(10) << right << "Credits" << endl;
+        cout << setfill('-') << setw(20+30+20+10) << ""
+            << setfill(' ') << endl;
+
+        while (cur) {
+            StudentEnrolled* curStudent = cur->studentEnrolled;
+
+            while (curStudent) {
+                if (curStudent->studentId == stu->studentId) {
+                    // Print course information in each row
+                    cout << setw(20) << left << cur->Course_ID << setw(30) << left << cur->Course_name
+                        << setw(20) << left << cur->teacherName
+                        << setw(10) << right << cur->numberOfCredits << endl;
+                    break;
+                }
+                curStudent = curStudent->next;
+            }
+            cur = cur->next;
+        }
+    }
+    else {
+        cout << "You have not enrolled any courses yet!" << endl;
+    }
 }

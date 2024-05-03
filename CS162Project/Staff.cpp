@@ -79,7 +79,7 @@ void StaffMember::addSemester(int yearStart, Semester*& cur_semester) {
       
 
       // Check if the semester already exists
-      if (cur_year->semester[index].startDay.year != 0) {
+      if (cur_year->semester[index-1].startDay.year != 0) {
         cout << "Semester " << index << " already exists." << endl;
         return;
       }

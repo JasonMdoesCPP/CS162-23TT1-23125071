@@ -163,16 +163,73 @@ void Semester::DeleteACourse(const string& courseId, User Head_User) {
         cur_student = cur_student->next;
     }
 }
+//void Semester::viewCourse() {
+//    Course* cur = course;
+//
+//    // Check for empty list
+//    if (!cur) {
+//        cout << "There are no courses added yet." << endl;
+//        return;  // Exit early if no courses
+//    }
+//
+//    // Determine maximum column widths for CourseID and CourseName
+//    int maxCourseIDLength = 0;
+//    int maxCourseNameLength = 0;
+//    while (cur) {
+//        maxCourseIDLength = max(maxCourseIDLength, int(cur->Course_ID.length()));
+//        maxCourseNameLength = max(maxCourseNameLength, int(cur->Course_name.length()));
+//        cur = cur->next;
+//    }
+//
+//    // Table header with increased width
+//    cout << "No." << "         " << "CourseID" << "         " << "CourseName" << endl;
+//    //cout << setfill('-') << setw(15 + maxCourseIDLength + maxCourseNameLength + 4) << "" << setfill(' ') << endl;
+//
+//    // Display course details in table format
+//    int counter = 1;
+//    cur = course;
+//    while (cur) {
+//        cout << counter << "           " << cur->Course_ID
+//            << "         "<<setw(cur->Course_ID.length()) // Adjust spacing
+//            << cur->Course_name << endl;
+//        counter++;
+//        cur = cur->next;
+//    }
+//}
 void Semester::viewCourse() {
     Course* cur = course;
+
+    // Check for empty list
     if (!cur) {
         cout << "There are no courses added yet." << endl;
+        return;
     }
-    cout << "The added courses in this semester have their courses' name to be: " << endl;
+
+    // Determine maximum column widths for CourseID and CourseName
+    int maxCourseIDLength = 0;
+    int maxCourseNameLength = 0;
     while (cur) {
-        cout << "- " << cur->Course_name << endl;
+        maxCourseIDLength = max(maxCourseIDLength, int(cur->Course_ID.length()));
+        maxCourseNameLength = max(maxCourseNameLength, int(cur->Course_name.length()));
         cur = cur->next;
     }
 
+    // Table header with increased width and potential truncation
+    cout << "No." << setw(15)  << "CourseID"
+        << setw(15) << "CourseName" << endl;
 
+    // Use setfill for consistent border and adjust spacing
+    cout << setfill('-') << setw(15 + maxCourseIDLength + maxCourseNameLength + 4) << ""
+        << setfill(' ') << endl;
+
+    // Display course details in table format
+    int counter = 1;
+    cur = course;
+    while (cur) {
+        cout << counter << setw(15) << cur->Course_ID
+            << setw(cur->Course_name.length() + 10)
+            << cur->Course_name << endl;
+        counter++;
+        cur = cur->next;
+    }
 }

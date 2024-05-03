@@ -10,6 +10,7 @@
 #include<vector>
 #include <iomanip>
 #include<algorithm>
+#include <conio.h>
 using namespace std;
 struct Student;
 struct Date{
@@ -139,4 +140,6 @@ void ImportClass(Class* headClass);
 void viewScoreOfClass(Semester* semester, Student* student, Course* HeadCourse);
 bool checkPublish();
 void exportScoreBoard(Semester* semester, const string& filename, User head_User);
+void viewYourCourse(Semester* cur_semester, Student* stu);
+string takePasswdFromUser();
 #endif // STRUCT_H_INCLUDED

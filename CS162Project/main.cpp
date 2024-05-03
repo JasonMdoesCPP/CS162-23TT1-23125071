@@ -12,6 +12,7 @@ int main() {
     user.addInformationStaffMembers();
     UpdateClass(HeadClass, user.students);
     int op;
+    system("cls");
     cout << "1. Log in" << endl;
     cout << "0. End program!" << endl;
     cout << "Enter: " ;
@@ -32,6 +33,8 @@ int main() {
     //
             int ca;
             do {
+                
+                system("cls");
                 cout << "1. View a list of courses you will study" << endl;
                 cout << "2. View score" << endl;
                 cout << "3. Change username or password" << endl;
@@ -41,25 +44,7 @@ int main() {
                 cin >> ca;
                 switch (ca) {
                     case 1: {
-                        Course* cur = cur_semester->course;
-                        if (cur) {
-                            cout << "The courses you will study in this course are: " << endl;
-                            while (cur) {
-                                StudentEnrolled* curStudent = cur->studentEnrolled;
-                                while (curStudent) {
-                                    if (curStudent->studentId == stu->studentId) {
-                                        cout <<  "- "<< cur->Course_name << endl;
-                                        break;
-                                    }
-                                    curStudent = curStudent->next;
-                                }
-                                cur = cur -> next;
-                            }
-                        }
-                        else {
-                            cout << "You have not enrolled any courses yet!" << endl;
-
-                        }
+                        viewYourCourse(cur_semester, stu);
                         break;
                     }
                     case 2: {
@@ -79,6 +64,8 @@ int main() {
                         cout << "Invalid choice!" << endl;
                         break;
                 }
+                cerr << "Press any key to continue!";
+                _getch();
             } while (ca!=0);
             user.user1 = nullptr; //What is it for?
             //Update all the files
@@ -93,6 +80,7 @@ int main() {
             }
             int ca;
             do {
+                system("cls");
                 cout << "1. Create a school year" << endl;
                 cout << "2. Create several classes for 1st-year students" << endl;
                 cout << "3. Add new 1st year students to 1st-year classes." << endl;
@@ -307,6 +295,8 @@ int main() {
                         cout << "Invalid choice!" << endl;
                         break;
                 }
+                cerr << "Press any key to continue!";
+                _getch();
             } while (ca != 0);
             //What is it for?
             //Create and Update all the files
@@ -314,6 +304,7 @@ int main() {
             user.staffMembers->importCourse();
             user.user2 = nullptr;
         }
+        system("cls");
         cout << "1. Log in" << endl;
         cout << "0. End program!" << endl;
         cout << "Enter: " ;

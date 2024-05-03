@@ -131,7 +131,11 @@ void StaffMember::importCourse()
         }
         curSchoolYear = curSchoolYear->next;
     }
-
+    if (flag)
+    {
+        fout << "SchoolYear,Semester,Course_ID,Course_name,classname,teacherName,numberOfCredits,maxSize,dow,session\n";
+        flag = false;
+    }
     fout.close();
 }
 void StaffMember::updateCourse(User& Head_User) {

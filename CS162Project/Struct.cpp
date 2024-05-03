@@ -231,43 +231,44 @@ void viewClasses(Class* HeadClass){
         cur = cur -> next;
     }
 }
-void viewStudentInClass(Class* HeadClass, Student* headStudent){
+void viewStudentInClass(Class* HeadClass, Student* headStudent) {
     Class* cur = HeadClass;
+
     if (!cur) {
-        cout << "There are no registered class." << endl;
-
-
+        cout << "There are no registered classes." << endl;
         return;
     }
+
     cout << "Please enter the class you want to view: ";
     string temp;
     cin >> temp;
+
     while (cur) {
         if (cur->className == temp) break;
-        cur = cur -> next;
+        cur = cur->next;
     }
+
     if (!cur) {
         cout << "There are no classes with this name" << endl;
-
-
         return;
     }
-    cout << "The students in class " << temp << " have their full name/id to be: " << endl;
+
+    cout << cur->className << endl;  // Print class name first
+
+    int studentCount = 1;  // Initialize student counter
     StudentEnrolled* curStudent = cur->studentEnroll;
     while (curStudent) {
         Student* curUserStudent = headStudent;
-        while(curUserStudent){
-            if(curUserStudent->studentId == curStudent->studentId){
-                cout << curUserStudent->firstName << " " << curUserStudent->lastName << endl;
+        while (curUserStudent) {
+            if (curUserStudent->studentId == curStudent->studentId) {
+                cout << studentCount << ". " << curStudent->studentId << " - " << curUserStudent->firstName << " " << curUserStudent->lastName << endl;
                 break;
             }
             curUserStudent = curUserStudent->next;
         }
-        cout << curStudent->studentId << endl;
-        curStudent = curStudent -> next;
+        curStudent = curStudent->next;
+        studentCount++;  // Increment counter for next student
     }
-
-
 }
 void publishScore(){
     ifstream fin;
@@ -779,8 +780,10 @@ void viewScoreOfClass(Semester* semester, Student* student, Course* HeadCourse){
 	cout << "Enter class name: ";
 	cin >> classname;
 	Student* curStu = student;
+    bool check = false;
 	while (curStu){
 		if (curStu->className == classname){
+            check = true;
 			cout << "Student ID: " << curStu->studentId << endl;
 			cout << "Student's name: " << curStu->firstName << " " << curStu->lastName << endl;
 			int score=0, cnt=0;
@@ -805,4 +808,5 @@ void viewScoreOfClass(Semester* semester, Student* student, Course* HeadCourse){
 		}
 		curStu = curStu->next;
 	}
+    if (check == false) cout << "There's no student in this class!";
 }

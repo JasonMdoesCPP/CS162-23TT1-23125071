@@ -1,5 +1,2 @@
 SchoolYear,Semester,Course_ID,Course_name,classname,teacherName,numberOfCredits,maxSize,dow,session
-2024,1,123,Introduction to Programming,CS101,John Smith,3,30,M,1
-2024,1,124,Calculus I,MATH101,Alice Johnson,3,30,M,1
-2024,2,125,Introduction to Programming,CS102,John Smith,3,30,M,1
-2024,2,126,Introduction to Psychology,PSYCH101,Sarah Davis,3,30,M,1
+2024,1,123,Introduction,23TT1,Someone,4,40,M,1
